@@ -6,14 +6,17 @@
                     <template v-for="item in app.schema.items" :key="item.id">
                         <q-form>
                             <q-input v-if="item.type=='string'"
+                                :readonly="this.method=='view'"
                                 type="text" 
                                 :label="item.label"
                                 v-model="values[item.id]"/>
                             <q-input v-if="item.type=='number'"
+                                :readonly="this.method=='view'"
                                 type="number" 
                                 :label="item.label" 
                                 v-model="values[item.id]"/>
                             <q-select v-if="item.type=='option'"
+                                :readonly="this.method=='view'"
                                 v-model="values[item.id]"
                                 emit-value
                                 map-options
@@ -28,7 +31,7 @@
                         class="q-mt-md"
                         @click="onCancel">
                     </q-btn>                        
-                    <q-btn
+                    <q-btn v-if="this.method!='view'"
                         :loading="submitting"
                         label="Save"
                         class="q-mt-md"
@@ -89,6 +92,13 @@ export default defineComponent({
 
         editRow (vals) {
             this.method = 'edit';
+            this.resetValues();
+            this.updateValues(vals);
+            this.show();
+        },
+
+        viewRow (vals) {
+            this.method = 'view';
             this.resetValues();
             this.updateValues(vals);
             this.show();

@@ -216,9 +216,6 @@ var deleteRows = function(vals){
 }
 
 var searchRows = function(searching){
-    console.log('searchRows on server...');
-    console.log(searching);
-    console.log(apps.users);
     let app = apps.users.app;
     let retRows = rows;
     for (let i = 0; i < app.schema.items.length; i++) {
@@ -261,8 +258,6 @@ var searchRows = function(searching){
                     break;
                 }
                 case 'option': {
-                    console.log('searching option.');
-                    console.log(searching[item.id]);
                     if (searching[item.id] !== void 0 && searching[item.id].length > 0){
                         retRows = retRows.filter((row) => {
                             let bRet = false;

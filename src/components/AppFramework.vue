@@ -11,10 +11,12 @@
         v-model:selected="selected"
         v-model:pagination="pagination"
         @request="onRequest"
+        @row-click="onRowClick"
         row-key="name">
       <template v-slot:top>
         <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Add" @click="addRow" />
         <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Edit" @click="editRow" />
+        <q-btn class="q-ml-sm" color="primary" :disable="loading" label="View" @click="viewRow" />
         <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Remove" @click="removeRow" />
         <q-toggle v-model="grid" label="grid view"/>
         <q-space />
@@ -93,7 +95,6 @@ export default defineComponent({
         },
 
         async flushRows (pagination) {
-            console.log(this.searching);
             this.rows = await this.getRows(pagination, this.searching);
         },
 
@@ -107,8 +108,15 @@ export default defineComponent({
             } else if (this.selected.length === 1){
                 this.$refs.editor.editRow(this.selected[0]);
             }
-            //this.$refs.editor.editRow();
         },
+
+        viewRow () {
+            if (this.selected.length > 1){
+                console.log('rows greater than one.');
+            } else if (this.selected.length === 1){
+                this.$refs.editor.viewRow(this.selected[0]);
+            }
+        },        
 
         searchRow () {
             this.$refs.search.show();
@@ -203,6 +211,10 @@ export default defineComponent({
             this.searching = val;
             this.resetPagination();
             this.flushRows();
+        },
+
+        onRowClick (event, row, index) {
+            this.$refs.editor.viewRow(row);
         }
     }
 })
