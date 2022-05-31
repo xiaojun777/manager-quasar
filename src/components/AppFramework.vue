@@ -36,7 +36,11 @@
         :app="app"
         ref="search"
         v-on:search="onSearch">
-    </search-view>    
+    </search-view>
+
+    <alert-dialog
+        ref="alert"/>
+
 </template>
 
 <script>
@@ -44,12 +48,14 @@ import { defineComponent } from 'vue';
 import axios from "axios";
 import RowEditor from './RowEditor.vue';
 import SearchView from './SearchView.vue';
+import AlertDialog from './Alert.vue';
 
 export default defineComponent({
     name: 'AppFramework',
     components: { 
         RowEditor, 
-        SearchView 
+        SearchView,
+        AlertDialog
     },
     props: {
         appid: String,
@@ -104,15 +110,19 @@ export default defineComponent({
 
         editRow () {
             if (this.selected.length > 1){
-                console.log('rows greater than one.');
-            } else if (this.selected.length === 1){
+                this.$refs.alert.show('rows greater than one.');
+            } else if (this.selected.length == 0){
+                this.$refs.alert.show('must select a row.');
+            }else if (this.selected.length === 1){
                 this.$refs.editor.editRow(this.selected[0]);
             }
         },
 
         viewRow () {
             if (this.selected.length > 1){
-                console.log('rows greater than one.');
+                this.$refs.alert.show('rows greater than one.');
+            } else if (this.selected.length == 0){
+                this.$refs.alert.show('must select a row.');
             } else if (this.selected.length === 1){
                 this.$refs.editor.viewRow(this.selected[0]);
             }
@@ -130,7 +140,7 @@ export default defineComponent({
                     this.flushRows();
                 }
             } else {
-                console.log('rows length must greater than zero.');
+                this.$refs.alert.show('rows length must greater than zero.');
             }
             
         },
