@@ -18,11 +18,7 @@
         <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Remove" @click="removeRow" />
         <q-toggle v-model="grid" label="grid view"/>
         <q-space />
-        <q-input borderless dense debounce="300" color="primary" v-model="filter">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
+        <q-icon name="search" @click="searchRow"/>
       </template>
     </q-table>
 
@@ -33,16 +29,26 @@
         v-on:new="onAdd"
         v-on:afternew="onAfterNew">
     </row-editor>
+
+    <search-view
+        :app="app"
+        ref="search"
+        v-on:search="onSearch">
+    </search-view>    
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import axios from "axios";
 import RowEditor from './RowEditor.vue';
+import SearchView from './SearchView.vue';
 
 export default defineComponent({
     name: 'AppFramework',
-    components: { RowEditor },
+    components: { 
+        RowEditor, 
+        SearchView 
+    },
     props: {
         appid: String,
         rowsPerPage: Number
@@ -57,6 +63,7 @@ export default defineComponent({
             filter: '',
             selection: 'multiple', //none, single, multiple
             selected: [],
+            searching: {},
             pagination: {
                 sortBy: this.sortBy,
                 descending: false,
@@ -75,8 +82,19 @@ export default defineComponent({
     },  
 
     methods: {
+        resetPagination () {
+            this.pagination = {
+                sortBy: this.app.schema.key,
+                descending: false,
+                page: 1,
+                rowsPerPage: this.pagination.rowsPerPage,
+                rowsNumber: 0
+            };              
+        },
+
         async flushRows (pagination) {
-            this.rows = await this.getRows(pagination);
+            console.log(this.searching);
+            this.rows = await this.getRows(pagination, this.searching);
         },
 
         addRow () {
@@ -90,6 +108,10 @@ export default defineComponent({
                 this.$refs.editor.editRow(this.selected[0]);
             }
             //this.$refs.editor.editRow();
+        },
+
+        searchRow () {
+            this.$refs.search.show();
         },
 
         async removeRow () {
@@ -135,7 +157,7 @@ export default defineComponent({
             return response.data.app;
         },
 
-        async getRows (pagination) {
+        async getRows (pagination, searching) {
             if (pagination === void 0){
                 pagination = this.pagination;
             }
@@ -144,7 +166,8 @@ export default defineComponent({
                 start: (page - 1) * rowsPerPage,
                 count: rowsPerPage,
                 sort: sortBy,
-                desc: false
+                desc: false,
+                searching: searching
             }});
             let items = [];
             if (response.data.code){
@@ -174,6 +197,12 @@ export default defineComponent({
 
         onRequest (config) {
             this.flushRows(config.pagination);
+        },
+
+        onSearch (val) {
+            this.searching = val;
+            this.resetPagination();
+            this.flushRows();
         }
     }
 })
