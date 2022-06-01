@@ -10,7 +10,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn flat icon="done" label="OK" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>

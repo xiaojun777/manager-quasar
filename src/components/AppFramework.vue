@@ -14,13 +14,23 @@
         @row-click="onRowClick"
         row-key="name">
       <template v-slot:top>
-        <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Add" @click="addRow" />
-        <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Edit" @click="editRow" />
-        <q-btn class="q-ml-sm" color="primary" :disable="loading" label="View" @click="viewRow" />
-        <q-btn class="q-ml-sm" color="primary" :disable="loading" label="Remove" @click="removeRow" />
-        <q-toggle v-model="grid" label="grid view"/>
+        <q-btn flat class="q-ml-sm" icon="add" :disable="loading" label="Add" @click="addRow"/>
+        <q-btn flat class="q-ml-sm" icon="edit" :disable="loading" label="Edit" @click="editRow" />
+        <q-btn flat class="q-ml-sm" icon="preview" :disable="loading" label="View" @click="viewRow" />
+        <q-btn flat class="q-ml-sm" icon="remove" :disable="loading" label="Remove" @click="removeRow" />
+        <q-btn-toggle
+            v-model="grid"
+            class="q-ml-sm"
+            flat
+            unelevated
+            :options="[
+                {label: 'table', value: false},
+                {label: 'grid', value: true}
+            ]"
+        />
+
         <q-space />
-        <q-icon name="search" @click="searchRow"/>
+        <q-btn flat class="q-ml-sm" icon="search" :disable="loading" @click="searchRow" />
       </template>
     </q-table>
 
@@ -49,9 +59,11 @@ import axios from "axios";
 import RowEditor from './RowEditor.vue';
 import SearchView from './SearchView.vue';
 import AlertDialog from './Alert.vue';
+import rows from './mixins/rows.js';
 
 export default defineComponent({
     name: 'AppFramework',
+    mixins: [rows],
     components: { 
         RowEditor, 
         SearchView,
@@ -63,12 +75,8 @@ export default defineComponent({
     },
     data: function () {
         return {
-            rows: [],
-            cols: [],
-            app: {},
             grid: false,
             loading: false,
-            filter: '',
             selection: 'multiple', //none, single, multiple
             selected: [],
             searching: {},
@@ -78,7 +86,7 @@ export default defineComponent({
                 page: 1,
                 rowsPerPage: this.rowsPerPage,
                 rowsNumber: 0
-            }          
+            }
         }
     },
 
@@ -230,6 +238,9 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
 
+<style lang="sass" scoped>
+    .my-custom-toggle
+        border: 1px solid #027be3
 </style>
+

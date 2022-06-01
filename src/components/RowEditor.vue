@@ -29,12 +29,14 @@
                         :loading="submitting"
                         label="Cancel"
                         class="q-mt-md"
+                        icon="cancel"
                         @click="onCancel">
                     </q-btn>                        
                     <q-btn v-if="this.method!='view'"
                         :loading="submitting"
                         label="Save"
                         class="q-mt-md"
+                        icon="save"
                         @click="onSave">
                     </q-btn>
                     </div>                    

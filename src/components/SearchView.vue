@@ -34,11 +34,13 @@
                     <q-btn
                         label="Cancel"
                         class="q-mt-md"
+                        icon="cancel"
                         @click="onCancel">
                     </q-btn>                        
                     <q-btn
                         label="Search"
                         class="q-mt-md"
+                        icon="search"
                         @click="onSearch">
                     </q-btn>
                     </div>                    
