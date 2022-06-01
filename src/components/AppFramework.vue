@@ -24,8 +24,8 @@
             flat
             unelevated
             :options="[
-                {label: 'table', value: false},
-                {label: 'grid', value: true}
+                {label: 'table', value: false, icon: 'list'},
+                {label: 'grid', value: true, icon: 'grid_view'}
             ]"
         />
 
