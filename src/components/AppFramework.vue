@@ -77,16 +77,8 @@ export default defineComponent({
         return {
             grid: false,
             loading: false,
-            selection: 'multiple', //none, single, multiple
-            selected: [],
-            searching: {},
-            pagination: {
-                sortBy: this.sortBy,
-                descending: false,
-                page: 1,
-                rowsPerPage: this.rowsPerPage,
-                rowsNumber: 0
-            }
+            selection: 'multiple',
+            selected: []
         }
     },
 
@@ -98,16 +90,6 @@ export default defineComponent({
     },  
 
     methods: {
-        resetPagination () {
-            this.pagination = {
-                sortBy: this.app.schema.key,
-                descending: false,
-                page: 1,
-                rowsPerPage: this.pagination.rowsPerPage,
-                rowsNumber: 0
-            };              
-        },
-
         async flushRows (pagination) {
             this.rows = await this.getRows(pagination, this.searching);
         },
@@ -151,60 +133,6 @@ export default defineComponent({
                 this.$refs.alert.show('rows length must greater than zero.');
             }
             
-        },
-
-        initCols () {
-            this.app.schema.items.forEach(item => {
-                let col = {
-                    name: item.id,
-                    field: item.id,
-                    label: item.label,
-                    align: 'left',
-                    sortable: item.sortable
-                };
-                if (this.app.schema.key === item.id){
-                    col['required'] = true
-                }
-                if (item.type === 'option'){
-                    col['format'] = function (val, row) {
-                        return item.options[val]
-                    }
-                }
-                this.cols.push(col);
-            });
-        },
-
-        getBaseUrl () {
-            return `/app/${this.appid}`;
-        },
-
-        async getSchema  () {
-            let response = await axios.get('app/schema', { params: { appid: this.appid } });
-            return response.data.app;
-        },
-
-        async getRows (pagination, searching) {
-            if (pagination === void 0){
-                pagination = this.pagination;
-            }
-            const { page, rowsPerPage, sortBy, descending } = pagination;
-            let response = await axios.get(this.getBaseUrl() + '/items', { params: {
-                start: (page - 1) * rowsPerPage,
-                count: rowsPerPage,
-                sort: sortBy,
-                desc: false,
-                searching: searching
-            }});
-            let items = [];
-            if (response.data.code){
-                this.pagination.sortBy = pagination.sortBy;
-                this.pagination.page = pagination.page;
-                this.pagination.descending = pagination.descending;
-                this.pagination.rowsPerPage = pagination.rowsPerPage;
-                this.pagination.rowsNumber = response.data.length;
-                items = response.data.items;
-            }
-            return items;
         },
         
         async onAdd (val, callback) {
