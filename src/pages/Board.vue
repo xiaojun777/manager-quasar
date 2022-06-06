@@ -1,17 +1,17 @@
 <template>
   <q-page class="flex">
-    <app-framework appid='users' :rows-per-page="5">
-    </app-framework>
+    <dash-board>
+    </dash-board>
   </q-page>
 </template>
 
 <script>
-import AppFramework from 'src/components/framework/AppFramework.vue';
+import DashBoard from 'src/components/dashboard/board.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  components: { AppFramework },
-  name: 'PageIndex',
+  components: { DashBoard },
+  name: 'AppDashBoard',
   data: function () {
     return {}
   },

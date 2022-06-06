@@ -218,6 +218,8 @@ var deleteRows = function(vals){
 var searchRows = function(searching){
     let app = apps.users.app;
     let retRows = rows;
+    console.log(searching);
+    console.log(typeof searching);
     for (let i = 0; i < app.schema.items.length; i++) {
         let item = app.schema.items[i];
         if (item.searchable){

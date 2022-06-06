@@ -59,7 +59,7 @@ import axios from "axios";
 import RowEditor from './RowEditor.vue';
 import SearchView from './SearchView.vue';
 import AlertDialog from './Alert.vue';
-import rows from './mixins/rows.js';
+import rows from 'src/components/mixins/rows.js';
 
 export default defineComponent({
     name: 'AppFramework',
@@ -82,18 +82,7 @@ export default defineComponent({
         }
     },
 
-    mounted: async function () {
-        this.app = await this.getSchema();
-        this.initCols();
-        this.pagination.sortBy = this.app.schema.key;
-        this.flushRows();
-    },  
-
     methods: {
-        async flushRows (pagination) {
-            this.rows = await this.getRows(pagination, this.searching);
-        },
-
         addRow () {
             this.$refs.editor.newRow();
         },

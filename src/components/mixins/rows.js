@@ -24,9 +24,20 @@ export default {
     computed: {
     },
   
+    mounted: async function () {
+        this.app = await this.getSchema();
+        this.initCols();
+        this.pagination.sortBy = this.app.schema.key;
+        this.flushRows();
+    },  
+
     methods: {
         getBaseUrl () {
             return `/app/${this.appid}`;
+        },
+
+        async flushRows (pagination) {
+            this.rows = await this.getRows(pagination, this.searching);
         },
 
         async getSchema  () {
@@ -56,6 +67,7 @@ export default {
         },
         
         async getRows (pagination, searching) {
+            console.log(searching);
             if (pagination === void 0){
                 pagination = this.pagination;
             }
