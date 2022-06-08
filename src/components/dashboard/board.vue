@@ -39,7 +39,9 @@ import WidgetRows from "./rows.vue";
 
 export default defineComponent({
     name: 'DashBoard',
-    
+    props: {
+        board: String
+    },
     components: {
         WidgetRows
     },
@@ -53,7 +55,10 @@ export default defineComponent({
     },
 
     methods: {
-        
+        async getPortlets () {
+            let response = await axios.get('board', { params: { board: this.board } });
+            return response.data.board;
+        },
     }
 });
 </script>

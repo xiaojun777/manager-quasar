@@ -338,6 +338,56 @@ export default {
                 code: bRet,
                 msg: msg
             }];
+        });
+        
+        
+        mock.onGet('/board', { params: { board: 'users' } }).reply(function (){
+            return [200, {
+                items: [{
+                    type: 'rows',
+                    title: '女性员工',
+                    column: 'one',
+                    params: {
+                        app: 'users',
+                        search: {
+                            gender: ['1']
+                        }
+                    }
+                },{
+                    type: 'rows',
+                    title: '黄姓员工',
+                    column: 'one',
+                    params: {
+                        app: 'users',
+                        search: {
+                            name: '黄'
+                        }
+                    }
+                },{
+                    type: 'rows',
+                    title: '男性员工',
+                    column: 'two',
+                    params: {
+                        app: 'users',
+                        search: {
+                            gender: ['0']
+                        }
+                    }
+                },{
+                    type: 'rows',
+                    title: '30-40岁员工',
+                    column: 'three',
+                    params: {
+                        app: 'users',
+                        search: {
+                            age: {
+                                min: 30,
+                                max: 40
+                            }
+                        }
+                    }                                          
+                }]
+            }];
         });        
     }
 }
