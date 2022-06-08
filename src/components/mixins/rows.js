@@ -29,7 +29,7 @@ export default {
         this.initCols();
         this.pagination.sortBy = this.app.schema.key;
         this.flushRows();
-    },  
+    },
 
     methods: {
         getBaseUrl () {

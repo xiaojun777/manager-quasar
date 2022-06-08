@@ -39,8 +39,21 @@ import WidgetRows from "./rows.vue";
 
 export default defineComponent({
     name: 'DashBoard',
+    
     components: {
         WidgetRows
+    },
+    
+    mounted: async function () {
+
+    },
+
+    data: function () {
+        return {};
+    },
+
+    methods: {
+        
     }
 });
 </script>
