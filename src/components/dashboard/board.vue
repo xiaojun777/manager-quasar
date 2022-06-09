@@ -59,9 +59,18 @@ import WidgetHtml from "./html.vue";
 
 export default defineComponent({
   name: "DashBoard",
+
   components: {
     WidgetRows,
     WidgetHtml,
   },
+
+  mounted: async function () {},
+
+  data: function () {
+    return {};
+  },
+
+  methods: {},
 });
 </script>
