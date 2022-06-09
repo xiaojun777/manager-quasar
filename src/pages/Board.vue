@@ -1,23 +1,20 @@
 <template>
   <q-page class="flex">
-    <dash-board>
-    </dash-board>
+    <dash-board boardid="users"> </dash-board>
   </q-page>
 </template>
 
 <script>
-import DashBoard from 'src/components/dashboard/board.vue';
-import { defineComponent } from 'vue';
+import DashBoard from "src/components/dashboard/board.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: { DashBoard },
-  name: 'AppDashBoard',
+  name: "AppDashBoard",
   data: function () {
-    return {}
+    return {};
   },
 
-  methods: function () {
-
-  }
-})
+  methods: function () {},
+});
 </script>

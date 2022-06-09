@@ -1,52 +1,16 @@
 <template>
   <q-page class="q-pa-sm">
     <div class="row q-col-gutter-lg">
-      <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <widget-html
-          title="简介"
-          html="员工总数6000，男性员工5000人，女性1000人。"
-        >
-        </widget-html>
-        <widget-rows
-          appid="users"
-          title="女性员工"
-          :params="{
-            gender: ['1'],
-          }"
-        >
-        </widget-rows>
-
-        <widget-rows
-          appid="users"
-          title="黄姓员工"
-          :params="{
-            name: '黄',
-          }"
-        >
-        </widget-rows>
-      </div>
-      <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <widget-rows
-          appid="users"
-          title="男性员工"
-          :params="{
-            gender: ['0'],
-          }"
-        >
-        </widget-rows>
-      </div>
-      <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <widget-rows
-          appid="users"
-          title="30-40岁员工"
-          :params="{
-            age: {
-              min: 30,
-              max: 40,
-            },
-          }"
-        >
-        </widget-rows>
+      <div :class="classes"
+        v-for="colnum in board.columns" :key="colnum">
+        <draggable
+          v-model="board.items[colnum - 1]"
+          item-key="name">
+          <template #item="{element}">
+            <portlet :portlet="element">
+            </portlet>
+          </template>
+        </draggable>
       </div>
     </div>
   </q-page>
@@ -54,23 +18,52 @@
 
 <script>
 import { defineComponent } from "vue";
-import WidgetRows from "./rows.vue";
-import WidgetHtml from "./html.vue";
+import Portlet from './portlet.vue';
+import draggable from 'vuedraggable';
+import axios from "axios";
 
 export default defineComponent({
   name: "DashBoard",
 
-  components: {
-    WidgetRows,
-    WidgetHtml,
+  props: {
+    boardid: String,
   },
 
-  mounted: async function () {},
+  components: {
+    Portlet,
+    draggable
+  },
+
+  computed: {
+    colWidth () {
+      return 12 / this.board.columns;
+    },
+
+    classes () {
+      let classes = `col-xs-12 col-sm-12 col-lg-${this.colWidth} col-md-${this.colWidth}`;
+      console.log(classes);
+      return classes;
+    }
+  },
+
+  mounted: async function () {
+    this.board = await this.getBoard();
+    console.log(this.board);
+  },
 
   data: function () {
-    return {};
+    return {
+      board: {},
+    };
   },
 
-  methods: {},
+  methods: {
+    async getBoard() {
+      let response = await axios.get("board", {
+        params: { board: this.boardid },
+      });
+      return response.data;
+    },
+  },
 });
 </script>

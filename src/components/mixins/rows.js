@@ -17,13 +17,13 @@ export default {
             page: 1,
             rowsPerPage: 5,
             rowsNumber: 0
-        }        
+        }
       }
     },
-  
+
     computed: {
     },
-  
+
     mounted: async function () {
         this.app = await this.getSchema();
         this.initCols();
@@ -44,7 +44,7 @@ export default {
             let response = await axios.get('app/schema', { params: { appid: this.appid } });
             return response.data.app;
         },
-        
+
         initCols () {
             this.app.schema.items.forEach(item => {
                 let col = {
@@ -65,9 +65,8 @@ export default {
                 this.cols.push(col);
             });
         },
-        
+
         async getRows (pagination, searching) {
-            console.log(searching);
             if (pagination === void 0){
                 pagination = this.pagination;
             }
@@ -90,7 +89,7 @@ export default {
             }
             return items;
         },
-        
+
         resetPagination () {
             this.pagination = {
                 sortBy: this.app.schema.key,
@@ -98,8 +97,7 @@ export default {
                 page: 1,
                 rowsPerPage: this.pagination.rowsPerPage,
                 rowsNumber: 0
-            };              
-        },        
+            };
+        },
     }
   }
-  
