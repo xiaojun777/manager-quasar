@@ -1,6 +1,6 @@
 <template>
-  <q-page class="q-pa-sm">
-    <div class="row q-col-gutter-lg">
+  <q-page class="fit">
+    <div class="fit row justify-center">
       <template
         v-for="colnum in board.columns" :key="colnum">
         <draggable
@@ -10,8 +10,9 @@
           :group="board.name"
           item-key="name">
           <template #item="{ element }">
-            <div>
-              <portlet :portlet="element">
+            <div class="q-ma-md">
+              <portlet :portlet="element"
+                @widget-delete="onDeleteWidget">
               </portlet>
             </div>
           </template>
@@ -45,8 +46,8 @@ export default defineComponent({
     },
 
     classes () {
-      let classes = `col-xs-12 col-sm-12 col-lg-${this.colWidth} col-md-${this.colWidth}`;
-      console.log(classes);
+      //let classes = `col-xs-12 col-sm-12 col-lg-${this.colWidth} col-md-${this.colWidth}`;
+      let classes = 'col';
       return classes;
     }
   },
@@ -68,6 +69,25 @@ export default defineComponent({
       });
       return response.data;
     },
+
+    onDeleteWidget (name) {
+      console.log('onDeleteWidget...');
+      console.log(name);
+      this.deleteWidget(name);
+    },
+
+    deleteWidget (name) {
+      for (let i=0; i<this.board.items.length; i++){
+        let col = this.board.items[i];
+        for (let j=0; j<col.length; j++){
+          let item = col[j];
+          if (item.name === name){
+            this.board.items[i].splice(j, 1);
+            break;
+          }
+        }
+      }
+    }
   },
 });
 </script>

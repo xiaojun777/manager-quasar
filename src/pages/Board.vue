@@ -1,7 +1,5 @@
 <template>
-  <q-page class="flex">
-    <dash-board boardid="users"> </dash-board>
-  </q-page>
+  <dash-board boardid="users"> </dash-board>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <board-widget :title="title" @edit="onEdit">
+  <board-widget :title="title" @edit="onEdit" @delete="onDelete">
     <q-table
         flat
         class="full-width"
@@ -23,7 +23,10 @@ export default defineComponent({
     components: {
       BoardWidget
     },
-    props: ['title', 'params'],
+    props: ['widgetName', 'title', 'params'],
+    emits: {
+      'delete': null
+    },
     data: function () {
         return {
             searching: this.params
@@ -32,6 +35,11 @@ export default defineComponent({
     methods: {
       onEdit () {
         console.log('on edit...');
+      },
+
+      onDelete () {
+        console.log('onDelete in rows...');
+        this.$emit('delete', this.widgetName);
       }
     }
 })

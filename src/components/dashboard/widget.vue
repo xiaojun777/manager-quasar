@@ -10,6 +10,12 @@
           icon="edit"
           @click="onEdit"
         />
+        <q-btn
+          flat
+          class="q-ml-sm"
+          icon="delete"
+          @click="onDelete"
+        />
       </q-bar>
     </q-card-section>
     <q-separator />
@@ -25,15 +31,23 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'DoardWidget',
   props: {
-    title: String,
+    title: String
   },
   data: function () {
     return {};
   },
 
+  emits: {
+    'delete': null,
+    'edit': null
+  },
   methods: {
     onEdit () {
       this.$emit('edit');
+    },
+
+    onDelete () {
+      this.$emit('delete');
     }
   }
 })

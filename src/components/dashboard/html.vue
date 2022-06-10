@@ -1,25 +1,58 @@
 <template>
-  <board-widget :title="title" @edit="onEdit">
+  <board-widget :title="title" @edit="onEdit" @delete="onDelete">
     <div v-html="html"></div>
   </board-widget>
+
+  <q-dialog full-width full-height v-model="editorShow">
+    <q-card>
+      <div class="q-pa-md">
+        <div class="q-gutter-md">
+          <q-form>
+            <q-input
+              type="text"
+              label="标题"
+              v-model="innerTitle"/>
+
+            <ckeditor v-model="innerHtml">
+            </ckeditor>
+          </q-form>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import BoardWidget from "./widget.vue";
+import Ckeditor from "../base/ckeditor.vue"
 
 export default defineComponent({
   name: "WidgetHtml",
-  props: ["title", "html"],
+  props: ["widgetName", "title", "html"],
   components: {
-    BoardWidget
+    BoardWidget,
+    Ckeditor
   },
   data: function () {
-    return {};
+    return {
+      innerTitle: this.title,
+      innterHtml: this.html,
+      editorShow: false
+    };
+  },
+  emits: {
+    'delete': null
   },
   methods: {
     onEdit () {
-      console.log('on edit...');
+      this.editorShow = true;
+    },
+
+    onDelete () {
+      console.log(arguments);
+      console.log('delete in html.');
+      this.$emit('delete', this.widgetName);
     }
   }
 });

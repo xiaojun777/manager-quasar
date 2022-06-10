@@ -172,6 +172,116 @@ let apps = {
   },
 };
 
+let board_one = {
+  title: "用户信息",
+  name: 'users',
+  columns: 3,
+  items: [[{
+    title: '简介',
+    type: 'html',
+    name: 'desc',
+    draggable: true,
+    params: {
+      html: '员工总数6000，男性员工5000人，女性1000人。'
+    }
+  },{
+    title: "女性员工",
+    type: 'rows',
+    name: 'female',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        gender: ['1'],
+      },
+    },
+  },{
+    title: "黄姓员工",
+    type: 'rows',
+    name: 'huang',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        name: '黄',
+      },
+    },
+  }],[{
+    title: "男性员工",
+    type: 'rows',
+    name: 'male',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        gender: ['0'],
+      },
+    },
+  }],[{
+    title: "30-40岁员工",
+    type: 'rows',
+    name: '30-40',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        age: {
+          min: 30,
+          max: 40,
+        },
+      },
+    },
+  }]],
+};
+
+let board_two = {
+  title: "用户信息",
+  name: 'users',
+  columns: 3,
+  items: [[{
+    title: '简介',
+    type: 'html',
+    name: 'desc',
+    draggable: true,
+    params: {
+      html: '员工总数6000，男性员工5000人，女性1000人。'
+    }
+  },{
+    title: "女性员工",
+    type: 'rows',
+    name: 'female',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        gender: ['1'],
+      },
+    },
+  },{
+    title: "黄姓员工",
+    type: 'rows',
+    name: 'huang',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        name: '黄',
+      },
+    },
+  }],[{
+    title: "男性员工",
+    type: 'rows',
+    name: 'male',
+    draggable: true,
+    params: {
+      appid: 'users',
+      searching: {
+        gender: ['0'],
+      },
+    },
+  }]],
+};
+
 let searching = {};
 let retRows = [];
 
@@ -387,67 +497,7 @@ export default {
         board: "users"
       }
     }).reply(function (config) {
-      return [200, {
-        title: "用户信息",
-        name: 'users',
-        columns: 3,
-        items: [[{
-          title: '简介',
-          type: 'html',
-          name: 'desc',
-          draggable: true,
-          params: {
-            html: '员工总数6000，男性员工5000人，女性1000人。'
-          }
-        },{
-          title: "女性员工",
-          type: 'rows',
-          name: 'female',
-          draggable: true,
-          params: {
-            appid: 'users',
-            searching: {
-              gender: ['1'],
-            },
-          },
-        },{
-          title: "黄姓员工",
-          type: 'rows',
-          name: 'huang',
-          draggable: true,
-          params: {
-            appid: 'users',
-            searching: {
-              name: '黄',
-            },
-          },
-        }],[{
-          title: "男性员工",
-          type: 'rows',
-          name: 'male',
-          draggable: true,
-          params: {
-            appid: 'users',
-            searching: {
-              gender: ['0'],
-            },
-          },
-        }],[{
-          title: "30-40岁员工",
-          type: 'rows',
-          name: '30-40',
-          draggable: true,
-          params: {
-            appid: 'users',
-            searching: {
-              age: {
-                min: 30,
-                max: 40,
-              },
-            },
-          },
-        }]],
-      }];
+      return [200, board_one];
     });
   },
 };
