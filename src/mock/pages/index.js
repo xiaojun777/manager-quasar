@@ -389,6 +389,7 @@ export default {
     }).reply(function (config) {
       return [200, {
         title: "用户信息",
+        name: 'users',
         columns: 3,
         items: [[{
           title: '简介',

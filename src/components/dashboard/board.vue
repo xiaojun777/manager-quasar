@@ -1,17 +1,22 @@
 <template>
   <q-page class="q-pa-sm">
     <div class="row q-col-gutter-lg">
-      <div :class="classes"
+      <template
         v-for="colnum in board.columns" :key="colnum">
         <draggable
+          tag="div"
+          :componentData="{class: classes}"
           v-model="board.items[colnum - 1]"
+          :group="board.name"
           item-key="name">
-          <template #item="{element}">
-            <portlet :portlet="element">
-            </portlet>
+          <template #item="{ element }">
+            <div>
+              <portlet :portlet="element">
+              </portlet>
+            </div>
           </template>
         </draggable>
-      </div>
+      </template>
     </div>
   </q-page>
 </template>
@@ -48,7 +53,6 @@ export default defineComponent({
 
   mounted: async function () {
     this.board = await this.getBoard();
-    console.log(this.board);
   },
 
   data: function () {

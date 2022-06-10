@@ -1,24 +1,27 @@
 <template>
-  <q-card bordered class="q-mt-lg">
-    <q-card-section>
-      <div class="text-h6">{{ title }}</div>
-    </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <div v-html="html"></div>
-    </q-card-section>
-  </q-card>
+  <board-widget :title="title" @edit="onEdit">
+    <div v-html="html"></div>
+  </board-widget>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import BoardWidget from "./widget.vue";
 
 export default defineComponent({
   name: "WidgetHtml",
   props: ["title", "html"],
+  components: {
+    BoardWidget
+  },
   data: function () {
     return {};
   },
+  methods: {
+    onEdit () {
+      console.log('on edit...');
+    }
+  }
 });
 </script>
 
