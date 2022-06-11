@@ -3,7 +3,8 @@
 </template>
 <script>
 import { defineComponent } from 'vue';
-import './mock'
+import './mock';
+
 export default defineComponent({
   name: 'App'
 })

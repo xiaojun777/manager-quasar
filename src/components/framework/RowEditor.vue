@@ -7,21 +7,21 @@
                         <q-form>
                             <q-input v-if="item.type=='string'"
                                 :readonly="this.method=='view'"
-                                type="text" 
+                                type="text"
                                 :label="item.label"
                                 v-model="values[item.id]"/>
                             <q-input v-if="item.type=='number'"
                                 :readonly="this.method=='view'"
-                                type="number" 
-                                :label="item.label" 
+                                type="number"
+                                :label="item.label"
                                 v-model="values[item.id]"/>
                             <q-select v-if="item.type=='option'"
                                 :readonly="this.method=='view'"
                                 v-model="values[item.id]"
                                 emit-value
                                 map-options
-                                :options="this.getOptions(item.options)" 
-                                :label="item.label" />                                
+                                :options="this.getOptions(item.options)"
+                                :label="item.label" />
                         </q-form>
                     </template>
                     <div class="row justify-end q-pa-md q-gutter-sm">
@@ -31,7 +31,7 @@
                         class="q-mt-md"
                         icon="cancel"
                         @click="onCancel">
-                    </q-btn>                        
+                    </q-btn>
                     <q-btn v-if="this.method!='view'"
                         :loading="submitting"
                         label="Save"
@@ -39,7 +39,7 @@
                         icon="save"
                         @click="onSave">
                     </q-btn>
-                    </div>                    
+                    </div>
                 </div>
                 <div v-for="item in app.schema.items" :key="item.id">
                     <span>{{this.values[item.id]}}</span>
@@ -115,7 +115,7 @@ export default defineComponent({
         },
 
         hide () {
-            this.resetValues();            
+            this.resetValues();
             this.showed = false;
         },
 
@@ -143,14 +143,12 @@ export default defineComponent({
                 this.submitting = true;
                 this.$emit('edit', this.values, (val) => {
                     this.submitting = false;
-                    console.log('after edit.');
-                    console.log(val);
                     if (val.code){
                         this.hide();
                         this.$emit('afteredit');
                     }else{
 
-                    }                    
+                    }
                 });
             }
 
