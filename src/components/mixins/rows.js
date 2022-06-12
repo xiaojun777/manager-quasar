@@ -23,13 +23,17 @@ export default {
     },
 
     mounted: async function () {
+      this.resetApp();
+    },
+
+    methods: {
+      async resetApp () {
         this.app = await this.getSchema();
         this.initCols();
         this.pagination.sortBy = this.app.schema.key;
         this.flushRows();
-    },
+      },
 
-    methods: {
         getBaseUrl () {
             return `/app/${this.appname}`;
         },

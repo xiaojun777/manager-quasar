@@ -22,7 +22,7 @@
             v-model="innerPortlet.title"/>
 
           <q-select
-            v-model="innerPortlet.params.appid"
+            v-model="appname"
             stack-label
             emit-value
             map-options
@@ -30,6 +30,11 @@
             option-label="name"
             :options="appinfos"
             label="选择应用"/>
+
+          <q-searchings
+            :appid="appname"
+            v-model:searching="searching">
+          </q-searchings>
 
           <div class="row justify-end q-pa-md q-gutter-sm">
             <q-btn
@@ -59,6 +64,7 @@ import rows from 'src/components/mixins/rows.js';
 import portletbase from 'src/components/mixins/portletbase';
 import editorbase from 'src/components/mixins/editorbase'
 import apps from 'src/components/mixins/apps'
+import QSearchings from 'src/components/base/searching.vue'
 
 export default defineComponent({
     name: 'WidgetRows',
@@ -70,6 +76,7 @@ export default defineComponent({
     ],
     components: {
       BoardWidget,
+      QSearchings
     },
     emits: {
       'delete': null
@@ -79,6 +86,23 @@ export default defineComponent({
         appname: this.portlet.params.appid,
         searching: this.portlet.params.searching
       }
+    },
+    watch: {
+      appname (val) {
+        console.log('appname：' + val);
+        this.innerPortlet.params.appid = val;
+        this.resetApp();
+      },
+
+      searching (val) {
+        console.log('searching: ' + val);
+        this.innerPortlet.params.seraching = val;
+        this.resetPagination();
+        this.flushRows();
+      }
+    },
+
+    mounted: function () {
     },
 
     methods: {

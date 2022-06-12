@@ -79,10 +79,33 @@ let apps = {
     schema: {
       key: 'groupid',
       items:[{
-        id: 'groupid',
-        label: '组ID',
-        type: 'string',
-        searchable: true
+        id: "groupid",
+        label: "用户组ID",
+        type: "string", //string, option, number, date, time, month
+        default: "",
+        searchable: false,
+        sortable: true,
+        rules: [{
+          type: "required",
+        },{
+          type: "alpha",
+        },{
+          type: "minlength",
+          params: [6],
+        },{
+          type: "maxlength",
+          params: [12],
+        }],
+      },{
+        id: "name",
+        label: "组名",
+        type: "string",
+        default: "",
+        searchable: true,
+        sortable: true,
+        rules: [{
+          type: "fullcode",
+        }],
       }]
     }
   },
@@ -112,7 +135,7 @@ let apps = {
         }],
       },{
         id: "name",
-        label: " 姓名",
+        label: "姓名",
         type: "string",
         default: "",
         searchable: true,
@@ -356,7 +379,7 @@ var searchRows = function (searching) {
           break;
         }
         case "option": {
-          if (searching[item.id] !== void 0 && searching[item.id].length > 0) {
+          if (searching[item.id] !== void 0 && searching[item.id] != null && searching[item.id].length > 0) {
             retRows = retRows.filter((row) => {
               let bRet = false;
               if (searching[item.id].includes(row[item.id])) {
