@@ -1,11 +1,9 @@
 import axios from "axios";
 
 export default {
-    props: {
-      appid: String
-    },
     data () {
       return {
+        appname: '',
         rows: [],
         cols: [],
         app: {},
@@ -33,7 +31,7 @@ export default {
 
     methods: {
         getBaseUrl () {
-            return `/app/${this.appid}`;
+            return `/app/${this.appname}`;
         },
 
         async flushRows (pagination) {
@@ -41,8 +39,8 @@ export default {
         },
 
         async getSchema  () {
-            let response = await axios.get('app/schema', { params: { appid: this.appid } });
-            return response.data.app;
+            let response = await axios.get('app/schema', { params: { appid: this.appname } });
+            return response.data;
         },
 
         initCols () {

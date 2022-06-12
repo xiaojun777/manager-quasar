@@ -105,6 +105,7 @@ export default defineComponent({
   },
   data: function () {
     return {
+      appname: this.appid,
       grid: false,
       loading: false,
       selection: "multiple",

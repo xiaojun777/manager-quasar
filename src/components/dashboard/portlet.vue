@@ -7,7 +7,6 @@
 
     <widget-rows v-if="portlet.type == 'rows'"
       v-model:portlet="innerPortlet"
-      :appid="innerPortlet.params.appid"
       @delete="onDelete"
     >
     </widget-rows>
@@ -39,13 +38,14 @@ export default defineComponent({
     },
 
     emits: {
-      'widget-delete': null
+      'widget-delete': null,
+      'update:portlet': null
     },
 
     watch: {
       innerPortlet: {
         handler (val) {
-          this.$emit('update', val);
+          this.$emit('update:portlet', val);
         },
         deep: true
       }

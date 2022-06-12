@@ -1,7 +1,3 @@
-import {
-  _
-} from "core-js";
-
 let rows = [{
   userid: "zhangsan",
   name: "张三",
@@ -77,97 +73,98 @@ let rows = [{
 }];
 
 let apps = {
-  users: {
-    app: {
-      id: "users",
-      name: "用户管理",
-      schema: {
-        key: "userid",
-        items: [{
-            id: "userid",
-            label: "用户ID",
-            type: "string", //string, option, number, date, time, month
-            default: "",
-            searchable: false,
-            sortable: true,
-            rules: [{
-                type: "required",
-              },
-              {
-                type: "alpha",
-              },
-              {
-                type: "minlength",
-                params: [6],
-              },
-              {
-                type: "maxlength",
-                params: [12],
-              },
-            ],
-          },
-          {
-            id: "name",
-            label: " 姓名",
-            type: "string",
-            default: "",
-            searchable: true,
-            sortable: true,
-            rules: [{
-              type: "fullcode",
-            }, ],
-          },
-          {
-            id: "age",
-            label: "年龄",
-            type: "number",
-            default: 1,
-            searchable: true,
-            sortable: true,
-            rules: [{
-                type: "min",
-                params: [0],
-              },
-              {
-                type: "max",
-                params: [150],
-              },
-            ],
-          },
-          {
-            id: "minzu",
-            label: "民族",
-            type: "string",
-            default: "汉",
-            searchable: false,
-            sortable: true,
-            rules: [{
-              type: "fullcode",
-            }, ],
-          },
-          {
-            id: "gender",
-            label: "性别",
-            type: "option",
-            default: 0,
-            searchable: true,
-            sortable: true,
-            options: {
-              0: "男",
-              1: "女",
-            },
-            rules: [],
-          },
-          {
-            id: "hobby",
-            label: "爱好",
-            type: "string",
-            searchable: false,
-            sortable: true,
-            rules: [],
-          },
-        ],
-      },
+  groups: {
+    id: "groups",
+    name: "用户组管理",
+    schema: {
+      key: 'groupid',
+      items:[{
+        id: 'groupid',
+        label: '组ID',
+        type: 'string',
+        searchable: true
+      }]
+    }
+  },
+
+  users: {  
+    id: "users",
+    name: "用户管理",
+    schema: {
+      key: "userid",
+      items: [{
+        id: "userid",
+        label: "用户ID",
+        type: "string", //string, option, number, date, time, month
+        default: "",
+        searchable: false,
+        sortable: true,
+        rules: [{
+          type: "required",
+        },{
+          type: "alpha",
+        },{
+          type: "minlength",
+          params: [6],
+        },{
+          type: "maxlength",
+          params: [12],
+        }],
+      },{
+        id: "name",
+        label: " 姓名",
+        type: "string",
+        default: "",
+        searchable: true,
+        sortable: true,
+        rules: [{
+          type: "fullcode",
+        }],
+      },{
+        id: "age",
+        label: "年龄",
+        type: "number",
+        default: 1,
+        searchable: true,
+        sortable: true,
+        rules: [{
+          type: "min",
+          params: [0],
+        },
+        {
+          type: "max",
+          params: [150],
+        }],
+      },{
+        id: "minzu",
+        label: "民族",
+        type: "string",
+        default: "汉",
+        searchable: false,
+        sortable: true,
+        rules: [{
+          type: "fullcode",
+        }],
+      },{
+        id: "gender",
+        label: "性别",
+        type: "option",
+        default: 0,
+        searchable: true,
+        sortable: true,
+        options: {
+          0: "男",
+          1: "女",
+        },
+        rules: [],
+      },{
+        id: "hobby",
+        label: "爱好",
+        type: "string",
+        searchable: false,
+        sortable: true,
+        rules: [],
+      }],
     },
   },
 };
@@ -305,7 +302,7 @@ var deleteRows = function (vals) {
 };
 
 var searchRows = function (searching) {
-  let app = apps.users.app;
+  let app = apps.users;
   let retRows = rows;
   for (let i = 0; i < app.schema.items.length; i++) {
     let item = app.schema.items[i];
@@ -378,17 +375,15 @@ var searchRows = function (searching) {
 
 export default {
   installData: function (mock) {
-    mock.onGet("/apps").reply(200, {
-      apps: [{
+    mock.onGet("/apps").reply(200, [{
           id: "users",
           name: "用户管理",
         },
         {
-          id: "books",
-          name: "图书管理",
+          id: "groups",
+          name: "用户组管理",
         },
-      ],
-    });
+      ]);
     mock
       .onGet("/app/schema", {
         params: {

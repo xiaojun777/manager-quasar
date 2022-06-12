@@ -21,19 +21,29 @@
             label="标题"
             v-model="innerPortlet.title"/>
 
+          <q-select
+            v-model="innerPortlet.params.appid"
+            stack-label
+            emit-value
+            map-options
+            option-value="id"
+            option-label="name"
+            :options="appinfos"
+            label="选择应用"/>
+
           <div class="row justify-end q-pa-md q-gutter-sm">
-              <q-btn
-                  label="Cancel"
-                  class="q-mt-md"
-                  icon="cancel"
-                  @click="onEditorCancel">
-              </q-btn>
-              <q-btn
-                  label="Save"
-                  class="q-mt-md"
-                  icon="save"
-                  @click="onEditorSave">
-              </q-btn>
+            <q-btn
+              label="Cancel"
+              class="q-mt-md"
+              icon="cancel"
+              @click="onEditorCancel">
+            </q-btn>
+            <q-btn
+              label="Save"
+              class="q-mt-md"
+              icon="save"
+              @click="onEditorSave">
+            </q-btn>
           </div>          
         </q-form>    
       </div>
@@ -48,10 +58,16 @@ import BoardWidget from "./widget.vue";
 import rows from 'src/components/mixins/rows.js';
 import portletbase from 'src/components/mixins/portletbase';
 import editorbase from 'src/components/mixins/editorbase'
+import apps from 'src/components/mixins/apps'
 
 export default defineComponent({
     name: 'WidgetRows',
-    mixins: [rows, portletbase, editorbase],
+    mixins: [
+      rows, 
+      portletbase, 
+      editorbase,
+      apps
+    ],
     components: {
       BoardWidget,
     },
@@ -60,6 +76,7 @@ export default defineComponent({
     },
     data: function () {
       return {
+        appname: this.portlet.params.appid,
         searching: this.portlet.params.searching
       }
     },
