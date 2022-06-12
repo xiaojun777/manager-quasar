@@ -2,48 +2,49 @@
     <q-dialog full-width full-height v-model="showed">
         <q-card>
             <div class="q-pa-md">
-                <div class="q-gutter-md">
+                <q-form class="q-gutter-lg">
                     <template v-for="item in app.schema.items" :key="item.id">
-                        <q-form>
-                            <q-input v-if="item.type=='string'"
-                                :readonly="this.method=='view'"
-                                type="text"
-                                :label="item.label"
-                                v-model="values[item.id]"/>
-                            <q-input v-if="item.type=='number'"
-                                :readonly="this.method=='view'"
-                                type="number"
-                                :label="item.label"
-                                v-model="values[item.id]"/>
-                            <q-select v-if="item.type=='option'"
-                                :readonly="this.method=='view'"
-                                v-model="values[item.id]"
-                                emit-value
-                                map-options
-                                :options="this.getOptions(item.options)"
-                                :label="item.label" />
-                        </q-form>
+                        <q-input v-if="item.type=='string'"
+                            :readonly="this.method=='view'"
+                            type="text"
+                            stack-label
+                            :label="item.label"
+                            v-model="values[item.id]"/>
+                        <q-input v-if="item.type=='number'"
+                            :readonly="this.method=='view'"
+                            type="number"
+                            stack-label
+                            :label="item.label"
+                            v-model="values[item.id]"/>
+                        <q-select v-if="item.type=='option'"
+                            :readonly="this.method=='view'"
+                            v-model="values[item.id]"
+                            stack-label
+                            emit-value
+                            map-options
+                            :options="this.getOptions(item.options)"
+                            :label="item.label" />
                     </template>
                     <div class="row justify-end q-pa-md q-gutter-sm">
-                    <q-btn
-                        :loading="submitting"
-                        label="Cancel"
-                        class="q-mt-md"
-                        icon="cancel"
-                        @click="onCancel">
-                    </q-btn>
-                    <q-btn v-if="this.method!='view'"
-                        :loading="submitting"
-                        label="Save"
-                        class="q-mt-md"
-                        icon="save"
-                        @click="onSave">
-                    </q-btn>
+                        <q-btn
+                            :loading="submitting"
+                            label="Cancel"
+                            class="q-mt-md"
+                            icon="cancel"
+                            @click="onCancel">
+                        </q-btn>
+                        <q-btn v-if="this.method!='view'"
+                            :loading="submitting"
+                            label="Save"
+                            class="q-mt-md"
+                            icon="save"
+                            @click="onSave">
+                        </q-btn>
                     </div>
-                </div>
-                <div v-for="item in app.schema.items" :key="item.id">
-                    <span>{{this.values[item.id]}}</span>
-                </div>
+                </q-form>
+            </div>
+            <div v-for="item in app.schema.items" :key="item.id">
+                <span>{{this.values[item.id]}}</span>
             </div>
         </q-card>
     </q-dialog>

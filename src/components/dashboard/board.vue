@@ -11,7 +11,9 @@
           item-key="name">
           <template #item="{ element }">
             <div class="q-ma-md">
-              <portlet :portlet="element"
+              <portlet 
+                :portlet="element"
+                :board="board.name"
                 @widget-delete="onDeleteWidget">
               </portlet>
             </div>

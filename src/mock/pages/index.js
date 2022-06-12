@@ -196,14 +196,14 @@ let board_one = {
       },
     },
   },{
-    title: "黄姓员工",
+    title: "李姓员工",
     type: 'rows',
     name: 'huang',
     draggable: true,
     params: {
       appid: 'users',
       searching: {
-        name: '黄',
+        name: '李',
       },
     },
   }],[{
@@ -246,39 +246,6 @@ let board_two = {
     params: {
       html: '员工总数6000，男性员工5000人，女性1000人。'
     }
-  },{
-    title: "女性员工",
-    type: 'rows',
-    name: 'female',
-    draggable: true,
-    params: {
-      appid: 'users',
-      searching: {
-        gender: ['1'],
-      },
-    },
-  },{
-    title: "黄姓员工",
-    type: 'rows',
-    name: 'huang',
-    draggable: true,
-    params: {
-      appid: 'users',
-      searching: {
-        name: '黄',
-      },
-    },
-  }],[{
-    title: "男性员工",
-    type: 'rows',
-    name: 'male',
-    draggable: true,
-    params: {
-      appid: 'users',
-      searching: {
-        gender: ['0'],
-      },
-    },
   }]],
 };
 

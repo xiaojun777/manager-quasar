@@ -1,16 +1,13 @@
 <template>
     <widget-html v-if="portlet.type == 'html'"
-      :title="portlet.title"
-      :widget-name="portlet.name"
-      :html="portlet.params.html"
+      v-model:portlet="innerPortlet"
       @delete="onDelete"
     >
     </widget-html>
+
     <widget-rows v-if="portlet.type == 'rows'"
-      :title="portlet.title"
-      :widget-name="portlet.name"
-      :appid="portlet.params.appid"
-      :params="portlet.params.searching"
+      v-model:portlet="innerPortlet"
+      :appid="innerPortlet.params.appid"
       @delete="onDelete"
     >
     </widget-rows>
@@ -26,16 +23,32 @@ export default defineComponent({
     name: 'Portlet',
     props: {
       portlet: {},
+      board: String,
       dataDraggable: Boolean
     },
 
     components: {
-        WidgetRows,
-        WidgetHtml
+      WidgetRows,
+      WidgetHtml
+    },
+
+    data: function () {
+      return {
+        innerPortlet: this.portlet
+      };
     },
 
     emits: {
       'widget-delete': null
+    },
+
+    watch: {
+      innerPortlet: {
+        handler (val) {
+          this.$emit('update', val);
+        },
+        deep: true
+      }
     },
 
     methods: {

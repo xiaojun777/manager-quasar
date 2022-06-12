@@ -1,9 +1,13 @@
 <template>
-  <ckeditor
-    :editor="editor"
-    v-model="editorData"
-    :config="editorConfig">
-  </ckeditor>
+  <div>
+    <q-field :label="label" stack-label>
+      <ckeditor
+        :editor="editor"
+        v-model="editorData"
+        :config="editorConfig">
+      </ckeditor>
+    </q-field>
+  </div>
 </template>
 
 <script>
@@ -14,28 +18,31 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: "CKeditor",
   props: {
-    value: String
-  },
-  model: {
-    name: 'value',
-    event: 'input'
+    label: String,
+    html: String
   },
   components: {
     ckeditor: CKEditor.component
   },
+  emits: {
+    'update:html': null
+  },
   data: function () {
     return {
       editor: ClassicEditor,
-      editorData: this.value,
+      editorData: this.html,
       editorConfig: {
         // The configuration of the editor.
         language: 'zh-cn',
+        toolbar: {
+          shouldNotGroupWhenFull: true
+        }
       }
     };
   },
   watch: {
     editorData (val) {
-      this.$emit('input', val);
+      this.$emit('update:html', val);
     }
   },
   computed: {
