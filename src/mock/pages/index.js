@@ -110,7 +110,7 @@ let apps = {
     }
   },
 
-  users: {  
+  users: {
     id: "users",
     name: "用户管理",
     schema: {
@@ -407,13 +407,25 @@ export default {
           name: "用户组管理",
         },
       ]);
-    mock
-      .onGet("/app/schema", {
-        params: {
-          appid: "users"
-        }
-      })
-      .reply(200, apps.users);
+    mock.onGet("/app/schema").reply(function (config){
+      let params = config.params;
+      return [
+        200,
+        apps[params.appid]
+      ];
+    });
+
+    mock.onGet("/app/groups/items").reply(function (config) {
+      return [
+        200,
+        {
+          code: true,
+          items: [],
+          length: 0,
+        },
+      ];
+    });
+
     mock.onGet("/app/users/items").reply(function (config) {
       let params = config.params;
       if (searching !== params.searching) {

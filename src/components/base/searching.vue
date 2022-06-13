@@ -1,23 +1,23 @@
 <template>
   <template v-for="item in innerApp.schema.items" :key="item.id">
     <q-input v-if="item.type=='string' && item.searchable"
-      type="text" 
+      type="text"
       stack-label
       :label="item.label"
       v-model="innerSearching[item.id]"/>
-    <div v-if="item.type=='number' && item.searchable" 
+    <div v-if="item.type=='number' && item.searchable"
       class="row">
       <q-input class="col"
-        type="number" 
+        type="number"
         stack-label
-        :label="item.label+'(min)'" 
+        :label="item.label+'(min)'"
         v-model="innerSearching[item.id]['min']"/>
       <div class="col-1 text-subtitle1" style="text-align:center; margin-top: 10px">---</div>
       <q-input class="col"
         type="number"
         stack-label
-        :label="item.label+'(max)'" 
-        v-model="innerSearching[item.id]['max']"/>               
+        :label="item.label+'(max)'"
+        v-model="innerSearching[item.id]['max']"/>
     </div>
     <q-select v-if="item.type=='option' && item.searchable"
       v-model="innerSearching[item.id]"
@@ -25,7 +25,7 @@
       emit-value
       map-options
       multiple
-      :options="this.getOptions(item.options)" 
+      :options="this.getOptions(item.options)"
       :label="item.label" />
   </template>
 </template>
@@ -53,10 +53,14 @@ export default defineComponent({
   watch: {
     innerSearching: {
       handler (val) {
-        console.log('innerSearching change.');
         this.$emit('update:searching', val);
       },
       deep: true
+    },
+    appid: {
+      async handler (val) {
+        this.innerApp = await this.getSchema();
+      }
     }
   },
 
@@ -111,7 +115,7 @@ export default defineComponent({
         });
       }
       return opts;
-    }      
+    }
   }
 })
 </script>

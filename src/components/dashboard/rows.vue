@@ -49,8 +49,8 @@
               icon="save"
               @click="onEditorSave">
             </q-btn>
-          </div>          
-        </q-form>    
+          </div>
+        </q-form>
       </div>
     </q-card>
   </q-dialog>
@@ -69,8 +69,8 @@ import QSearchings from 'src/components/base/searching.vue'
 export default defineComponent({
     name: 'WidgetRows',
     mixins: [
-      rows, 
-      portletbase, 
+      rows,
+      portletbase,
       editorbase,
       apps
     ],
@@ -89,16 +89,17 @@ export default defineComponent({
     },
     watch: {
       appname (val) {
-        console.log('appname：' + val);
         this.innerPortlet.params.appid = val;
         this.resetApp();
       },
 
-      searching (val) {
-        console.log('searching: ' + val);
-        this.innerPortlet.params.seraching = val;
-        this.resetPagination();
-        this.flushRows();
+      searching: {
+        handler (val) {
+          this.innerPortlet.params.seraching = val;
+          this.resetPagination();
+          this.flushRows();
+        },
+        deep: true
       }
     },
 

@@ -5,13 +5,13 @@
         v-for="colnum in board.columns" :key="colnum">
         <draggable
           tag="div"
-          :componentData="{class: classes}"
+          :componentData="{class: 'col'}"
           v-model="board.items[colnum - 1]"
           :group="board.name"
           item-key="name">
           <template #item="{ element }">
             <div class="q-ma-md">
-              <portlet 
+              <portlet
                 :portlet="element"
                 :board="board.name"
                 @widget-delete="onDeleteWidget">
@@ -43,15 +43,6 @@ export default defineComponent({
   },
 
   computed: {
-    colWidth () {
-      return 12 / this.board.columns;
-    },
-
-    classes () {
-      //let classes = `col-xs-12 col-sm-12 col-lg-${this.colWidth} col-md-${this.colWidth}`;
-      let classes = 'col';
-      return classes;
-    }
   },
 
   mounted: async function () {
