@@ -5,7 +5,7 @@
         v-for="colnum in board.columns" :key="colnum">
         <draggable
           tag="div"
-          :componentData="{class: 'col'}"
+          :componentData="{class: 'col-lg-4 col-md-4 col-xs-12 col-sm-12'}"
           v-model="board.items[colnum - 1]"
           :group="board.name"
           item-key="name">
