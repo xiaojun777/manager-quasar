@@ -10,12 +10,19 @@
       @delete="onDelete"
     >
     </widget-rows>
+
+    <widget-gallery v-if="portlet.type == 'gallery'"
+      v-model:portlet="innerPortlet"
+      @delete="onDelete"
+    >
+    </widget-gallery>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import WidgetRows from "./rows.vue";
 import WidgetHtml from "./html.vue";
+import WidgetGallery from "./gallery.vue";
 
 
 export default defineComponent({
@@ -28,7 +35,8 @@ export default defineComponent({
 
     components: {
       WidgetRows,
-      WidgetHtml
+      WidgetHtml,
+      WidgetGallery
     },
 
     data: function () {

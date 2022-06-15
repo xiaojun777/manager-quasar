@@ -251,6 +251,26 @@ let board_one = {
         },
       },
     },
+  },{
+    title: "图片新闻",
+    type: "gallery",
+    name: "image_news",
+    draggable: true,
+    params: {
+      images: [{
+        image: 'https://cdn.quasar.dev/img/mountains.jpg',
+        //link暂定，还未确定站点链接如何实现。
+      },{
+        image: 'https://cdn.quasar.dev/img/parallax1.jpg',
+        //link暂定，还未确定站点链接如何实现。
+      },{
+        image: 'https://cdn.quasar.dev/img/parallax2.jpg',
+        //link暂定，还未确定站点链接如何实现。
+      },{
+        image: 'https://cdn.quasar.dev/img/quasar.jpg',
+        //link暂定，还未确定站点链接如何实现。
+      }]
+    }
   }]],
 };
 

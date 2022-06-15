@@ -61,6 +61,8 @@
       <q-space />
       <q-btn
         flat
+        dense
+        round
         class="q-ml-sm"
         icon="search"
         :disable="loading"
@@ -193,5 +195,5 @@ export default defineComponent({
 
 <style lang="sass" scoped>
 .my-custom-toggle
-    border: 1px solid #027be3
+  border: 1px solid #027be3
 </style>

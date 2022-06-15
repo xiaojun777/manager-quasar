@@ -7,9 +7,6 @@ export default {
       }
     },
 
-    onEditorHanlder: async function () {
-    },
-
     methods: {
       onEdit () {
         this.editorShow = true;
@@ -21,6 +18,6 @@ export default {
 
       onEditorSave () {
         this.editorShow = false;
-      }        
+      }
     }
   }

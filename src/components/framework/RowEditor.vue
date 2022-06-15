@@ -43,9 +43,7 @@
                     </div>
                 </q-form>
             </div>
-            <div v-for="item in app.schema.items" :key="item.id">
-                <span>{{this.values[item.id]}}</span>
-            </div>
+
         </q-card>
     </q-dialog>
 </template>

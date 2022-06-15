@@ -11,50 +11,28 @@
     </q-table>
   </board-widget>
 
-  <q-dialog full-width full-height v-model="editorShow">
-    <q-card>
-      <div class="q-pa-md">
-        <q-form class="q-gutter-lg">
-          <q-input
-            stack-label
-            type="text"
-            label="标题"
-            v-model="innerPortlet.title"/>
+  <portlet-editor
+    :title="innerPortlet.title"
+    @save="onEditorSave"
+    @cancel="onEditorCancel"
+    v-model:show="editorShow"
+    >
+    <q-select
+      v-model="appname"
+      stack-label
+      emit-value
+      map-options
+      option-value="id"
+      option-label="name"
+      :options="appinfos"
+      label="选择应用"/>
 
-          <q-select
-            v-model="appname"
-            stack-label
-            emit-value
-            map-options
-            option-value="id"
-            option-label="name"
-            :options="appinfos"
-            label="选择应用"/>
+    <q-searchings
+      :appid="appname"
+      v-model:searching="searching">
+    </q-searchings>
 
-          <q-searchings
-            :appid="appname"
-            v-model:searching="searching">
-          </q-searchings>
-
-          <div class="row justify-end q-pa-md q-gutter-sm">
-            <q-btn
-              label="Cancel"
-              class="q-mt-md"
-              icon="cancel"
-              @click="onEditorCancel">
-            </q-btn>
-            <q-btn
-              label="Save"
-              class="q-mt-md"
-              icon="save"
-              @click="onEditorSave">
-            </q-btn>
-          </div>
-        </q-form>
-      </div>
-    </q-card>
-  </q-dialog>
-
+  </portlet-editor>
 </template>
 
 <script>
@@ -65,6 +43,7 @@ import portletbase from 'src/components/mixins/portletbase';
 import editorbase from 'src/components/mixins/editorbase'
 import apps from 'src/components/mixins/apps'
 import QSearchings from 'src/components/base/searching.vue'
+import PortletEditor from './portleteditor.vue'
 
 export default defineComponent({
     name: 'WidgetRows',
@@ -76,7 +55,8 @@ export default defineComponent({
     ],
     components: {
       BoardWidget,
-      QSearchings
+      QSearchings,
+      PortletEditor
     },
     emits: {
       'delete': null
