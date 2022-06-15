@@ -43,7 +43,6 @@
                     </div>
                 </q-form>
             </div>
-
         </q-card>
     </q-dialog>
 </template>
