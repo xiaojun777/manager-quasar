@@ -1,7 +1,7 @@
 <template>
   <q-card bordered class="q-mt-md">
     <div v-if="editable"
-      :style="{'z-index': '9'}"
+      :style="{'margin-top': '-20px'}"
       class="row absolute-top-right q-gutter-sm"
       align="right">
       <q-btn
