@@ -59,7 +59,7 @@ export default defineComponent({
     };
   },
   emits: {
-    'update:title': null,
+    'udpate:title': null,
     'save': null,
     'cancel': null,
     'update:show': null,
@@ -69,7 +69,7 @@ export default defineComponent({
   watch: {
     innerTitle: {
       handler (val) {
-        this.$emit('udpate:title', val);
+        this.$emit('update:title', val);
       }
     },
     innerShow: {

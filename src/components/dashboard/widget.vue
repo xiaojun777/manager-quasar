@@ -1,11 +1,11 @@
 <template>
-  <q-card bordered class="q-mt-md">
+  <q-card bordered :class="editable ? 'q-mt-lg' : 'q-mt-md'">
     <div v-if="editable"
-      :style="{'margin-top': '-20px'}"
+      :style="{'margin-top': '-30px'}"
       class="row absolute-top-right q-gutter-sm"
       align="right">
       <q-btn
-        push round dense
+        flat round dense
         color="white"
         text-color="primary"
         icon="edit"
@@ -14,7 +14,7 @@
         @click="onEdit"
       />
       <q-btn
-        push round dense
+        flat round dense
         color="white"
         text-color="primary"
         icon="delete"
@@ -26,11 +26,11 @@
 
     <template v-if="titleshow">
       <q-card-section :style="{'padding': '6px'}">
-        <div class="text-h7">{{ title }}</div>
+        <div class="text-h7">{{title}}</div>
       </q-card-section>
       <q-separator :style="{'margin-left':'4px','margin-right':'4px'}"/>
     </template>
-    <q-card-section>
+    <q-card-section class="q-portlet-body">
       <slot></slot>
     </q-card-section>
   </q-card>
@@ -67,8 +67,8 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
-.q-card__section
-  padding: 8px !important
+.q-portlet-body
+  padding: 0px
 .q-card
-  box-shadow: none !important
+  box-shadow: none
 </style>

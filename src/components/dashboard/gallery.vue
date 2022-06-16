@@ -9,6 +9,7 @@
       swipeable
       animated
       arrows
+      autoplay
       v-model="slide"
       v-model:fullscreen="fullscreen"
       infinite
@@ -93,4 +94,5 @@ export default defineComponent({
 .ratio-16-9
   aspect-ratio: 16 / 9 !important
   height: auto !important
+
 </style>
