@@ -1,7 +1,7 @@
 <template>
   <q-dialog full-width full-height v-model="showed">
     <q-card class="column no-wrap">
-      <div class="q-pa-md">
+      <div class="q-pa-md scroll">
         <q-form class="q-gutter-lg">
           <q-searchings ref="hello"
             :app="app"
@@ -13,12 +13,16 @@
       <q-space/>
       <div class="row justify-end q-pa-md q-gutter-sm">
         <q-btn
+          flat rounded
+          color="secondary"
           label="取消"
           class="q-mt-md"
           icon="cancel"
           @click="onCancel">
         </q-btn>
         <q-btn
+          flat rounded
+          color="primary"
           label="搜索"
           class="q-mt-md"
           icon="search"

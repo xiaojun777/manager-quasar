@@ -37,7 +37,6 @@
           @click="onEditorSave">
         </q-btn>
       </div>
-
     </q-card>
   </q-dialog>
 </template>

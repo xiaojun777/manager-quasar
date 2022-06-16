@@ -1,7 +1,7 @@
 <template>
   <q-dialog full-width full-height v-model="showed">
     <q-card class="column no-wrap">
-      <div class="q-pa-md">
+      <div class="q-pa-md scroll">
         <q-form class="q-gutter-lg">
           <template v-for="item in app.schema.items" :key="item.id">
             <q-input v-if="item.type=='string'"
@@ -30,18 +30,22 @@
       <q-space />
       <div class="row justify-end q-pa-md q-gutter-sm">
         <q-btn
-            :loading="submitting"
-            label="取消"
-            class="q-mt-md"
-            icon="cancel"
-            @click="onCancel">
+          flat rounded
+          :loading="submitting"
+          label="取消"
+          class="q-mt-md"
+          icon="cancel"
+          color="secondary"
+          @click="onCancel">
         </q-btn>
         <q-btn v-if="this.method!='view'"
-            :loading="submitting"
-            label="保存"
-            class="q-mt-md"
-            icon="save"
-            @click="onSave">
+          flat rounded
+          :loading="submitting"
+          label="保存"
+          class="q-mt-md"
+          icon="save"
+          color="primary"
+          @click="onSave">
         </q-btn>
       </div>
     </q-card>
