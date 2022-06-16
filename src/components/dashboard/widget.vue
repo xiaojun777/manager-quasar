@@ -28,7 +28,7 @@
       <q-card-section :style="{'padding': '6px'}">
         <div class="text-h7">{{ title }}</div>
       </q-card-section>
-      <q-separator />
+      <q-separator :style="{'margin-left':'4px','margin-right':'4px'}"/>
     </template>
     <q-card-section>
       <slot></slot>

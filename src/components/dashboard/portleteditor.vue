@@ -19,23 +19,24 @@
           </q-input>
 
           <slot></slot>
-
-          <div class="row justify-end q-pa-md q-gutter-sm">
-            <q-btn
-                label="Cancel"
-                class="q-mt-md"
-                icon="cancel"
-                @click="onEditorCancel">
-            </q-btn>
-            <q-btn
-                label="Save"
-                class="q-mt-md"
-                icon="save"
-                @click="onEditorSave">
-            </q-btn>
-          </div>
         </q-form>
       </div>
+
+      <q-card-actions align="right" class="absolute-bottom q-pa-md">
+        <q-btn
+          label="Cancel"
+          class="q-mt-md"
+          icon="cancel"
+          @click="onEditorCancel">
+        </q-btn>
+        <q-btn
+          label="Save"
+          class="q-mt-md"
+          icon="save"
+          @click="onEditorSave">
+        </q-btn>
+      </q-card-actions>
+
     </q-card>
   </q-dialog>
 </template>
