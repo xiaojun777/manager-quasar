@@ -1,5 +1,10 @@
 <template>
-  <board-widget :title="innerPortlet.title" @edit="onEdit" @delete="onDelete">
+  <board-widget
+    :title="innerPortlet.title"
+    :titleshow="innerPortlet.titleshow"
+    @edit="onEdit"
+    @delete="onDelete"
+    :editable="editable">
     <q-carousel
       swipeable
       animated
@@ -29,11 +34,13 @@
   </board-widget>
 
   <portlet-editor
-    :title="innerPortlet.title"
+    v-model:title="innerPortlet.title"
+    v-model:titleshow="innerPortlet.titleshow"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
     >
+
   </portlet-editor>
 
 </template>
@@ -47,7 +54,7 @@ import PortletEditor from './portleteditor.vue'
 
 export default defineComponent({
   name: "WidgetGallery",
-  props: ['portlet'],
+  props: [],
   mixins: [
     portletbase,
     editorbase
@@ -61,8 +68,8 @@ export default defineComponent({
       fullscreen: false,
       images: this.portlet.params.images,
       slide: 1,
-      width: 100
-    };
+      width: 100,
+    }
   },
   emits: {
     'delete': null

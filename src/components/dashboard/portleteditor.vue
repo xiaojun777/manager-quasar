@@ -7,23 +7,32 @@
             stack-label
             type="text"
             label="标题"
-            v-model="innerTitle"/>
+            :readonly="!innerTitleShow"
+            v-model="innerTitle">
+            <template v-slot:append>
+              <q-checkbox
+                v-model="innerTitleShow"
+                label=""
+                checked-icon="visibility"
+                unchecked-icon="visibility_off"/>
+            </template>
+          </q-input>
 
           <slot></slot>
 
           <div class="row justify-end q-pa-md q-gutter-sm">
-              <q-btn
-                  label="Cancel"
-                  class="q-mt-md"
-                  icon="cancel"
-                  @click="onEditorCancel">
-              </q-btn>
-              <q-btn
-                  label="Save"
-                  class="q-mt-md"
-                  icon="save"
-                  @click="onEditorSave">
-              </q-btn>
+            <q-btn
+                label="Cancel"
+                class="q-mt-md"
+                icon="cancel"
+                @click="onEditorCancel">
+            </q-btn>
+            <q-btn
+                label="Save"
+                class="q-mt-md"
+                icon="save"
+                @click="onEditorSave">
+            </q-btn>
           </div>
         </q-form>
       </div>
@@ -36,7 +45,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "PortletEditor",
-  props: ['title','show'],
+  props: ['title','show', 'titleshow'],
   mixins: [
   ],
   components: {
@@ -44,14 +53,16 @@ export default defineComponent({
   data: function () {
     return {
       innerTitle: this.title,
-      innerShow: this.show
+      innerShow: this.show,
+      innerTitleShow: this.titleshow
     };
   },
   emits: {
     'update:title': null,
     'save': null,
     'cancel': null,
-    'update:show': null
+    'update:show': null,
+    'update:titleshow': null
   },
 
   watch: {
@@ -68,6 +79,11 @@ export default defineComponent({
     show: {
       handler (val) {
         this.innerShow = val;
+      }
+    },
+    innerTitleShow: {
+      handler (val) {
+        this.$emit('update:titleshow', val);
       }
     }
   },

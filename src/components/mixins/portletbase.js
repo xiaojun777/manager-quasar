@@ -1,6 +1,7 @@
 export default {
     props: {
-      portlet: Object
+      portlet: Object,
+      editable: Boolean
     },
     data () {
       return {

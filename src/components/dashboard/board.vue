@@ -10,10 +10,11 @@
           :group="board.name"
           item-key="name">
           <template #item="{ element }">
-            <div class="q-ma-md">
+            <div class="q-ma-sm">
               <portlet
                 :portlet="element"
                 :board="board.name"
+                :editable="editable"
                 @widget-delete="onDeleteWidget">
               </portlet>
             </div>
@@ -52,6 +53,7 @@ export default defineComponent({
   data: function () {
     return {
       board: {},
+      editable: true
     };
   },
 

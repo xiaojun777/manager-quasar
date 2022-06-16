@@ -2,18 +2,21 @@
     <widget-html v-if="portlet.type == 'html'"
       v-model:portlet="innerPortlet"
       @delete="onDelete"
+      :editable="editable"
     >
     </widget-html>
 
     <widget-rows v-if="portlet.type == 'rows'"
       v-model:portlet="innerPortlet"
       @delete="onDelete"
+      :editable="editable"
     >
     </widget-rows>
 
     <widget-gallery v-if="portlet.type == 'gallery'"
       v-model:portlet="innerPortlet"
       @delete="onDelete"
+      :editable="editable"
     >
     </widget-gallery>
 </template>
@@ -30,7 +33,7 @@ export default defineComponent({
     props: {
       portlet: {},
       board: String,
-      dataDraggable: Boolean
+      editable: Boolean
     },
 
     components: {

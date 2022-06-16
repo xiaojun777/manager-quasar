@@ -1,10 +1,16 @@
 <template>
-  <board-widget :title="innerPortlet.title" @edit="onEdit" @delete="onDelete">
+  <board-widget
+    :title="innerPortlet.title"
+    :titleshow="innerPortlet.titleshow"
+    @edit="onEdit"
+    @delete="onDelete"
+    :editable="editable">
     <div v-html="innerPortlet.params.html"></div>
   </board-widget>
 
   <portlet-editor
-    :title="innerPortlet.title"
+    v-model:title="innerPortlet.title"
+    v-model:titleshow="innerPortlet.titleshow"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
@@ -27,7 +33,7 @@ import PortletEditor from './portleteditor.vue'
 
 export default defineComponent({
   name: "WidgetHtml",
-  props: ['portlet'],
+  props: [],
   mixins: [
     portletbase,
     editorbase

@@ -1,5 +1,10 @@
 <template>
-  <board-widget :title="innerPortlet.title" @edit="onEdit" @delete="onDelete">
+  <board-widget
+    :title="innerPortlet.title"
+    :titleshow="innerPortlet.titleshow"
+    @edit="onEdit"
+    @delete="onDelete"
+    :editable="editable">
     <q-table
       flat
       class="full-width"
@@ -12,7 +17,8 @@
   </board-widget>
 
   <portlet-editor
-    :title="innerPortlet.title"
+    v-model:title="innerPortlet.title"
+    v-model:titleshow="innerPortlet.titleshow"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"

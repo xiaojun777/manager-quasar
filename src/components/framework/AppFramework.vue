@@ -17,14 +17,20 @@
     <template v-slot:top>
       <q-btn
         flat
+        rounded
+        push
+        outline
         class="q-ml-sm"
         icon="add"
+        text-color="primary"
         :disable="loading"
         label="Add"
         @click="addRow"
       />
       <q-btn
         flat
+        rounded
+        text-color="primary"
         class="q-ml-sm"
         icon="edit"
         :disable="loading"
@@ -33,6 +39,8 @@
       />
       <q-btn
         flat
+        rounded
+        text-color="primary"
         class="q-ml-sm"
         icon="preview"
         :disable="loading"
@@ -41,6 +49,8 @@
       />
       <q-btn
         flat
+        rounded
+        text-color="primary"
         class="q-ml-sm"
         icon="remove"
         :disable="loading"
@@ -49,6 +59,8 @@
       />
       <q-btn-toggle
         v-model="grid"
+        rounded
+        text-color="primary"
         class="q-ml-sm"
         flat
         unelevated
@@ -195,5 +207,5 @@ export default defineComponent({
 
 <style lang="sass" scoped>
 .my-custom-toggle
-  border: 1px solid #027be3
+    border: 1px solid #027be3
 </style>

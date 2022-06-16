@@ -198,6 +198,7 @@ let board_one = {
   columns: 3,
   items: [[{
     title: '简介',
+    titleshow: false,
     type: 'html',
     name: 'desc',
     draggable: true,
@@ -206,6 +207,7 @@ let board_one = {
     }
   },{
     title: "女性员工",
+    titleshow: true,
     type: 'rows',
     name: 'female',
     draggable: true,
@@ -217,6 +219,7 @@ let board_one = {
     },
   },{
     title: "李姓员工",
+    titleshow: true,
     type: 'rows',
     name: 'huang',
     draggable: true,
@@ -228,6 +231,7 @@ let board_one = {
     },
   }],[{
     title: "男性员工",
+    titleshow: true,
     type: 'rows',
     name: 'male',
     draggable: true,
@@ -239,6 +243,7 @@ let board_one = {
     },
   }],[{
     title: "30-40岁员工",
+    titleshow: false,
     type: 'rows',
     name: '30-40',
     draggable: true,
@@ -253,6 +258,7 @@ let board_one = {
     },
   },{
     title: "图片新闻",
+    titleshow: false,
     type: "gallery",
     name: "image_news",
     draggable: true,

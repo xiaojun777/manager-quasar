@@ -1,24 +1,35 @@
 <template>
-  <q-card bordered class="q-mt-lg">
-    <q-card-section>
-      <q-bar :style="{'background-color': 'transparent'}">
-        <div class="text-h6">{{ title }}</div>
-        <q-space />
-        <q-btn
-          flat
-          class="q-ml-sm"
-          icon="edit"
-          @click="onEdit"
-        />
-        <q-btn
-          flat
-          class="q-ml-sm"
-          icon="delete"
-          @click="onDelete"
-        />
-      </q-bar>
-    </q-card-section>
-    <q-separator />
+  <q-card bordered class="q-mt-md">
+    <div v-if="editable"
+      :style="{'z-index': '9'}"
+      class="row absolute-top-right q-gutter-sm"
+      align="right">
+      <q-btn
+        push round dense
+        color="white"
+        text-color="primary"
+        icon="edit"
+        class="q-ml-sm"
+        size="xs"
+        @click="onEdit"
+      />
+      <q-btn
+        push round dense
+        color="white"
+        text-color="primary"
+        icon="delete"
+        class="q-ml-sm"
+        size="xs"
+        @click="onDelete"
+      />
+    </div>
+
+    <template v-if="titleshow">
+      <q-card-section :style="{'padding': '6px'}">
+        <div class="text-h7">{{ title }}</div>
+      </q-card-section>
+      <q-separator />
+    </template>
     <q-card-section>
       <slot></slot>
     </q-card-section>
@@ -31,7 +42,9 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'DoardWidget',
   props: {
-    title: String
+    title: String,
+    titleshow: Boolean,
+    editable: Boolean
   },
   data: function () {
     return {};
@@ -52,3 +65,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="sass" scoped>
+.q-card__section
+  padding: 8px !important
+.q-card
+  box-shadow: none !important
+</style>
