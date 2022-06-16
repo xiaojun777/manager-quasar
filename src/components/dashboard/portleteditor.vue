@@ -1,7 +1,7 @@
 <template>
   <q-dialog full-width full-height v-model="innerShow">
-    <q-card>
-      <div class="q-pa-md">
+    <q-card class="column no-wrap">
+      <q-card-section class="scroll">
         <q-form class="q-gutter-lg">
           <q-input
             stack-label
@@ -17,25 +17,26 @@
                 unchecked-icon="visibility_off"/>
             </template>
           </q-input>
-
           <slot></slot>
         </q-form>
-      </div>
-
-      <q-card-actions align="right" class="absolute-bottom q-pa-md">
+      </q-card-section>
+      <q-space />
+      <div class="row q-pa-md justify-end">
         <q-btn
-          label="Cancel"
-          class="q-mt-md"
+          flat rounded
+          label="取消"
           icon="cancel"
+          color="secondary"
           @click="onEditorCancel">
         </q-btn>
         <q-btn
-          label="Save"
-          class="q-mt-md"
+          flat rounded
+          label="保存"
           icon="save"
+          color="primary"
           @click="onEditorSave">
         </q-btn>
-      </q-card-actions>
+      </div>
 
     </q-card>
   </q-dialog>
