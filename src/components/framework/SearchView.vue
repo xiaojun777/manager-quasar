@@ -1,27 +1,29 @@
 <template>
   <q-dialog full-width full-height v-model="showed">
-    <q-card>
+    <q-card class="column no-wrap">
       <div class="q-pa-md">
         <q-form class="q-gutter-lg">
           <q-searchings ref="hello"
             :app="app"
             v-model:searching="values">
           </q-searchings>
-          <div class="row justify-end q-pa-md q-gutter-sm">
-            <q-btn
-              label="Cancel"
-              class="q-mt-md"
-              icon="cancel"
-              @click="onCancel">
-            </q-btn>                        
-            <q-btn
-              label="Search"
-              class="q-mt-md"
-              icon="search"
-              @click="onSearch">
-            </q-btn>
-          </div>                                                              
+
         </q-form>
+      </div>
+      <q-space/>
+      <div class="row justify-end q-pa-md q-gutter-sm">
+        <q-btn
+          label="取消"
+          class="q-mt-md"
+          icon="cancel"
+          @click="onCancel">
+        </q-btn>
+        <q-btn
+          label="搜索"
+          class="q-mt-md"
+          icon="search"
+          @click="onSearch">
+        </q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -88,11 +90,11 @@ export default defineComponent({
     onCancel () {
       this.hide();
     },
-        
+
     onSearch () {
       this.$emit('search', this.values);
       this.hide();
-    }        
-  }    
+    }
+  }
 });
 </script>

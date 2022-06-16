@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex">
+  <q-page>
     <app-framework appid='users' :rows-per-page="5">
     </app-framework>
   </q-page>

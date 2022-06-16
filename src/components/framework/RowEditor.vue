@@ -1,50 +1,51 @@
 <template>
-    <q-dialog full-width full-height v-model="showed">
-        <q-card>
-            <div class="q-pa-md">
-                <q-form class="q-gutter-lg">
-                    <template v-for="item in app.schema.items" :key="item.id">
-                        <q-input v-if="item.type=='string'"
-                            :readonly="this.method=='view'"
-                            type="text"
-                            stack-label
-                            :label="item.label"
-                            v-model="values[item.id]"/>
-                        <q-input v-if="item.type=='number'"
-                            :readonly="this.method=='view'"
-                            type="number"
-                            stack-label
-                            :label="item.label"
-                            v-model="values[item.id]"/>
-                        <q-select v-if="item.type=='option'"
-                            :readonly="this.method=='view'"
-                            v-model="values[item.id]"
-                            stack-label
-                            emit-value
-                            map-options
-                            :options="this.getOptions(item.options)"
-                            :label="item.label" />
-                    </template>
-                    <div class="row justify-end q-pa-md q-gutter-sm">
-                        <q-btn
-                            :loading="submitting"
-                            label="Cancel"
-                            class="q-mt-md"
-                            icon="cancel"
-                            @click="onCancel">
-                        </q-btn>
-                        <q-btn v-if="this.method!='view'"
-                            :loading="submitting"
-                            label="Save"
-                            class="q-mt-md"
-                            icon="save"
-                            @click="onSave">
-                        </q-btn>
-                    </div>
-                </q-form>
-            </div>
-        </q-card>
-    </q-dialog>
+  <q-dialog full-width full-height v-model="showed">
+    <q-card class="column no-wrap">
+      <div class="q-pa-md">
+        <q-form class="q-gutter-lg">
+          <template v-for="item in app.schema.items" :key="item.id">
+            <q-input v-if="item.type=='string'"
+              :readonly="this.method=='view'"
+              type="text"
+              stack-label
+              :label="item.label"
+              v-model="values[item.id]"/>
+            <q-input v-if="item.type=='number'"
+              :readonly="this.method=='view'"
+              type="number"
+              stack-label
+              :label="item.label"
+              v-model="values[item.id]"/>
+            <q-select v-if="item.type=='option'"
+              :readonly="this.method=='view'"
+              v-model="values[item.id]"
+              stack-label
+              emit-value
+              map-options
+              :options="this.getOptions(item.options)"
+              :label="item.label" />
+          </template>
+        </q-form>
+      </div>
+      <q-space />
+      <div class="row justify-end q-pa-md q-gutter-sm">
+        <q-btn
+            :loading="submitting"
+            label="取消"
+            class="q-mt-md"
+            icon="cancel"
+            @click="onCancel">
+        </q-btn>
+        <q-btn v-if="this.method!='view'"
+            :loading="submitting"
+            label="保存"
+            class="q-mt-md"
+            icon="save"
+            @click="onSave">
+        </q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
