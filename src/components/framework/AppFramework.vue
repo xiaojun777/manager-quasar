@@ -1,6 +1,5 @@
 <template>
-  {{searchingItems}}
-  <q-bar class="full-width">
+  <q-bar class="full-width bg-transparent">
     <q-btn
       flat rounded
       class="q-ml-sm"
@@ -75,20 +74,13 @@
     @row-click="onRowClick"
     row-key="name"
   >
-    <!--template v-slot:top>
-      <q-chip removable v-model="icecream" @remove="log('Icecream')" color="primary" text-color="white" icon="cake">
-        Ice cream
-      </q-chip>
-      <q-chip removable v-model="eclair" @remove="log('Icecream')" color="teal" text-color="white" icon="cake">
-        Eclair
-      </q-chip>
-      <q-chip removable v-model="cupcake" @remove="log('Icecream')" color="orange" text-color="white" icon="cake">
-        Cupcake
-      </q-chip>
-      <q-chip disable removable v-model="gingerbread" @remove="log('Icecream')" color="red" text-color="white" icon="cake">
-        Gingerbread (disable)
-      </q-chip>
-    </template-->
+    <template v-slot:top>
+      <template v-for="item in searchingItems" :key="item.id">
+        <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
+          {{item.label}}
+        </q-chip>
+      </template>
+    </template>
 
   </q-table>
 
@@ -206,15 +198,38 @@ export default defineComponent({
       this.flushRows(config.pagination);
     },
 
-    onSearch(val) {
-      this.searching = val;
+    refreshTable () {
       this.resetPagination();
       this.flushRows();
       this.transSearchItems();
     },
 
+    onSearch(val) {
+      this.searching = val;
+      this.refreshTable();
+    },
+
     onRowClick(event, row, index) {
       this.$refs.editor.viewRow(row);
+    },
+
+    onRemoveSearchingItem(itemId) {
+      console.log(typeof this.searching[itemId]);
+      switch(typeof this.searching[itemId]){
+        case 'string': {
+          this.searching[itemId] = '';
+          break;
+        }
+        case 'object': {
+          if (Array.isArray(this.searching[itemId])){
+            this.searching[itemId] = [];
+          }else{
+            this.searching[itemId] = {};
+          }
+          break;
+        }
+      }
+      this.refreshTable();
     },
 
     transSearchItems () {
@@ -251,7 +266,7 @@ export default defineComponent({
                     label += '且'
                   }
 
-                  if (bMin){
+                  if (bMax){
                     label += '<=' + max;
                   }
                   this.searchingItems.push({
