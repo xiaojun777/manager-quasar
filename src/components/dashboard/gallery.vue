@@ -76,7 +76,7 @@ export default defineComponent({
     'delete': null
   },
   mounted: function () {
-    console.log(this.images);
+
   },
   methods: {
     onDelete () {

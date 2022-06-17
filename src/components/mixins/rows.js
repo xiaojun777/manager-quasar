@@ -28,7 +28,7 @@ export default {
 
     methods: {
       async resetApp () {
-        this.app = await this.getSchema();
+        this.app = await this.getApp();
         this.initCols();
         this.resetPagination();
         //this.pagination.sortBy = this.app.schema.key;
@@ -43,8 +43,8 @@ export default {
         this.rows = await this.getRows(pagination, this.searching);
       },
 
-      async getSchema  () {
-        let response = await axios.get('app/schema', { params: { appid: this.appname } });
+      async getApp  () {
+        let response = await axios.get('apps/getapp', { params: { appid: this.appname } });
         return response.data;
       },
 

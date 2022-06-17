@@ -59,7 +59,7 @@ export default defineComponent({
     },
     appid: {
       async handler (val) {
-        this.innerApp = await this.getSchema();
+        this.innerApp = await this.getApp();
       }
     }
   },
@@ -68,14 +68,14 @@ export default defineComponent({
     if (this.app !== void 0){
       this.innerApp = this.app;
     }else{
-      this.innerApp = await this.getSchema();
+      this.innerApp = await this.getApp();
     }
     this.resetSearching(this.searching);
   },
 
   methods: {
-    async getSchema  () {
-      let response = await axios.get('app/schema', { params: { appid: this.appid } });
+    async getApp  () {
+      let response = await axios.get('apps/getapp', { params: { appid: this.appid } });
       return response.data;
     },
 

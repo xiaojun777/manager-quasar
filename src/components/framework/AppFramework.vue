@@ -169,6 +169,7 @@ export default defineComponent({
           params: this.selected,
         });
         if (response.data.code) {
+          this.selected = [];
           this.flushRows();
         }
       } else {
@@ -214,7 +215,6 @@ export default defineComponent({
     },
 
     onRemoveSearchingItem(itemId) {
-      console.log(typeof this.searching[itemId]);
       switch(typeof this.searching[itemId]){
         case 'string': {
           this.searching[itemId] = '';
