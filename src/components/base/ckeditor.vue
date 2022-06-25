@@ -1,31 +1,28 @@
 <template>
   <div>
     <q-field :label="label" stack-label>
-      <ckeditor
-        :editor="editor"
-        v-model="editorData"
-        :config="editorConfig">
+      <ckeditor :editor="editor" v-model="editorData" :config="editorConfig">
       </ckeditor>
     </q-field>
   </div>
 </template>
 
 <script>
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { defineComponent } from 'vue';
+import CKEditor from "@ckeditor/ckeditor5-vue";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "CKeditor",
   props: {
     label: String,
-    html: String
+    html: String,
   },
   components: {
-    ckeditor: CKEditor.component
+    ckeditor: CKEditor.component,
   },
   emits: {
-    'update:html': null
+    "update:html": null,
   },
   data: function () {
     return {
@@ -33,22 +30,20 @@ export default defineComponent({
       editorData: this.html,
       editorConfig: {
         // The configuration of the editor.
-        language: 'zh-cn',
+        language: "zh-cn",
         toolbar: {
-          shouldNotGroupWhenFull: true
-        }
-      }
+          shouldNotGroupWhenFull: true,
+        },
+      },
     };
   },
   watch: {
-    editorData (val) {
-      this.$emit('update:html', val);
-    }
+    editorData(val) {
+      this.$emit("update:html", val);
+    },
   },
-  computed: {
-  },
-  methods: {
-  }
+  computed: {},
+  methods: {},
 });
 </script>
 

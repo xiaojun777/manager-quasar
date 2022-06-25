@@ -1,7 +1,5 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -9,20 +7,18 @@
 </template>
 
 <script>
-
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 import axios from "axios";
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
 
-  components: {
-  },
+  components: {},
 
   data: function () {
     return {
-      apps: []
-    }
+      apps: [],
+    };
   },
 
   mounted: async function () {
@@ -31,23 +27,23 @@ export default defineComponent({
 
   methods: {
     getApps: async function () {
-      let response = await axios.get('/apps');
+      let response = await axios.get("/apps");
       return response.data.apps;
     },
 
     appClickHandler: function (app) {
       console.log(app);
-    }
+    },
   },
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+  setup() {
+    const leftDrawerOpen = ref(false);
     return {
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+    };
+  },
+});
 </script>

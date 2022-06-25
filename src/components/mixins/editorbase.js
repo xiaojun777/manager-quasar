@@ -1,23 +1,22 @@
 export default {
-    props: {
+  props: {},
+  data() {
+    return {
+      editorShow: false,
+    };
+  },
+
+  methods: {
+    onEdit() {
+      this.editorShow = true;
     },
-    data () {
-      return {
-        editorShow: false
-      }
+
+    onEditorCancel() {
+      this.editorShow = false;
     },
 
-    methods: {
-      onEdit () {
-        this.editorShow = true;
-      },
-
-      onEditorCancel () {
-        this.editorShow = false;
-      },
-
-      onEditorSave () {
-        this.editorShow = false;
-      }
-    }
-  }
+    onEditorSave() {
+      this.editorShow = false;
+    },
+  },
+};

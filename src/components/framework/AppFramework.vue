@@ -1,7 +1,8 @@
 <template>
   <q-bar class="full-width bg-transparent">
     <q-btn
-      flat rounded
+      flat
+      rounded
       class="q-ml-sm"
       icon="add"
       text-color="primary"
@@ -10,7 +11,8 @@
       @click="addRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="edit"
@@ -19,7 +21,8 @@
       @click="editRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="preview"
@@ -28,7 +31,8 @@
       @click="viewRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="remove"
@@ -51,7 +55,9 @@
 
     <q-space />
     <q-btn
-      flat dense round
+      flat
+      dense
+      round
       class="q-ml-sm"
       text-color="primary"
       icon="search"
@@ -76,12 +82,16 @@
   >
     <template v-slot:top>
       <template v-for="item in searchingItems" :key="item.id">
-        <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
-          {{item.label}}
+        <q-chip
+          removable
+          @remove="onRemoveSearchingItem(item.id)"
+          color="primary"
+          text-color="white"
+        >
+          {{ item.label }}
         </q-chip>
       </template>
     </template>
-
   </q-table>
 
   <row-editor
@@ -125,13 +135,11 @@ export default defineComponent({
       loading: false,
       selection: "multiple",
       selected: [],
-      searchingItems: []
+      searchingItems: [],
     };
   },
 
-  computed: {
-
-  },
+  computed: {},
 
   methods: {
     addRow() {
@@ -199,7 +207,7 @@ export default defineComponent({
       this.flushRows(config.pagination);
     },
 
-    refreshTable () {
+    refreshTable() {
       this.resetPagination();
       this.flushRows();
       this.transSearchItems();
@@ -215,15 +223,15 @@ export default defineComponent({
     },
 
     onRemoveSearchingItem(itemId) {
-      switch(typeof this.searching[itemId]){
-        case 'string': {
-          this.searching[itemId] = '';
+      switch (typeof this.searching[itemId]) {
+        case "string": {
+          this.searching[itemId] = "";
           break;
         }
-        case 'object': {
-          if (Array.isArray(this.searching[itemId])){
+        case "object": {
+          if (Array.isArray(this.searching[itemId])) {
             this.searching[itemId] = [];
-          }else{
+          } else {
             this.searching[itemId] = {};
           }
           break;
@@ -232,7 +240,7 @@ export default defineComponent({
       this.refreshTable();
     },
 
-    transSearchItems () {
+    transSearchItems() {
       this.searchingItems = [];
       let searching = this.searching;
       for (let i = 0; i < this.app.schema.items.length; i++) {
@@ -240,55 +248,66 @@ export default defineComponent({
         if (item.searchable) {
           switch (item.type) {
             case "string": {
-              if (searching[item.id] !== void 0 && searching[item.id].length > 0) {
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id].length > 0
+              ) {
                 this.searchingItems.push({
                   id: item.id,
-                  label: item.label + ': ' + searching[item.id]
+                  label: item.label + ": " + searching[item.id],
                 });
               }
               break;
             }
             case "number": {
-              if (searching[item.id] !== void 0 && (searching[item.id].min !== void 0 || searching[item.id].max !== void 0)) {
+              if (
+                searching[item.id] !== void 0 &&
+                (searching[item.id].min !== void 0 ||
+                  searching[item.id].max !== void 0)
+              ) {
                 let numberSearching = searching[item.id];
-                let label = item.label + ': ';
+                let label = item.label + ": ";
                 let min = numberSearching.min;
                 let max = numberSearching.max;
                 let bMin = min !== void 0 && min.length !== 0;
                 let bMax = max !== void 0 && max.length !== 0;
 
-                if (bMin || bMax){
-                  if (bMin){
-                    label += '>=' + min;
+                if (bMin || bMax) {
+                  if (bMin) {
+                    label += ">=" + min;
                   }
 
-                  if (bMin && bMax){
-                    label += '且'
+                  if (bMin && bMax) {
+                    label += "且";
                   }
 
-                  if (bMax){
-                    label += '<=' + max;
+                  if (bMax) {
+                    label += "<=" + max;
                   }
                   this.searchingItems.push({
                     id: item.id,
-                    label: label
+                    label: label,
                   });
                 }
               }
               break;
             }
             case "option": {
-              if (searching[item.id] !== void 0 && searching[item.id] != null && searching[item.id].length > 0) {
-                let label = item.label + ': ';
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id] != null &&
+                searching[item.id].length > 0
+              ) {
+                let label = item.label + ": ";
                 let labels = [];
-                for (let i=0; i<searching[item.id].length; i++) {
+                for (let i = 0; i < searching[item.id].length; i++) {
                   let con = searching[item.id][i];
                   labels.push(item.options[con]);
                 }
-                label += `[${labels.join(',')}]`;
+                label += `[${labels.join(",")}]`;
                 this.searchingItems.push({
                   id: item.id,
-                  label: label
+                  label: label,
                 });
               }
               break;
@@ -296,7 +315,7 @@ export default defineComponent({
           }
         }
       }
-    }
+    },
   },
 });
 </script>

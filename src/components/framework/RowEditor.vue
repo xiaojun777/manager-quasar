@@ -4,48 +4,59 @@
       <div class="q-pa-md scroll">
         <q-form class="q-gutter-lg">
           <template v-for="item in app.schema.items" :key="item.id">
-            <q-input v-if="item.type=='string'"
-              :readonly="this.method=='view'"
+            <q-input
+              v-if="item.type == 'string'"
+              :readonly="this.method == 'view'"
               type="text"
               stack-label
               :label="item.label"
-              v-model="values[item.id]"/>
-            <q-input v-if="item.type=='number'"
-              :readonly="this.method=='view'"
+              v-model="values[item.id]"
+            />
+            <q-input
+              v-if="item.type == 'number'"
+              :readonly="this.method == 'view'"
               type="number"
               stack-label
               :label="item.label"
-              v-model="values[item.id]"/>
-            <q-select v-if="item.type=='option'"
-              :readonly="this.method=='view'"
+              v-model="values[item.id]"
+            />
+            <q-select
+              v-if="item.type == 'option'"
+              :readonly="this.method == 'view'"
               v-model="values[item.id]"
               stack-label
               emit-value
               map-options
               :options="this.getOptions(item.options)"
-              :label="item.label" />
+              :label="item.label"
+            />
           </template>
         </q-form>
       </div>
       <q-space />
       <div class="row justify-end q-pa-md q-gutter-sm">
         <q-btn
-          flat rounded
+          flat
+          rounded
           :loading="submitting"
           label="取消"
           class="q-mt-md"
           icon="cancel"
           color="secondary"
-          @click="onCancel">
+          @click="onCancel"
+        >
         </q-btn>
-        <q-btn v-if="this.method!='view'"
-          flat rounded
+        <q-btn
+          v-if="this.method != 'view'"
+          flat
+          rounded
           :loading="submitting"
           label="保存"
           class="q-mt-md"
           icon="save"
           color="primary"
-          @click="onSave">
+          @click="onSave"
+        >
         </q-btn>
       </div>
     </q-card>
@@ -53,114 +64,104 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    name: 'RowEditor',
-    props: {
-        app: null
+  name: "RowEditor",
+  props: {
+    app: null,
+  },
+  data: function () {
+    return {
+      showed: false,
+      values: {},
+      method: "new",
+      submitting: false,
+    };
+  },
+
+  mounted: async function () {},
+
+  computed: {},
+
+  methods: {
+    getOptions(options) {
+      let opts = [];
+      for (let opt in Object.keys(options)) {
+        opts.push({
+          value: opt,
+          label: options[opt],
+        });
+      }
+      return opts;
     },
-    data: function () {
-        return {
-            showed: false,
-            values: {},
-            method: 'new',
-            submitting: false
-        }
+
+    newRow() {
+      this.method = "new";
+      this.resetValues();
+      this.show();
     },
 
-    mounted: async function () {
+    editRow(vals) {
+      this.method = "edit";
+      this.resetValues();
+      this.updateValues(vals);
+      this.show();
     },
 
-    computed: {
-
+    viewRow(vals) {
+      this.method = "view";
+      this.resetValues();
+      this.updateValues(vals);
+      this.show();
     },
 
-    methods: {
-        getOptions (options) {
-            let opts = [];
-            for (let opt in Object.keys(options)) {
-                opts.push({
-                    value: opt,
-                    label: options[opt]
-                });
-            }
-            return opts;
-        },
+    updateValues(vals) {
+      this.values = vals;
+    },
 
-        newRow () {
-            this.method = 'new';
-            this.resetValues();
-            this.show();
-        },
+    resetValues() {
+      this.values = {};
+    },
 
-        editRow (vals) {
-            this.method = 'edit';
-            this.resetValues();
-            this.updateValues(vals);
-            this.show();
-        },
+    hide() {
+      this.resetValues();
+      this.showed = false;
+    },
 
-        viewRow (vals) {
-            this.method = 'view';
-            this.resetValues();
-            this.updateValues(vals);
-            this.show();
-        },
+    show() {
+      this.showed = true;
+    },
 
-        updateValues (vals) {
-            this.values = vals;
-        },
+    onCancel() {
+      this.hide();
+    },
 
-        resetValues () {
-            this.values = {};
-        },
-
-        hide () {
-            this.resetValues();
-            this.showed = false;
-        },
-
-        show () {
-            this.showed = true;
-        },
-
-        onCancel () {
+    onSave() {
+      if (this.method === "new") {
+        this.submitting = true;
+        this.$emit("new", this.values, (val) => {
+          this.submitting = false;
+          if (val.code) {
             this.hide();
-        },
-
-        onSave () {
-            if (this.method === 'new'){
-                this.submitting = true;
-                this.$emit('new', this.values, (val) => {
-                    this.submitting = false;
-                    if (val.code){
-                        this.hide();
-                        this.$emit('afternew');
-                    }else{
-
-                    }
-                });
-            }else{
-                this.submitting = true;
-                this.$emit('edit', this.values, (val) => {
-                    this.submitting = false;
-                    if (val.code){
-                        this.hide();
-                        this.$emit('afteredit');
-                    }else{
-
-                    }
-                });
-            }
-
-        }
+            this.$emit("afternew");
+          } else {
+          }
+        });
+      } else {
+        this.submitting = true;
+        this.$emit("edit", this.values, (val) => {
+          this.submitting = false;
+          if (val.code) {
+            this.hide();
+            this.$emit("afteredit");
+          } else {
+          }
+        });
+      }
     },
+  },
 
-    computed: {
-
-    }
-
-})
+  computed: {},
+});
 </script>
