@@ -1,10 +1,10 @@
 <template>
-  <q-tab-panels
+  <q-tab-panels class="fit"
     v-model="panel"
     animated
     swipeable>
-    <q-tab-panel name="rows">
-      <q-bar class="full-width bg-transparent">
+    <q-tab-panel name="rows" class="fit">
+      <q-bar class="fit bg-transparent">
         <q-btn
           flat rounded
           class="q-ml-sm"
@@ -52,8 +52,9 @@
           @click="searchRow"
         />
       </q-bar>
+
       <q-table
-        class="full-width"
+        class="fit"
         ref="table"
         :title="app.name"
         :rows="rows"
@@ -87,12 +88,12 @@
         @edit="onEditorEdit"
         @new="onEditorAdd"
         @afternew="onEditorAfterNew"
+        @afteredit="onEditorAfterEdit"
         @cancel="onEditorCancel"
       >
       </row-editor>
     </q-tab-panel>
   </q-tab-panels>
-
   <alert-dialog ref="alert" />
   <confirm-dialog ref="confirm" />
 </template>
@@ -243,6 +244,12 @@ export default defineComponent({
     },
 
     onEditorAfterNew () {
+      this.hideRowEditor();
+      this.flushRows();
+    },
+
+    onEditorAfterEdit () {
+      this.hideRowEditor();
       this.flushRows();
     },
 
