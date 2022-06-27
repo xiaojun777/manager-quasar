@@ -1,8 +1,10 @@
 <template>
-  <q-page class="">
+  <div>{{ color }}</div>
+  <button @click="add">修改颜色</button>
+  <q-page>
     <div class="row q-col-gutter-sm q-ml-xs q-mr-sm q-py-sm">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <line-chart></line-chart>
+        <line-chart :colorData="color"></line-chart>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <bar-chart> </bar-chart>
@@ -25,7 +27,6 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <area-chart></area-chart>
       </div>
-      <q-input disable rounded v-model="colorColor" type="text"></q-input>
     </div>
   </q-page>
 </template>
@@ -53,9 +54,15 @@ export default defineComponent({
   },
   name: 'Echarts',
   data: function () {
-    return {}
+    return {
+      color: ['orange', 'cyan', 'pink', 'green', 'blue']
+    }
   },
 
-  methods: function () {}
+  methods: {
+    add() {
+      this.color = this.color.reverse()
+    }
+  }
 })
 </script>

@@ -4,9 +4,11 @@
   >
     <div>
       <div style="font-size: 30vh">404</div>
+      <div>{{ count }}</div>
 
       <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
 
+      <q-btn @click="add">添加</q-btn>
       <q-btn
         class="q-mt-xl"
         color="white"
@@ -21,9 +23,19 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "Error404",
-});
+  name: 'Error404',
+  data() {
+    return {
+      count: ['orange']
+    }
+  },
+  methods: {
+    add() {
+      this.count.push('white')
+    }
+  }
+})
 </script>

@@ -11,143 +11,150 @@
 </template>
 
 <script>
-import * as echarts from "echarts";
-import { defineComponent } from "vue";
+import * as echarts from 'echarts'
+import { defineComponent } from 'vue'
 export default defineComponent({
-  name: "AreaChart",
+  name: 'AreaChart',
   data() {
     return {
       model: false,
       options: {
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+            dataView: {},
+            restore: {}
+          }
+        },
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "cross",
+            type: 'cross',
             label: {
-              backgroundColor: "#6a7985",
-            },
-          },
+              backgroundColor: '#6a7985'
+            }
+          }
         },
         legend: {
           data: [
-            "Email marketing",
-            "Affiliate advertising",
-            "Video advertising",
-            "Direct access",
-            "Search engine",
+            'Email marketing',
+            'Affiliate advertising',
+            'Video advertising',
+            'Direct access',
+            'Search engine'
           ],
-          bottom: 10,
+          bottom: 10
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "15%",
-          top: "5%",
-          containLabel: true,
+          left: '3%',
+          right: '4%',
+          bottom: '15%',
+          top: '5%',
+          containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             boundaryGap: false,
             data: [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ],
-          },
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
+              'Sunday'
+            ]
+          }
         ],
         yAxis: [
           {
-            type: "value",
-          },
+            type: 'value'
+          }
         ],
         series: [
           {
-            name: "Email marketing",
-            type: "line",
-            stack: "Total",
+            name: 'Email marketing',
+            type: 'line',
+            stack: 'Total',
             areaStyle: {},
             emphasis: {
-              focus: "series",
+              focus: 'series'
             },
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: [120, 132, 101, 134, 90, 230, 210]
           },
           {
-            name: "Affiliate Advertising",
-            type: "line",
-            stack: "Total",
+            name: 'Affiliate Advertising',
+            type: 'line',
+            stack: 'Total',
             areaStyle: {},
             emphasis: {
-              focus: "series",
+              focus: 'series'
             },
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: [220, 182, 191, 234, 290, 330, 310]
           },
           {
-            name: "Video ads",
-            type: "line",
-            stack: "Total",
+            name: 'Video ads',
+            type: 'line',
+            stack: 'Total',
             areaStyle: {},
             emphasis: {
-              focus: "series",
+              focus: 'series'
             },
-            data: [150, 232, 201, 154, 190, 330, 410],
+            data: [150, 232, 201, 154, 190, 330, 410]
           },
           {
-            name: "Direct access",
-            type: "line",
-            stack: "Total",
+            name: 'Direct access',
+            type: 'line',
+            stack: 'Total',
             areaStyle: {},
             emphasis: {
-              focus: "series",
+              focus: 'series'
             },
-            data: [320, 332, 301, 334, 390, 330, 320],
+            data: [320, 332, 301, 334, 390, 330, 320]
           },
           {
-            name: "Search Engine",
-            type: "line",
-            stack: "Total",
+            name: 'Search Engine',
+            type: 'line',
+            stack: 'Total',
             label: {
               show: true,
-              position: "top",
+              position: 'top'
             },
             areaStyle: {},
             emphasis: {
-              focus: "series",
+              focus: 'series'
             },
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-          },
-        ],
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
+          }
+        ]
       },
-      area_chart: null,
-    };
+      area_chart: null
+    }
   },
   mounted() {
-    this.init();
+    this.init()
   },
   watch: {
-    "$q.dark.isActive": function () {
-      this.init();
-    },
+    '$q.dark.isActive': function () {
+      this.init()
+    }
   },
   methods: {
     init() {
-      let areaChart = document.getElementById("areaChart");
-      echarts.dispose(areaChart);
-      let theme = this.model ? "dark" : "light";
-      this.area_chart = echarts.init(areaChart, theme);
-      this.area_chart.setOption(this.options);
+      let areaChart = document.getElementById('areaChart')
+      echarts.dispose(areaChart)
+      let theme = this.model ? 'dark' : 'light'
+      this.area_chart = echarts.init(areaChart, theme)
+      this.area_chart.setOption(this.options)
     },
     onResize() {
       if (this.area_chart) {
-        this.area_chart.resize();
+        this.area_chart.resize()
       }
-    },
-  },
-});
+    }
+  }
+})
 </script>
 
 <style scoped></style>

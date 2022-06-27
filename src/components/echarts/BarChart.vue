@@ -22,76 +22,83 @@
 </template>
 
 <script>
-import * as echarts from "echarts";
-import { defineComponent } from "vue";
+import * as echarts from 'echarts'
+import { defineComponent } from 'vue'
 export default defineComponent({
-  name: "BarChart",
+  name: 'BarChart',
   data() {
     return {
       model: false,
       options: {
         legend: {
-          bottom: 10,
+          bottom: 10
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+            dataView: {},
+            restore: {}
+          }
         },
         tooltip: {},
         dataset: {
           source: [
-            ["product", "2015", "2016", "2017"],
-            ["Matcha Latte", 43.3, 85.8, 93.7],
-            ["Milk Tea", 83.1, 73.4, 55.1],
-            ["Cheese Cocoa", 86.4, 65.2, 82.5],
-            ["Walnut Brownie", 72.4, 53.9, 39.1],
-          ],
+            ['product', '2015', '2016', '2017'],
+            ['Matcha Latte', 43.3, 85.8, 93.7],
+            ['Milk Tea', 83.1, 73.4, 55.1],
+            ['Cheese Cocoa', 86.4, 65.2, 82.5],
+            ['Walnut Brownie', 72.4, 53.9, 39.1]
+          ]
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "20%",
-          top: "5%",
-          containLabel: true,
+          left: '3%',
+          right: '4%',
+          bottom: '20%',
+          top: '5%',
+          containLabel: true
         },
-        xAxis: { type: "category" },
+        xAxis: { type: 'category' },
         yAxis: {},
         // Declare several bar series, each will be mapped
         // to a column of dataset.source by default.
-        series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+        series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
       },
-      bar_chart: null,
-    };
+      bar_chart: null
+    }
   },
   mounted() {
-    this.init();
+    this.init()
   },
   watch: {
-    "$q.dark.isActive": function () {
-      this.init();
-    },
+    '$q.dark.isActive': function () {
+      this.init()
+    }
   },
   methods: {
     SaveImage() {
-      const linkSource = this.bar_chart.getDataURL();
-      const downloadLink = document.createElement("a");
-      document.body.appendChild(downloadLink);
+      const linkSource = this.bar_chart.getDataURL()
+      const downloadLink = document.createElement('a')
+      document.body.appendChild(downloadLink)
 
-      downloadLink.href = linkSource;
-      downloadLink.target = "_self";
-      downloadLink.download = "BarChart.png";
-      downloadLink.click();
+      downloadLink.href = linkSource
+      downloadLink.target = '_self'
+      downloadLink.download = 'BarChart.png'
+      downloadLink.click()
     },
     init() {
-      let barChart = document.getElementById("barChart");
-      echarts.dispose(barChart);
-      let theme = this.model ? "dark" : "light";
-      this.bar_chart = echarts.init(barChart, theme);
-      this.bar_chart.setOption(this.options);
+      let barChart = document.getElementById('barChart')
+      echarts.dispose(barChart)
+      let theme = this.model ? 'dark' : 'light'
+      this.bar_chart = echarts.init(barChart, theme)
+      this.bar_chart.setOption(this.options)
     },
     onResize() {
       if (this.bar_chart) {
-        this.bar_chart.resize();
+        this.bar_chart.resize()
       }
-    },
-  },
-});
+    }
+  }
+})
 </script>
 
 <style scoped></style>
