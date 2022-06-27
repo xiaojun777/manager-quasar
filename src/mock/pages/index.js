@@ -9,5 +9,5 @@ export default {
     boards.installData(mock)
     users.installData(mock)
     educations.installData(mock)
-  },
+  }
 }

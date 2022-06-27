@@ -8,13 +8,15 @@
             type="text"
             label="标题"
             :readonly="!innerTitleShow"
-            v-model="innerTitle">
+            v-model="innerTitle"
+          >
             <template v-slot:append>
               <q-checkbox
                 v-model="innerTitleShow"
                 label=""
                 checked-icon="visibility"
-                unchecked-icon="visibility_off"/>
+                unchecked-icon="visibility_off"
+              />
             </template>
           </q-input>
           <slot></slot>
@@ -23,18 +25,22 @@
       <q-space />
       <div class="row q-pa-md justify-end">
         <q-btn
-          flat rounded
+          flat
+          rounded
           label="取消"
           icon="cancel"
           color="secondary"
-          @click="onEditorCancel">
+          @click="onEditorCancel"
+        >
         </q-btn>
         <q-btn
-          flat rounded
+          flat
+          rounded
           label="保存"
           icon="save"
           color="primary"
-          @click="onEditorSave">
+          @click="onEditorSave"
+        >
         </q-btn>
       </div>
     </q-card>
@@ -46,60 +52,57 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "PortletEditor",
-  props: ['title','show', 'titleshow'],
-  mixins: [
-  ],
-  components: {
-  },
+  props: ["title", "show", "titleshow"],
+  mixins: [],
+  components: {},
   data: function () {
     return {
       innerTitle: this.title,
       innerShow: this.show,
-      innerTitleShow: this.titleshow
+      innerTitleShow: this.titleshow,
     };
   },
   emits: {
-    'udpate:title': null,
-    'save': null,
-    'cancel': null,
-    'update:show': null,
-    'update:titleshow': null
+    "udpate:title": null,
+    save: null,
+    cancel: null,
+    "update:show": null,
+    "update:titleshow": null,
   },
 
   watch: {
     innerTitle: {
-      handler (val) {
-        this.$emit('update:title', val);
-      }
+      handler(val) {
+        this.$emit("update:title", val);
+      },
     },
     innerShow: {
-      handler (val) {
-        this.$emit('update:show', val);
-      }
+      handler(val) {
+        this.$emit("update:show", val);
+      },
     },
     show: {
-      handler (val) {
+      handler(val) {
         this.innerShow = val;
-      }
+      },
     },
     innerTitleShow: {
-      handler (val) {
-        this.$emit('update:titleshow', val);
-      }
-    }
+      handler(val) {
+        this.$emit("update:titleshow", val);
+      },
+    },
   },
 
   methods: {
-    onEditorSave () {
-      this.$emit('save');
+    onEditorSave() {
+      this.$emit("save");
     },
 
-    onEditorCancel () {
-      this.$emit('cancel');
-    }
-  }
+    onEditorCancel() {
+      this.$emit("cancel");
+    },
+  },
 });
 </script>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

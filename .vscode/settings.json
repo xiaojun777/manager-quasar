@@ -4,5 +4,11 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+<<<<<<< HEAD
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"]
+=======
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+  "todo-tree.tree.showBadges": false,
+  "todo-tree.tree.disableCompactFolders": true
+>>>>>>> 78f3054429ba73f441d74db2ed66e265f21f3045
 }

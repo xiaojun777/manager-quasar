@@ -1,11 +1,15 @@
 <template>
   <q-card bordered :class="editable ? 'q-mt-lg' : 'q-mt-md'">
-    <div v-if="editable"
-      :style="{'margin-top': '-30px'}"
+    <div
+      v-if="editable"
+      :style="{ 'margin-top': '-30px' }"
       class="row absolute-top-right q-gutter-sm"
-      align="right">
+      align="right"
+    >
       <q-btn
-        flat round dense
+        flat
+        round
+        dense
         color="white"
         text-color="primary"
         icon="edit"
@@ -14,7 +18,9 @@
         @click="onEdit"
       />
       <q-btn
-        flat round dense
+        flat
+        round
+        dense
         color="white"
         text-color="primary"
         icon="delete"
@@ -25,10 +31,10 @@
     </div>
 
     <template v-if="titleshow">
-      <q-card-section :style="{'padding': '6px'}">
-        <div class="text-h7">{{title}}</div>
+      <q-card-section :style="{ padding: '6px' }">
+        <div class="text-h7">{{ title }}</div>
       </q-card-section>
-      <q-separator :style="{'margin-left':'4px','margin-right':'4px'}"/>
+      <q-separator :style="{ 'margin-left': '4px', 'margin-right': '4px' }" />
     </template>
     <q-card-section class="q-portlet-body">
       <slot></slot>
@@ -37,33 +43,33 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'DoardWidget',
+  name: "DoardWidget",
   props: {
     title: String,
     titleshow: Boolean,
-    editable: Boolean
+    editable: Boolean,
   },
   data: function () {
     return {};
   },
 
   emits: {
-    'delete': null,
-    'edit': null
+    delete: null,
+    edit: null,
   },
   methods: {
-    onEdit () {
-      this.$emit('edit');
+    onEdit() {
+      this.$emit("edit");
     },
 
-    onDelete () {
-      this.$emit('delete');
-    }
-  }
-})
+    onDelete() {
+      this.$emit("delete");
+    },
+  },
+});
 </script>
 
 <style lang="sass" scoped>

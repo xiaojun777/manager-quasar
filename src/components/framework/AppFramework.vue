@@ -243,6 +243,7 @@ export default defineComponent({
     transSearchItems() {
       this.searchingItems = []
       let searching = this.searching
+
       for (let i = 0; i < this.app.schema.items.length; i++) {
         let item = this.app.schema.items[i]
         if (item.searchable) {

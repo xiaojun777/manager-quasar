@@ -6,85 +6,85 @@ let rows = [
     name: '张三',
     age: 45,
     gender: '0',
-    hobby: '骑行 徒步',
+    hobby: '骑行 徒步'
   },
   {
     userid: 'lisi',
     name: '李四',
     age: 44,
     gender: '0',
-    hobby: '跑步 徒步',
+    hobby: '跑步 徒步'
   },
   {
     userid: 'wangwu',
     name: '王五',
     age: 34,
     gender: '0',
-    hobby: '跑步 徒步 楚留香',
+    hobby: '跑步 徒步 楚留香'
   },
   {
     userid: 'liuyi',
     name: '刘一',
     age: 46,
     gender: '0',
-    hobby: '跑步 徒步 骑行',
+    hobby: '跑步 徒步 骑行'
   },
   {
     userid: 'chener',
     name: 'chener',
     age: 45,
     gender: '0',
-    hobby: '跑步 徒步 骑行 打牌 高尔夫',
+    hobby: '跑步 徒步 骑行 打牌 高尔夫'
   },
   {
     userid: 'zhaoliu',
     name: '赵六',
     age: 45,
     gender: '0',
-    hobby: '跑步 徒步 骑行 打牌 足球',
+    hobby: '跑步 徒步 骑行 打牌 足球'
   },
   {
     userid: 'sunqi',
     name: '孙七',
     age: 30,
     gender: '1',
-    hobby: '跑步 徒步 骑行 喝酒',
+    hobby: '跑步 徒步 骑行 喝酒'
   },
   {
     userid: 'zhouba',
     name: '周八',
     age: 27,
     gender: '1',
-    hobby: '跑步 徒步 骑行 刺绣',
+    hobby: '跑步 徒步 骑行 刺绣'
   },
   {
     userid: 'wujiu',
     name: '吴九',
     age: 45,
     gender: '0',
-    hobby: '徒步 骑行 电影',
+    hobby: '徒步 骑行 电影'
   },
   {
     userid: 'zhengshi',
     name: '郑十',
     age: 27,
     gender: '0',
-    hobby: '徒步 骑行 电影 台球 机车',
+    hobby: '徒步 骑行 电影 台球 机车'
   },
   {
     userid: 'haoyu',
     name: '浩宇',
     age: 24,
     gender: '0',
-    hobby: '徒步',
+    hobby: '徒步'
   },
   {
     userid: 'yize',
     name: '奕泽',
     age: 27,
     gender: '0',
-    hobby: '徒步',
-  },
+    hobby: '徒步'
+  }
 ]
 
 let app = {
@@ -102,20 +102,20 @@ let app = {
         sortable: true,
         rules: [
           {
-            type: 'required',
+            type: 'required'
           },
           {
-            type: 'alpha',
+            type: 'alpha'
           },
           {
             type: 'minlength',
-            params: [6],
+            params: [6]
           },
           {
             type: 'maxlength',
-            params: [12],
-          },
-        ],
+            params: [12]
+          }
+        ]
       },
       {
         id: 'name',
@@ -126,9 +126,9 @@ let app = {
         sortable: true,
         rules: [
           {
-            type: 'fullcode',
-          },
-        ],
+            type: 'fullcode'
+          }
+        ]
       },
       {
         id: 'age',
@@ -140,13 +140,13 @@ let app = {
         rules: [
           {
             type: 'min',
-            params: [0],
+            params: [0]
           },
           {
             type: 'max',
-            params: [150],
-          },
-        ],
+            params: [150]
+          }
+        ]
       },
       {
         id: 'minzu',
@@ -157,9 +157,9 @@ let app = {
         sortable: true,
         rules: [
           {
-            type: 'fullcode',
-          },
-        ],
+            type: 'fullcode'
+          }
+        ]
       },
       {
         id: 'gender',
@@ -170,9 +170,9 @@ let app = {
         sortable: true,
         options: {
           0: '男',
-          1: '女',
+          1: '女'
         },
-        rules: [],
+        rules: []
       },
       {
         id: 'hobby',
@@ -180,10 +180,10 @@ let app = {
         type: 'string',
         searchable: false,
         sortable: true,
-        rules: [],
-      },
-    ],
-  },
+        rules: []
+      }
+    ]
+  }
 }
 
 let searching = {}
@@ -207,5 +207,5 @@ export default {
     mock.onAny('/app/users/delete').reply(function (config) {
       return mockhandler.delete(app, rows, config)
     })
-  },
+  }
 }

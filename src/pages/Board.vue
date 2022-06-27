@@ -12,7 +12,6 @@ export default defineComponent({
   data: function () {
     return {};
   },
-
   methods: function () {},
 });
 </script>
