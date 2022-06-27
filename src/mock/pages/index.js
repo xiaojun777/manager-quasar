@@ -5,9 +5,9 @@ import educations from './education'
 
 export default {
   installData: function (mock) {
-    apps.installData(mock);
-    boards.installData(mock);
-    users.installData(mock);
-    educations.installData(mock);
-  }
-};
+    apps.installData(mock)
+    boards.installData(mock)
+    users.installData(mock)
+    educations.installData(mock)
+  },
+}

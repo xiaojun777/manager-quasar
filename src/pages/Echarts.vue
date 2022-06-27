@@ -29,19 +29,17 @@
     </div>
   </q-page>
 </template>
-<!-- TODO: 导入组件 -->
-<!-- FIXME: hei -->
-<!-- BUG: hello -->
+
 <script>
-import LineChart from "src/components/echarts/LineChart";
-import Boxplot from "src/components/echarts/BoxChart";
-import PieChart from "src/components/echarts/PieChart";
-import ScatterChart from "src/components/echarts/ScatterChart";
-import DottedBarChart from "src/components/echarts/DottedBarChart";
-import GuageChart from "src/components/echarts/GuageChart";
-import BarChart from "src/components/echarts/BarChart";
-import AreaChart from "src/components/echarts/AreaChart";
-import { defineComponent } from "vue";
+import LineChart from 'src/components/echarts/LineChart'
+import Boxplot from 'src/components/echarts/BoxChart'
+import PieChart from 'src/components/echarts/PieChart'
+import ScatterChart from 'src/components/echarts/ScatterChart'
+import DottedBarChart from 'src/components/echarts/DottedBarChart'
+import GuageChart from 'src/components/echarts/GuageChart'
+import BarChart from 'src/components/echarts/BarChart'
+import AreaChart from 'src/components/echarts/AreaChart'
+import { defineComponent } from 'vue'
 export default defineComponent({
   components: {
     LineChart,
@@ -51,13 +49,13 @@ export default defineComponent({
     Boxplot,
     PieChart,
     ScatterChart,
-    DottedBarChart,
+    DottedBarChart
   },
-  name: "Echarts",
+  name: 'Echarts',
   data: function () {
-    return {};
+    return {}
   },
 
-  methods: function () {},
-});
+  methods: function () {}
+})
 </script>

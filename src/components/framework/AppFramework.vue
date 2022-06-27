@@ -1,7 +1,8 @@
 <template>
   <q-bar class="full-width bg-transparent">
     <q-btn
-      flat rounded
+      flat
+      rounded
       class="q-ml-sm"
       icon="add"
       text-color="primary"
@@ -10,7 +11,8 @@
       @click="addRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="edit"
@@ -19,7 +21,8 @@
       @click="editRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="preview"
@@ -28,7 +31,8 @@
       @click="viewRow"
     />
     <q-btn
-      flat rounded
+      flat
+      rounded
       text-color="primary"
       class="q-ml-sm"
       icon="remove"
@@ -45,13 +49,15 @@
       unelevated
       :options="[
         { label: '表格', value: false, icon: 'list' },
-        { label: '网格', value: true, icon: 'grid_view' },
+        { label: '网格', value: true, icon: 'grid_view' }
       ]"
     />
 
     <q-space />
     <q-btn
-      flat dense round
+      flat
+      dense
+      round
       class="q-ml-sm"
       text-color="primary"
       icon="search"
@@ -76,12 +82,16 @@
   >
     <template v-slot:top>
       <template v-for="item in searchingItems" :key="item.id">
-        <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
-          {{item.label}}
+        <q-chip
+          removable
+          @remove="onRemoveSearchingItem(item.id)"
+          color="primary"
+          text-color="white"
+        >
+          {{ item.label }}
         </q-chip>
       </template>
     </template>
-
   </q-table>
 
   <row-editor
@@ -99,206 +109,215 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import axios from "axios";
-import RowEditor from "./RowEditor.vue";
-import SearchView from "./SearchView.vue";
-import AlertDialog from "./Alert.vue";
-import rows from "src/components/mixins/rows.js";
+import { defineComponent } from 'vue'
+import axios from 'axios'
+import RowEditor from './RowEditor.vue'
+import SearchView from './SearchView.vue'
+import AlertDialog from './Alert.vue'
+import rows from 'src/components/mixins/rows.js'
 
 export default defineComponent({
-  name: "AppFramework",
+  name: 'AppFramework',
   mixins: [rows],
   components: {
     RowEditor,
     SearchView,
-    AlertDialog,
+    AlertDialog
   },
   props: {
     appid: String,
-    rowsPerPage: Number,
+    rowsPerPage: Number
   },
   data: function () {
     return {
       appname: this.appid,
       grid: false,
       loading: false,
-      selection: "multiple",
+      selection: 'multiple',
       selected: [],
       searchingItems: []
-    };
+    }
   },
 
-  computed: {
-
-  },
+  computed: {},
 
   methods: {
     addRow() {
-      this.$refs.editor.newRow();
+      this.$refs.editor.newRow()
     },
 
     editRow() {
       if (this.selected.length > 1) {
-        this.$refs.alert.show("rows greater than one.");
+        this.$refs.alert.show('rows greater than one.')
       } else if (this.selected.length == 0) {
-        this.$refs.alert.show("must select a row.");
+        this.$refs.alert.show('must select a row.')
       } else if (this.selected.length === 1) {
-        this.$refs.editor.editRow(this.selected[0]);
+        this.$refs.editor.editRow(this.selected[0])
       }
     },
 
     viewRow() {
       if (this.selected.length > 1) {
-        this.$refs.alert.show("rows greater than one.");
+        this.$refs.alert.show('rows greater than one.')
       } else if (this.selected.length == 0) {
-        this.$refs.alert.show("must select a row.");
+        this.$refs.alert.show('must select a row.')
       } else if (this.selected.length === 1) {
-        this.$refs.editor.viewRow(this.selected[0]);
+        this.$refs.editor.viewRow(this.selected[0])
       }
     },
 
     searchRow() {
-      this.$refs.search.show();
+      this.$refs.search.show()
     },
 
     async removeRow() {
-      console.log("remove row...");
+      console.log('remove row...')
       if (this.selected.length > 0) {
-        let response = await axios.post(this.getBaseUrl() + "/delete", {
-          params: this.selected,
-        });
+        let response = await axios.post(this.getBaseUrl() + '/delete', {
+          params: this.selected
+        })
         if (response.data.code) {
-          this.selected = [];
-          this.flushRows();
+          this.selected = []
+          this.flushRows()
         }
       } else {
-        this.$refs.alert.show("rows length must greater than zero.");
+        this.$refs.alert.show('rows length must greater than zero.')
       }
     },
 
     async onAdd(val, callback) {
-      let response = await axios.post(this.getBaseUrl() + "/add", {
-        params: val,
-      });
-      callback(response.data);
+      let response = await axios.post(this.getBaseUrl() + '/add', {
+        params: val
+      })
+      callback(response.data)
     },
 
     async onEdit(val, callback) {
-      let response = await axios.post(this.getBaseUrl() + "/update", {
-        params: val,
-      });
-      callback(response.data);
+      let response = await axios.post(this.getBaseUrl() + '/update', {
+        params: val
+      })
+      callback(response.data)
     },
 
     onAfterNew() {
-      this.flushRows();
+      this.flushRows()
     },
 
     onRequest(config) {
-      this.flushRows(config.pagination);
+      this.flushRows(config.pagination)
     },
 
-    refreshTable () {
-      this.resetPagination();
-      this.flushRows();
-      this.transSearchItems();
+    refreshTable() {
+      this.resetPagination()
+      this.flushRows()
+      this.transSearchItems()
     },
 
     onSearch(val) {
-      this.searching = val;
-      this.refreshTable();
+      this.searching = val
+      this.refreshTable()
     },
 
     onRowClick(event, row, index) {
-      this.$refs.editor.viewRow(row);
+      this.$refs.editor.viewRow(row)
     },
 
     onRemoveSearchingItem(itemId) {
-      switch(typeof this.searching[itemId]){
+      switch (typeof this.searching[itemId]) {
         case 'string': {
-          this.searching[itemId] = '';
-          break;
+          this.searching[itemId] = ''
+          break
         }
         case 'object': {
-          if (Array.isArray(this.searching[itemId])){
-            this.searching[itemId] = [];
-          }else{
-            this.searching[itemId] = {};
+          if (Array.isArray(this.searching[itemId])) {
+            this.searching[itemId] = []
+          } else {
+            this.searching[itemId] = {}
           }
-          break;
+          break
         }
       }
-      this.refreshTable();
+      this.refreshTable()
     },
 
-    transSearchItems () {
-      this.searchingItems = [];
-      let searching = this.searching;
+    transSearchItems() {
+      this.searchingItems = []
+      let searching = this.searching
       for (let i = 0; i < this.app.schema.items.length; i++) {
-        let item = this.app.schema.items[i];
+        let item = this.app.schema.items[i]
         if (item.searchable) {
           switch (item.type) {
-            case "string": {
-              if (searching[item.id] !== void 0 && searching[item.id].length > 0) {
+            case 'string': {
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id].length > 0
+              ) {
                 this.searchingItems.push({
                   id: item.id,
                   label: item.label + ': ' + searching[item.id]
-                });
+                })
               }
-              break;
+              break
             }
-            case "number": {
-              if (searching[item.id] !== void 0 && (searching[item.id].min !== void 0 || searching[item.id].max !== void 0)) {
-                let numberSearching = searching[item.id];
-                let label = item.label + ': ';
-                let min = numberSearching.min;
-                let max = numberSearching.max;
-                let bMin = min !== void 0 && min.length !== 0;
-                let bMax = max !== void 0 && max.length !== 0;
+            case 'number': {
+              if (
+                searching[item.id] !== void 0 &&
+                (searching[item.id].min !== void 0 ||
+                  searching[item.id].max !== void 0)
+              ) {
+                let numberSearching = searching[item.id]
+                let label = item.label + ': '
+                let min = numberSearching.min
+                let max = numberSearching.max
+                let bMin = min !== void 0 && min.length !== 0
+                let bMax = max !== void 0 && max.length !== 0
 
-                if (bMin || bMax){
-                  if (bMin){
-                    label += '>=' + min;
+                if (bMin || bMax) {
+                  if (bMin) {
+                    label += '>=' + min
                   }
 
-                  if (bMin && bMax){
+                  if (bMin && bMax) {
                     label += '且'
                   }
 
-                  if (bMax){
-                    label += '<=' + max;
+                  if (bMax) {
+                    label += '<=' + max
                   }
                   this.searchingItems.push({
                     id: item.id,
                     label: label
-                  });
+                  })
                 }
               }
-              break;
+              break
             }
-            case "option": {
-              if (searching[item.id] !== void 0 && searching[item.id] != null && searching[item.id].length > 0) {
-                let label = item.label + ': ';
-                let labels = [];
-                for (let i=0; i<searching[item.id].length; i++) {
-                  let con = searching[item.id][i];
-                  labels.push(item.options[con]);
+            case 'option': {
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id] != null &&
+                searching[item.id].length > 0
+              ) {
+                let label = item.label + ': '
+                let labels = []
+                for (let i = 0; i < searching[item.id].length; i++) {
+                  let con = searching[item.id][i]
+                  labels.push(item.options[con])
                 }
-                label += `[${labels.join(',')}]`;
+                label += `[${labels.join(',')}]`
                 this.searchingItems.push({
                   id: item.id,
                   label: label
-                });
+                })
               }
-              break;
+              break
             }
           }
         }
       }
     }
-  },
-});
+  }
+})
 </script>
 
 <style lang="sass" scoped>
