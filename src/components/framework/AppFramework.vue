@@ -1,10 +1,12 @@
 <template>
-  <q-tab-panels class="fit"
+  <q-tab-panels class="col"
     v-model="panel"
     animated
     swipeable>
-    <q-tab-panel name="rows" class="fit">
-      <q-bar class="fit bg-transparent">
+    <q-tab-panel name="rows"
+      :style="{'padding': '0px'}"
+      class="column">
+      <q-bar class="bg-transparent">
         <q-btn
           flat rounded
           class="q-ml-sm"
@@ -54,7 +56,7 @@
       </q-bar>
 
       <q-table
-        class="fit"
+        class="col"
         ref="table"
         :title="app.name"
         :rows="rows"
