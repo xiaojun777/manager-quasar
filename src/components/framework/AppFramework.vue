@@ -1,86 +1,97 @@
 <template>
-  <q-bar class="full-width bg-transparent">
-    <q-btn
-      flat rounded
-      class="q-ml-sm"
-      icon="add"
-      text-color="primary"
-      :disable="loading || !flags.add"
-      label="新增"
-      @click="addRow"
-    />
-    <q-btn
-      flat rounded
-      text-color="primary"
-      class="q-ml-sm"
-      icon="edit"
-      :disable="loading || !flags.edit"
-      label="修改"
-      @click="editRow"
-    />
-    <q-btn
-      flat rounded
-      text-color="primary"
-      class="q-ml-sm"
-      icon="preview"
-      :disable="loading || !flags.view"
-      label="查看"
-      @click="viewRow"
-    />
-    <q-btn
-      flat rounded
-      text-color="primary"
-      class="q-ml-sm"
-      icon="remove"
-      :disable="loading || !flags.delete"
-      label="删除"
-      @click="removeRow"
-    />
+  <q-tab-panels
+    v-model="panel"
+    animated
+    swipeable>
+    <q-tab-panel name="rows">
+      <q-bar class="full-width bg-transparent">
+        <q-btn
+          flat rounded
+          class="q-ml-sm"
+          icon="add"
+          text-color="primary"
+          :disable="loading || !flags.add"
+          label="新增"
+          @click="addRow"
+        />
+        <q-btn
+          flat rounded
+          text-color="primary"
+          class="q-ml-sm"
+          icon="edit"
+          :disable="loading || !flags.edit"
+          label="修改"
+          @click="editRow"
+        />
+        <q-btn
+          flat rounded
+          text-color="primary"
+          class="q-ml-sm"
+          icon="preview"
+          :disable="loading || !flags.view"
+          label="查看"
+          @click="viewRow"
+        />
+        <q-btn
+          flat rounded
+          text-color="primary"
+          class="q-ml-sm"
+          icon="remove"
+          :disable="loading || !flags.delete"
+          label="删除"
+          @click="removeRow"
+        />
 
-    <q-space />
-    <q-btn
-      flat dense round
-      class="q-ml-sm"
-      text-color="primary"
-      icon="search"
-      :disable="loading"
-      @click="searchRow"
-    />
-  </q-bar>
-  <q-table
-    class="full-width"
-    ref="table"
-    :title="app.name"
-    :rows="rows"
-    :columns="cols"
-    :loading="loading"
-    :selection="selection"
-    v-model:selected="selected"
-    v-model:pagination="pagination"
-    @request="onRequest"
-    @row-click="onRowClick"
-    row-key="name"
-  >
-    <template v-slot:top>
-      <template v-for="item in searchingItems" :key="item.id">
-        <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
-          {{item.label}}
-        </q-chip>
-      </template>
-    </template>
+        <q-space />
+        <q-btn
+          flat dense round
+          class="q-ml-sm"
+          text-color="primary"
+          icon="search"
+          :disable="loading"
+          @click="searchRow"
+        />
+      </q-bar>
+      <q-table
+        class="full-width"
+        ref="table"
+        :title="app.name"
+        :rows="rows"
+        :columns="cols"
+        :loading="loading"
+        :selection="selection"
+        v-model:selected="selected"
+        v-model:pagination="pagination"
+        @request="onRequest"
+        @row-click="onRowClick"
+        row-key="name"
+      >
+        <template v-slot:top>
+          <template v-for="item in searchingItems" :key="item.id">
+            <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
+              {{item.label}}
+            </q-chip>
+          </template>
+        </template>
 
-  </q-table>
+      </q-table>
+      <search-view :app="app" ref="search" v-on:search="onSearch"> </search-view>
+    </q-tab-panel>
 
-  <row-editor
-    :app="app"
-    ref="editor"
-    v-on:edit="onEdit"
-    v-on:new="onAdd"
-    v-on:afternew="onAfterNew"
-  >
-  </row-editor>
-
-  <search-view :app="app" ref="search" v-on:search="onSearch"> </search-view>
+    <q-tab-panel name="editor">
+      <row-editor
+        :app="app"
+        :rowval="rowVal"
+        :method="method"
+        ref="editor"
+        @edit="onEditorEdit"
+        @new="onEditorAdd"
+        @afternew="onEditorAfterNew"
+        @cancel="onEditorCancel"
+      >
+      </row-editor>
+    </q-tab-panel>
+  </q-tab-panels>
 
   <alert-dialog ref="alert" />
   <confirm-dialog ref="confirm" />
@@ -89,7 +100,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
-import RowEditor from "./RowEditor.vue";
+import RowEditor from "../base/roweditor.vue";
 import SearchView from "./SearchView.vue";
 import AlertDialog from "./Alert.vue";
 import ConfirmDialog from "./Confirm.vue";
@@ -120,7 +131,10 @@ export default defineComponent({
         edit: false,
         view: false,
         delete: false
-      }
+      },
+      panel: 'rows',
+      rowVal: {},
+      method: 'view'
     };
   },
 
@@ -175,27 +189,26 @@ export default defineComponent({
     },
 
     addRow() {
-      this.$refs.editor.newRow();
+      this.showRowEditor('new', {});
     },
 
     editRow() {
-      if (this.selected.length > 1) {
-        this.$refs.alert.show("同时只能编辑一个条目。");
-      } else if (this.selected.length == 0) {
-        this.$refs.alert.show("必须选择一个编辑条目。");
-      } else if (this.selected.length === 1) {
-        this.$refs.editor.editRow(this.selected[0]);
-      }
+      this.showRowEditor('edit', this.selected[0]);
     },
 
     viewRow() {
-      if (this.selected.length > 1) {
-        this.$refs.alert.show("rows greater than one.");
-      } else if (this.selected.length == 0) {
-          this.$refs.alert.show("must select a row.");
-      } else if (this.selected.length === 1) {
-        this.$refs.editor.viewRow(this.selected[0]);
-      }
+      this.showRowEditor('view', this.selected[0]);
+    },
+
+    showRowEditor (method, val) {
+      this.panel = "editor";
+      this.method = method;
+      this.rowVal = val;
+    },
+
+    hideRowEditor () {
+      this.panel = "rows";
+      this.rowVal = {};
     },
 
     searchRow() {
@@ -215,22 +228,26 @@ export default defineComponent({
       }
     },
 
-    async onAdd(val, callback) {
+    async onEditorAdd (val, callback) {
       let response = await axios.post(this.getBaseUrl() + "/add", {
         params: val,
       });
       callback(response.data);
     },
 
-    async onEdit(val, callback) {
+    async onEditorEdit (val, callback) {
       let response = await axios.post(this.getBaseUrl() + "/update", {
         params: val,
       });
       callback(response.data);
     },
 
-    onAfterNew() {
+    onEditorAfterNew () {
       this.flushRows();
+    },
+
+    onEditorCancel () {
+      this.hideRowEditor();
     },
 
     onRequest(config) {
@@ -249,7 +266,7 @@ export default defineComponent({
     },
 
     onRowClick(event, row, index) {
-      this.$refs.editor.viewRow(row);
+      this.showRowEditor('view', row);
     },
 
     onRemoveSearchingItem(itemId) {
