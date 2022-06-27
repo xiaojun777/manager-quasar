@@ -1,5 +1,5 @@
 <template>
-    <q-dialog v-model="showed">
+    <q-dialog v-model="showed" persistent>
       <q-card>
         <q-card-section>
           <div class="text-h6">Alert</div>

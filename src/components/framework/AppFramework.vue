@@ -5,7 +5,7 @@
       class="q-ml-sm"
       icon="add"
       text-color="primary"
-      :disable="loading"
+      :disable="loading || !flags.add"
       label="新增"
       @click="addRow"
     />
@@ -14,7 +14,7 @@
       text-color="primary"
       class="q-ml-sm"
       icon="edit"
-      :disable="loading"
+      :disable="loading || !flags.edit"
       label="修改"
       @click="editRow"
     />
@@ -23,7 +23,7 @@
       text-color="primary"
       class="q-ml-sm"
       icon="preview"
-      :disable="loading"
+      :disable="loading || !flags.view"
       label="查看"
       @click="viewRow"
     />
@@ -32,21 +32,9 @@
       text-color="primary"
       class="q-ml-sm"
       icon="remove"
-      :disable="loading"
+      :disable="loading || !flags.delete"
       label="删除"
       @click="removeRow"
-    />
-    <q-btn-toggle
-      v-model="grid"
-      rounded
-      text-color="primary"
-      class="q-ml-sm"
-      flat
-      unelevated
-      :options="[
-        { label: '表格', value: false, icon: 'list' },
-        { label: '网格', value: true, icon: 'grid_view' },
-      ]"
     />
 
     <q-space />
@@ -65,7 +53,6 @@
     :title="app.name"
     :rows="rows"
     :columns="cols"
-    :grid="grid"
     :loading="loading"
     :selection="selection"
     v-model:selected="selected"
@@ -96,6 +83,7 @@
   <search-view :app="app" ref="search" v-on:search="onSearch"> </search-view>
 
   <alert-dialog ref="alert" />
+  <confirm-dialog ref="confirm" />
 </template>
 
 <script>
@@ -104,6 +92,7 @@ import axios from "axios";
 import RowEditor from "./RowEditor.vue";
 import SearchView from "./SearchView.vue";
 import AlertDialog from "./Alert.vue";
+import ConfirmDialog from "./Confirm.vue";
 import rows from "src/components/mixins/rows.js";
 
 export default defineComponent({
@@ -113,6 +102,7 @@ export default defineComponent({
     RowEditor,
     SearchView,
     AlertDialog,
+    ConfirmDialog
   },
   props: {
     appid: String,
@@ -121,11 +111,16 @@ export default defineComponent({
   data: function () {
     return {
       appname: this.appid,
-      grid: false,
       loading: false,
       selection: "multiple",
       selected: [],
-      searchingItems: []
+      searchingItems: [],
+      flags: {
+        add: true,
+        edit: false,
+        view: false,
+        delete: false
+      }
     };
   },
 
@@ -133,16 +128,61 @@ export default defineComponent({
 
   },
 
+  mounted: async function () {
+    this.updateFlag(this.selected);
+  },
+
+  watch: {
+    selected: {
+      handler (val) {
+        this.updateFlag(val);
+      },
+      deep: true
+    }
+  },
+
   methods: {
+    updateFlag (selected) {
+      switch (selected.length){
+        case 0: {
+          this.flags = {
+            add: true,
+            edit: false,
+            view: false,
+            delete: false
+          }
+          break;
+        }
+        case 1: {
+          this.flags = {
+            add: true,
+            edit: true,
+            view: true,
+            delete: true
+          }
+          break;
+        }
+        default: {
+          this.flags = {
+            add: true,
+            edit: false,
+            view: false,
+            delete: true
+          }
+          break;
+        }
+      }
+    },
+
     addRow() {
       this.$refs.editor.newRow();
     },
 
     editRow() {
       if (this.selected.length > 1) {
-        this.$refs.alert.show("rows greater than one.");
+        this.$refs.alert.show("同时只能编辑一个条目。");
       } else if (this.selected.length == 0) {
-        this.$refs.alert.show("must select a row.");
+        this.$refs.alert.show("必须选择一个编辑条目。");
       } else if (this.selected.length === 1) {
         this.$refs.editor.editRow(this.selected[0]);
       }
@@ -152,7 +192,7 @@ export default defineComponent({
       if (this.selected.length > 1) {
         this.$refs.alert.show("rows greater than one.");
       } else if (this.selected.length == 0) {
-        this.$refs.alert.show("must select a row.");
+          this.$refs.alert.show("must select a row.");
       } else if (this.selected.length === 1) {
         this.$refs.editor.viewRow(this.selected[0]);
       }
@@ -163,8 +203,8 @@ export default defineComponent({
     },
 
     async removeRow() {
-      console.log("remove row...");
-      if (this.selected.length > 0) {
+      let bRet = await this.$refs.confirm.show('确定要删除信息吗？');
+      if (bRet) {
         let response = await axios.post(this.getBaseUrl() + "/delete", {
           params: this.selected,
         });
@@ -172,8 +212,6 @@ export default defineComponent({
           this.selected = [];
           this.flushRows();
         }
-      } else {
-        this.$refs.alert.show("rows length must greater than zero.");
       }
     },
 
