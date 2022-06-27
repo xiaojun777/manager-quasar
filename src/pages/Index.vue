@@ -1,6 +1,6 @@
 <template>
   <q-page class="fit row">
-    <app-framework appid='users' :rows-per-page="5">
+    <app-framework appid='users' :rows-per-page="5" class="col">
     </app-framework>
   </q-page>
 </template>

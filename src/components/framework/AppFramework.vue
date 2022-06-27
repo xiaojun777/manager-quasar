@@ -1,10 +1,9 @@
 <template>
-  <q-tab-panels class="col"
+  <q-tab-panels :class="this.class"
     v-model="panel"
     animated
     swipeable>
     <q-tab-panel name="rows"
-      :style="{'padding': '0px'}"
       class="column">
       <q-bar class="bg-transparent">
         <q-btn
@@ -81,8 +80,10 @@
       <search-view :app="app" ref="search" v-on:search="onSearch"> </search-view>
     </q-tab-panel>
 
-    <q-tab-panel name="editor">
+    <q-tab-panel name="editor"
+      class="row">
       <row-editor
+        class="col"
         :app="app"
         :rowval="rowVal"
         :method="method"
@@ -121,6 +122,7 @@ export default defineComponent({
   props: {
     appid: String,
     rowsPerPage: Number,
+    class: String
   },
   data: function () {
     return {
@@ -367,5 +369,8 @@ export default defineComponent({
 
 <style lang="sass" scoped>
 .my-custom-toggle
-    border: 1px solid #027be3
+  border: 1px solid #027be3
+
+.q-tab-panel
+  padding: 0px !important
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="column no-wrap">
+  <q-card :class="'column no-wrap ' + this.class">
     <div class="q-pa-md scroll">
       <q-form class="q-gutter-lg">
         <template v-for="item in app.schema.items" :key="item.id">
@@ -59,7 +59,8 @@ export default defineComponent({
   props: {
     app: null,
     rowval: null,
-    method: String
+    method: String,
+    class: String
   },
   data: function () {
     return {
