@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="showed">
+  <q-dialog v-model="showed" persistent>
     <q-card>
       <q-card-section>
         <div class="text-h6">Alert</div>
@@ -17,21 +17,21 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "AlertDialog",
+  name: 'AlertDialog',
   data: function () {
     return {
-      info: "",
-      showed: false,
-    };
+      info: '',
+      showed: false
+    }
   },
   methods: {
     show(info) {
-      this.info = info;
-      this.showed = true;
-    },
-  },
-});
+      this.info = info
+      this.showed = true
+    }
+  }
+})
 </script>
