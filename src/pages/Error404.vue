@@ -8,7 +8,7 @@
 
       <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
 
-      <q-btn @click="add">添加</q-btn>
+      <q-btn @click="add">gotoE-charts</q-btn>
       <q-btn
         class="q-mt-xl"
         color="white"
@@ -34,7 +34,8 @@ export default defineComponent({
   },
   methods: {
     add() {
-      this.count.push('white')
+      // this.count.push('white')
+      this.$router.push({ path: '/echarts' })
     }
   }
 })

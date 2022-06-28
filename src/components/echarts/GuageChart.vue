@@ -70,11 +70,11 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.init()
+    this.drawGuageChart()
   },
   watch: {
     '$q.dark.isActive': function () {
-      this.init()
+      this.drawGuageChart()
     }
   },
   methods: {
@@ -94,6 +94,13 @@ export default defineComponent({
       let theme = this.model ? 'dark' : 'light'
       this.guage_chart = echarts.init(guageChart, theme)
       this.guage_chart.setOption(this.options)
+    },
+    drawGuageChart() {
+      let guageChart = document.getElementById('guageChart')
+      // echarts.dispose(guageChart)
+      let theme = this.model ? 'dark' : 'light'
+      guageChart = echarts.init(guageChart, theme)
+      guageChart.setOption(this.options)
     },
     onResize() {
       if (this.guage_chart) {

@@ -67,11 +67,11 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.init()
+    this.drawBarChart()
   },
   watch: {
     '$q.dark.isActive': function () {
-      this.init()
+      this.drawBarChart()
     }
   },
   methods: {
@@ -91,6 +91,13 @@ export default defineComponent({
       let theme = this.model ? 'dark' : 'light'
       this.bar_chart = echarts.init(barChart, theme)
       this.bar_chart.setOption(this.options)
+    },
+    drawBarChart() {
+      let barChart = document.getElementById('barChart')
+      // echarts.dispose(barChart)
+      let theme = this.model ? 'dark' : 'light'
+      barChart = echarts.init(barChart, theme)
+      barChart.setOption(this.options)
     },
     onResize() {
       if (this.bar_chart) {

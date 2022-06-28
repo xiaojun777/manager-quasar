@@ -136,20 +136,27 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.init()
+    this.drawDottedBarChart()
   },
   watch: {
     '$q.dark.isActive': function () {
-      this.init()
+      this.drawDottedBarChart()
     }
   },
   methods: {
     init() {
-      // let dottedbarChart = document.getElementById('dottedbarChart')
-      // echarts.dispose(dottedbarChart)
-      // let theme = this.model ? 'dark' : 'light'
-      // this.dottedbar_chart = echarts.init(dottedbarChart, theme)
-      // this.dottedbar_chart.setOption(this.options)
+      let dottedbarChart = document.getElementById('dottedbarChart')
+      echarts.dispose(dottedbarChart)
+      let theme = this.model ? 'dark' : 'light'
+      this.dottedbar_chart = echarts.init(dottedbarChart, theme)
+      this.dottedbar_chart.setOption(this.options)
+    },
+    drawDottedBarChart() {
+      let dottedbarChart = document.getElementById('dottedbarChart')
+      echarts.dispose(dottedbarChart)
+      let theme = this.model ? 'dark' : 'light'
+      dottedbarChart = echarts.init(dottedbarChart, theme)
+      dottedbarChart.setOption(this.options)
     },
     onResize() {
       if (this.dottedbar_chart) {

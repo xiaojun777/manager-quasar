@@ -1,8 +1,7 @@
 <template>
   <div>
     <q-card>
-      <div>{{ options.color }}</div>
-
+      <div>{{ colorData }}</div>
       <q-card-section class="text-h6"> Line Chart </q-card-section>
       <q-card-section>
         <div ref="linechart" id="lineChart" style="height: 250px"></div>
@@ -14,9 +13,17 @@
 
 <script>
 import * as echarts from 'echarts'
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
 export default defineComponent({
   name: 'LineChart',
+  props: {
+    colorData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
     return {
       options: {
@@ -207,10 +214,6 @@ export default defineComponent({
       model: false
     }
   },
-  mounted() {
-    this.init()
-  },
-  props: ['colorData'],
   watch: {
     '$q.dark.isActive': function () {
       this.init()
@@ -226,15 +229,27 @@ export default defineComponent({
       },
       deep: true,
       immediate: true
+    },
+    colorData: {
+      handle(oldVal, newVal) {
+        console.log(oldVal, newVal)
+        this.init()
+      }
     }
+  },
+  mounted() {
+    this.init()
   },
   methods: {
     init() {
       let lineChart = document.getElementById('lineChart')
-      echarts.dispose(lineChart)
       let theme = this.model ? 'dark' : 'light'
-      this.line_chart = echarts.init(lineChart, theme)
-      this.line_chart.setOption(this.options)
+      lineChart = echarts.init(lineChart, theme)
+      lineChart.setOption(this.options)
+      this.line_chart = lineChart
+      console.log('linechart:', this.line_chart)
+      // echarts.dispose(lineChart)
+      // this.line_chart.setOption(this.options)
     },
     onResize() {
       if (this.line_chart) {

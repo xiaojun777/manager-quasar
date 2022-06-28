@@ -123,11 +123,11 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.init()
+    this.drawBoxChart()
   },
   watch: {
     '$q.dark.isActive': function () {
-      this.init()
+      this.drawBoxChart()
     }
   },
   methods: {
@@ -137,6 +137,13 @@ export default defineComponent({
       let theme = this.model ? 'dark' : 'light'
       this.boxplot_chart = echarts.init(boxplotChart, theme)
       this.boxplot_chart.setOption(this.options)
+    },
+    drawBoxChart() {
+      let boxplotChart = document.getElementById('boxplotChart')
+      // echarts.dispose(boxplotChart)
+      let theme = this.model ? 'dark' : 'light'
+      boxplotChart = echarts.init(boxplotChart, theme)
+      boxplotChart.setOption(this.options)
     },
     onResize() {
       if (this.boxplot_chart) {

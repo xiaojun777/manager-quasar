@@ -133,20 +133,21 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.init()
+    console.log('AreaChart mounted is comming')
+    this.drawAreaChart()
   },
   watch: {
     '$q.dark.isActive': function () {
-      this.init()
+      this.drawAreaChart()
     }
   },
   methods: {
-    init() {
+    drawAreaChart() {
       let areaChart = document.getElementById('areaChart')
-      echarts.dispose(areaChart)
+      // echarts.dispose(areaChart)
       let theme = this.model ? 'dark' : 'light'
-      this.area_chart = echarts.init(areaChart, theme)
-      this.area_chart.setOption(this.options)
+      areaChart = echarts.init(areaChart, theme)
+      areaChart.setOption(this.options)
     },
     onResize() {
       if (this.area_chart) {
