@@ -4,6 +4,7 @@ let app = {
   label: "教育经历",
   schema: {
     key: "education_id",
+    apps: [],
     items: [{
       id: 'education_id',
       label: '教育经历ID',

@@ -104,7 +104,6 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
-import RowEditor from "./RowEditor.vue";
 import SearchView from "./SearchView.vue";
 import AlertDialog from "./Alert.vue";
 import ConfirmDialog from "./Confirm.vue";
@@ -114,7 +113,6 @@ export default defineComponent({
   name: "AppFramework",
   mixins: [rows],
   components: {
-    RowEditor,
     SearchView,
     AlertDialog,
     ConfirmDialog
