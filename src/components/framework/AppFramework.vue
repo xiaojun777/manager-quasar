@@ -57,7 +57,7 @@
       <q-table
         class="col"
         ref="table"
-        :title="app.name"
+        :title="app.label"
         :rows="rows"
         :columns="cols"
         :loading="loading"
@@ -104,7 +104,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
-import RowEditor from "../base/roweditor.vue";
+import RowEditor from "./RowEditor.vue";
 import SearchView from "./SearchView.vue";
 import AlertDialog from "./Alert.vue";
 import ConfirmDialog from "./Confirm.vue";
