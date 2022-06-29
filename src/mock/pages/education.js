@@ -22,7 +22,7 @@ let app = {
       default: "",
       visible: false,
       editable: false,
-      searchable: false,
+      searchable: true,
       sortable: true,
       rules: [],
     },{

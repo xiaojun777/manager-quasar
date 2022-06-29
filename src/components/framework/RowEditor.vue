@@ -70,7 +70,7 @@
 
       <template v-for="childapp in this.app.schema.apps" :key="childapp.id">
         <q-tab-panel :name="childapp.id" class="column">
-          <app-framework :appid="childapp.id" :rows-per-page="5" class="col">
+          <app-framework :appid="childapp.id" :rows-per-page="5" class="col" :defaultData="this.genForeignData(childapp.foreigns)">
           </app-framework>
         </q-tab-panel>
       </template>
@@ -116,6 +116,15 @@ export default defineComponent({
   },
 
   methods: {
+    genForeignData (keys) {
+      let data = {};
+      for(let i=0; i<keys.length; i++){
+        let key = keys[i];
+        data[key] = this.rowval[key];
+      }
+      return data;
+    },
+
     getTabs: function () {
       let tabs = [{
         id: this.app.id,

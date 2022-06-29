@@ -120,7 +120,13 @@ export default defineComponent({
   props: {
     appid: String,
     rowsPerPage: Number,
-    class: String
+    class: String,
+    defaultData: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
   },
   data: function () {
     return {
@@ -129,6 +135,7 @@ export default defineComponent({
       selection: "multiple",
       selected: [],
       searchingItems: [],
+      defaultSearching: this.defaultData,
       flags: {
         add: true,
         edit: false,
@@ -192,7 +199,7 @@ export default defineComponent({
     },
 
     addRow() {
-      this.showRowEditor('new', {});
+      this.showRowEditor('new', this.defaultData);
     },
 
     editRow() {
