@@ -22,54 +22,63 @@
     :editable="editable"
   >
   </widget-gallery>
+  <widget-line-chart
+    v-if="portlet.type == 'lineChart'"
+    v-model:portlet="innerPortlet"
+    @delete="onDelete"
+    :editable="editable"
+  >
+  </widget-line-chart>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import WidgetRows from "./rows.vue";
-import WidgetHtml from "./html.vue";
-import WidgetGallery from "./gallery.vue";
+import { defineComponent } from 'vue'
+import WidgetRows from './rows.vue'
+import WidgetHtml from './html.vue'
+import WidgetGallery from './gallery.vue'
+import WidgetLineChart from './lineChart.vue'
 
 export default defineComponent({
-  name: "Portlet",
+  name: 'Portlet',
   props: {
     portlet: {},
     board: String,
-    editable: Boolean,
+    editable: Boolean
   },
 
   components: {
     WidgetRows,
     WidgetHtml,
     WidgetGallery,
+    WidgetLineChart
   },
 
   data: function () {
     return {
-      innerPortlet: this.portlet,
-    };
+      innerPortlet: this.portlet
+    }
   },
 
   emits: {
-    "widget-delete": null,
-    "update:portlet": null,
+    'widget-delete': null,
+    'update:portlet': null
   },
 
   watch: {
     innerPortlet: {
       handler(val) {
-        this.$emit("update:portlet", val);
+        this.$emit('update:portlet', val)
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
 
   methods: {
     onDelete(val) {
-      console.log("onDelete in portlet...");
-      console.log(val);
-      this.$emit("widget-delete", val);
-    },
-  },
-});
+      console.log('onDelete in portlet...')
+      console.log(val)
+      this.$emit('widget-delete', val)
+    }
+  }
+})
 </script>

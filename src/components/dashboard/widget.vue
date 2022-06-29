@@ -43,33 +43,33 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "DoardWidget",
+  name: 'DoardWidget',
   props: {
     title: String,
     titleshow: Boolean,
-    editable: Boolean,
+    editable: Boolean
   },
   data: function () {
-    return {};
+    return {}
   },
 
   emits: {
     delete: null,
-    edit: null,
+    edit: null
   },
   methods: {
     onEdit() {
-      this.$emit("edit");
+      this.$emit('edit')
     },
 
     onDelete() {
-      this.$emit("delete");
-    },
-  },
-});
+      this.$emit('delete')
+    }
+  }
+})
 </script>
 
 <style lang="sass" scoped>

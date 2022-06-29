@@ -27,62 +27,62 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import Portlet from "./portlet.vue";
-import draggable from "vuedraggable";
-import axios from "axios";
+import { defineComponent } from 'vue'
+import Portlet from './portlet.vue'
+import draggable from 'vuedraggable'
+import axios from 'axios'
 
 export default defineComponent({
-  name: "DashBoard",
+  name: 'DashBoard',
 
   props: {
-    boardid: String,
+    boardid: String //users
   },
 
   components: {
     Portlet,
-    draggable,
+    draggable
   },
 
   computed: {},
 
   mounted: async function () {
-    this.board = await this.getBoard();
+    this.board = await this.getBoard()
   },
 
   data: function () {
     return {
       board: {},
-      editable: true,
-    };
+      editable: true
+    }
   },
 
   methods: {
     async getBoard() {
-      let response = await axios.get("board", {
-        params: { board: this.boardid },
-      });
-      return response.data;
+      let response = await axios.get('board', {
+        params: { board: this.boardid }
+      })
+      return response.data
     },
 
     onDeleteWidget(name) {
-      console.log("onDeleteWidget...");
-      console.log(name);
-      this.deleteWidget(name);
+      console.log('onDeleteWidget...')
+      console.log(name)
+      this.deleteWidget(name)
     },
 
     deleteWidget(name) {
       for (let i = 0; i < this.board.items.length; i++) {
-        let col = this.board.items[i];
+        let col = this.board.items[i]
         for (let j = 0; j < col.length; j++) {
-          let item = col[j];
+          let item = col[j]
           if (item.name === name) {
-            this.board.items[i].splice(j, 1);
-            break;
+            this.board.items[i].splice(j, 1)
+            break
           }
         }
       }
-    },
-  },
-});
+    }
+  }
+})
 </script>
