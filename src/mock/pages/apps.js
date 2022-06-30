@@ -13,13 +13,13 @@ export default {
 
     mock.onGet("/apps").reply(200, [{
       id: "users",
-      name: "用户管理",
+      label: "用户管理",
     },{
       id: "groups",
-      name: "用户组管理",
+      label: "用户组管理",
     },{
       id: "educations",
-      name: "教育经历",
+      label: "教育经历",
     }]);
 
     mock.onGet("/apps/getapp").reply(function (config){

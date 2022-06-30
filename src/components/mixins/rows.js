@@ -8,6 +8,7 @@ export default {
         cols: [],
         app: {},
         selection: 'none', //none, single, multiple
+        defaultSearching: {},
         searching: {},
         pagination: {
           sortBy: '',
@@ -40,7 +41,9 @@ export default {
       },
 
       async flushRows (pagination) {
-        this.rows = await this.getRows(pagination, this.searching);
+        let searching = Object.assign(this.defaultSearching, this.defaultSearching);
+        console.log(searching);
+        this.rows = await this.getRows(pagination, searching);
       },
 
       async getApp  () {

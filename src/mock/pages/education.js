@@ -1,15 +1,18 @@
 import mockhandler from './base/mockhandler';
 let app = {
   id: "educations",
-  name: "教育经历",
+  label: "教育经历",
   schema: {
     key: "education_id",
+    apps: [],
     items: [{
       id: 'education_id',
       label: '教育经历ID',
       type: 'string',
       default: "",
-      searchable: true,
+      visible: false,
+      editable: false,
+      searchable: false,
       sortable: true,
       rules: [],
     },{
@@ -17,6 +20,8 @@ let app = {
       label: '用户ID',
       type: 'string',
       default: "",
+      visible: false,
+      editable: false,
       searchable: true,
       sortable: true,
       rules: [],
@@ -45,17 +50,17 @@ let app = {
       sortable: true,
       rules: [],
     },{
-      id: "education_starttime",
+      id: "education_startdate",
       label: "受教育开始日期",
-      type: "date",
+      type: "string",
       default: '19700101',
       searchable: true,
       sortable: true,
       rules: [],
     },{
-      id: "education_endtime",
+      id: "education_enddate",
       label: "受教育结束日期",
-      type: "date",
+      type: "string",
       default: '19700101',
       searchable: true,
       sortable: true,

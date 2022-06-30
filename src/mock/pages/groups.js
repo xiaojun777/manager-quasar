@@ -1,6 +1,6 @@
 let app =  {
   id: "groups",
-  name: "用户组管理",
+  label: "用户组管理",
   schema: {
     key: 'groupid',
     items:[{
