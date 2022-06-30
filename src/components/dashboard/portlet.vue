@@ -64,8 +64,6 @@ export default defineComponent({
 
     methods: {
       onDelete (val) {
-        console.log('onDelete in portlet...');
-        console.log(val);
         this.$emit('widget-delete', val);
       }
     }

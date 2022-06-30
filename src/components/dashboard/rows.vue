@@ -94,7 +94,6 @@ export default defineComponent({
 
     methods: {
       onDelete () {
-        console.log('onDelete in rows...');
         this.$emit('delete', this.portlet.name);
       }
     }

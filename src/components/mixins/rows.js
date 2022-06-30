@@ -7,14 +7,13 @@ export default {
         rows: [],
         cols: [],
         app: {},
-        selection: 'none', //none, single, multiple
         defaultSearching: {},
         searching: {},
         pagination: {
           sortBy: '',
           descending: false,
           page: 1,
-          rowsPerPage: 5,
+          rowsPerPage: 10,
           rowsNumber: 0
         }
       }
@@ -41,7 +40,7 @@ export default {
       },
 
       async flushRows (pagination) {
-        let searching = _.merge(this.defaultSearching, this.defaultSearching);
+        let searching = _.merge(this.defaultSearching, this.searching);
         this.rows = await this.getRows(pagination, searching);
       },
 

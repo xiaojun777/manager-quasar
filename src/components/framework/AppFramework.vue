@@ -5,7 +5,8 @@
     swipeable>
     <q-tab-panel name="rows"
       class="column">
-      <q-bar class="bg-transparent">
+      <q-bar v-if="editable"
+        class="bg-transparent">
         <q-btn
           flat rounded
           class="q-ml-sm"
@@ -62,11 +63,13 @@
         :columns="cols"
         :loading="loading"
         :selection="selection"
+        :hide-header="hideHeader"
+        :hide-bottom="hideBottom"
         v-model:selected="selected"
         v-model:pagination="pagination"
         @request="onRequest"
         @row-click="onRowClick"
-        row-key="name"
+        :row-key="row => {row[this.app.schema.key]}"
       >
         <template v-slot:top>
           <template v-for="item in searchingItems" :key="item.id">
@@ -119,20 +122,30 @@ export default defineComponent({
   },
   props: {
     appid: String,
-    rowsPerPage: Number,
     class: String,
+    editable: {
+      type: Boolean,
+      default: true
+    },
     defaultData: {
       type: Object,
       default () {
         return {}
       }
+    },
+    hideHeader: {
+      type: Boolean,
+      default: false
+    },
+    hideBottom: {
+      type: Boolean,
+      default: false
     }
   },
   data: function () {
     return {
       appname: this.appid,
       loading: false,
-      selection: "multiple",
       selected: [],
       searchingItems: [],
       defaultSearching: this.defaultData,
@@ -149,7 +162,9 @@ export default defineComponent({
   },
 
   computed: {
-
+    selection () {
+      return this.editable ? "multiple" : "none";
+    }
   },
 
   mounted: async function () {
@@ -373,9 +388,16 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
-.my-custom-toggle
-  border: 1px solid #027be3
 
 .q-tab-panel
   padding: 0px !important
+
+::v-deep .q-table__top
+  padding-top: 0px !important
+  padding-bottom: 0px !important
+
+::v-deep .q-table th, ::v-deep .q-table td
+  padding-top: 0px !important
+  padding-bottom: 0px !important
+
 </style>
