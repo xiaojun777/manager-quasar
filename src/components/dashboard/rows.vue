@@ -29,7 +29,7 @@
       emit-value
       map-options
       option-value="id"
-      option-label="name"
+      option-label="label"
       :options="appinfos"
       label="选择应用"/>
 

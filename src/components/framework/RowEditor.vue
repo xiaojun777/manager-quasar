@@ -1,6 +1,7 @@
 <template>
   <q-card :class="'column no-wrap ' + this.class">
     <q-tabs
+      v-if="getTabs().length > 1"
       v-model="panel"
       dense
       class="text-grey"
