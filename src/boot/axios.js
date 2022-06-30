@@ -9,7 +9,8 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' })
-
+import AppFramework from 'src/components/framework/AppFramework.vue';
+import RowEditor from 'src/components/framework/RowEditor.vue';
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -20,6 +21,9 @@ export default boot(({ app }) => {
   app.config.globalProperties.$api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
+
+  app.component('app-framework', AppFramework);
+  app.component('row-editor', RowEditor);
 })
 
 export { api }

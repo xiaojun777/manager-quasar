@@ -64,20 +64,20 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "RowEditor",
+  name: 'RowEditorDialog',
   props: {
-    app: null,
+    app: null
   },
   data: function () {
     return {
       showed: false,
       values: {},
-      method: "new",
-      submitting: false,
-    };
+      method: 'new',
+      submitting: false
+    }
   },
 
   mounted: async function () {},
@@ -86,82 +86,82 @@ export default defineComponent({
 
   methods: {
     getOptions(options) {
-      let opts = [];
+      let opts = []
       for (let opt in Object.keys(options)) {
         opts.push({
           value: opt,
-          label: options[opt],
-        });
+          label: options[opt]
+        })
       }
-      return opts;
+      return opts
     },
 
     newRow() {
-      this.method = "new";
-      this.resetValues();
-      this.show();
+      this.method = 'new'
+      this.resetValues()
+      this.show()
     },
 
     editRow(vals) {
-      this.method = "edit";
-      this.resetValues();
-      this.updateValues(vals);
-      this.show();
+      this.method = 'edit'
+      this.resetValues()
+      this.updateValues(vals)
+      this.show()
     },
 
     viewRow(vals) {
-      this.method = "view";
-      this.resetValues();
-      this.updateValues(vals);
-      this.show();
+      this.method = 'view'
+      this.resetValues()
+      this.updateValues(vals)
+      this.show()
     },
 
     updateValues(vals) {
-      this.values = vals;
+      this.values = vals
     },
 
     resetValues() {
-      this.values = {};
+      this.values = {}
     },
 
     hide() {
-      this.resetValues();
-      this.showed = false;
+      this.resetValues()
+      this.showed = false
     },
 
     show() {
-      this.showed = true;
+      this.showed = true
     },
 
     onCancel() {
-      this.hide();
+      this.hide()
     },
 
     onSave() {
-      if (this.method === "new") {
-        this.submitting = true;
-        this.$emit("new", this.values, (val) => {
-          this.submitting = false;
+      if (this.method === 'new') {
+        this.submitting = true
+        this.$emit('new', this.values, (val) => {
+          this.submitting = false
           if (val.code) {
-            this.hide();
-            this.$emit("afternew");
+            this.hide()
+            this.$emit('afternew')
           } else {
           }
-        });
+        })
       } else {
-        this.submitting = true;
-        this.$emit("edit", this.values, (val) => {
-          this.submitting = false;
+        this.submitting = true
+        this.$emit('edit', this.values, (val) => {
+          this.submitting = false
           if (val.code) {
-            this.hide();
-            this.$emit("afteredit");
+            this.hide()
+            this.$emit('afteredit')
           } else {
           }
-        });
+        })
       }
-    },
+    }
   },
 
-  computed: {},
-});
+  computed: {}
+})
 </script>

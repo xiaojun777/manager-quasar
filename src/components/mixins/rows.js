@@ -1,100 +1,106 @@
-import axios from "axios";
+import axios from 'axios'
 
 export default {
   data() {
     return {
-      appname: "",
+      appname: '',
       rows: [],
       cols: [],
       app: {},
-      selection: "none", //none, single, multiple
+      selection: 'none', //none, single, multiple
+      defaultSearching: {},
       searching: {},
       pagination: {
-        sortBy: "",
+        sortBy: '',
         descending: false,
         page: 1,
         rowsPerPage: 5,
-        rowsNumber: 0,
-      },
-    };
+        rowsNumber: 0
+      }
+    }
   },
 
   computed: {},
 
   mounted: async function () {
-    this.resetApp();
+    this.resetApp()
   },
 
   methods: {
     async resetApp() {
-      this.app = await this.getApp();
-      this.initCols();
-      this.resetPagination();
+      this.app = await this.getApp()
+      this.initCols()
+      this.resetPagination()
       //this.pagination.sortBy = this.app.schema.key;
-      this.flushRows();
+      this.flushRows()
     },
 
     getBaseUrl() {
-      return `/app/${this.appname}`;
+      return `/app/${this.appname}`
     },
 
     async flushRows(pagination) {
-      this.rows = await this.getRows(pagination, this.searching);
+      let searching = Object.assign(
+        this.defaultSearching,
+        this.defaultSearching
+      )
+      console.log(searching)
+      this.rows = await this.getRows(pagination, searching)
     },
 
     async getApp() {
-      let response = await axios.get("apps/getapp", {
-        params: { appid: this.appname },
-      });
-      return response.data;
+      let response = await axios.get('apps/getapp', {
+        params: { appid: this.appname }
+      })
+      return response.data
     },
 
     initCols() {
-      this.cols = [];
+      this.cols = []
       this.app.schema.items.forEach((item) => {
         let col = {
           name: item.id,
           field: item.id,
           label: item.label,
-          align: "left",
-          sortable: item.sortable,
-        };
+          align: 'left',
+          sortable: item.sortable
+        }
         if (this.app.schema.key === item.id) {
-          col["required"] = true;
+          col['required'] = true
         }
-        if (item.type === "option") {
-          col["format"] = function (val, row) {
-            return item.options[val];
-          };
+        if (item.type === 'option') {
+          col['format'] = function (val, row) {
+            return item.options[val]
+          }
         }
-        this.cols.push(col);
-      });
+        this.cols.push(col)
+      })
     },
 
     async getRows(pagination, searching) {
       if (pagination === void 0) {
-        pagination = this.pagination;
+        pagination = this.pagination
       }
-      const { page, rowsPerPage, sortBy, descending } = pagination;
-      let response = await axios.get(this.getBaseUrl() + "/items", {
+      const { page, rowsPerPage, sortBy, descending } = pagination
+      let response = await axios.get(this.getBaseUrl() + '/items', {
         params: {
           start: (page - 1) * rowsPerPage,
           count: rowsPerPage,
           sort: sortBy,
           desc: false,
-          searching: searching,
-        },
-      });
-      let items = [];
+          searching: searching
+        }
+      })
+      let items = []
       if (response.data.code) {
-        this.pagination.sortBy = pagination.sortBy;
-        this.pagination.page = pagination.page;
-        this.pagination.descending = pagination.descending;
-        this.pagination.rowsPerPage = pagination.rowsPerPage;
-        this.pagination.rowsNumber = response.data.length;
-        items = response.data.items;
+        this.pagination.sortBy = pagination.sortBy
+        this.pagination.page = pagination.page
+        this.pagination.descending = pagination.descending
+        this.pagination.rowsPerPage = pagination.rowsPerPage
+        this.pagination.rowsNumber = response.data.length
+        items = response.data.items
       }
-      return items;
+      return items
     },
 
     resetPagination() {
@@ -103,8 +109,8 @@ export default {
         descending: false,
         page: 1,
         rowsPerPage: this.pagination.rowsPerPage,
-        rowsNumber: 0,
-      };
-    },
-  },
-};
+        rowsNumber: 0
+      }
+    }
+  }
+}

@@ -59,7 +59,7 @@
       <q-table
         class="col"
         ref="table"
-        :title="app.name"
+        :title="app.label"
         :rows="rows"
         :columns="cols"
         :loading="loading"
@@ -110,7 +110,6 @@
 <script>
 import { defineComponent } from 'vue'
 import axios from 'axios'
-import RowEditor from '../base/roweditor.vue'
 import SearchView from './SearchView.vue'
 import AlertDialog from './Alert.vue'
 import ConfirmDialog from './Confirm.vue'
@@ -120,7 +119,6 @@ export default defineComponent({
   name: 'AppFramework',
   mixins: [rows],
   components: {
-    RowEditor,
     SearchView,
 
     AlertDialog,
@@ -129,7 +127,13 @@ export default defineComponent({
   props: {
     appid: String,
     rowsPerPage: Number,
-    class: String
+    class: String,
+    defaultData: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
   },
   data: function () {
     return {
@@ -139,6 +143,7 @@ export default defineComponent({
       selected: [],
 
       searchingItems: [],
+      defaultSearching: this.defaultData,
       flags: {
         add: true,
         edit: false,
@@ -200,7 +205,7 @@ export default defineComponent({
     },
 
     addRow() {
-      this.showRowEditor('new', {})
+      this.showRowEditor('new', this.defaultData)
     },
 
     editRow() {

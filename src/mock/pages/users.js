@@ -89,9 +89,16 @@ let rows = [
 
 let app = {
   id: 'users',
-  name: '用户管理',
+  label: '用户管理',
   schema: {
     key: 'userid',
+    apps: [
+      {
+        label: '教育经历',
+        id: 'educations',
+        foreigns: ['userid']
+      }
+    ],
     items: [
       {
         id: 'userid',
