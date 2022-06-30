@@ -6,9 +6,12 @@
     @delete="onDelete"
     :editable="editable"
   >
-    <!-- <div ref="lineChart" id="lineChart" style="height: 250px"></div> -->
-    <div v-if="chartType === 'pie'" :id="chartType">{{ chartType }}</div>
-    <div v-else-if="chartType === 'line'" :id="chartType">{{ chartType }}</div>
+    <q-card>
+      <q-card-section>
+        <div ref="echarts" id="echarts" style="height: 250px"></div>
+      </q-card-section>
+      <q-resize-observer @resize="onResize" />
+    </q-card>
   </board-widget>
   <portlet-editor
     v-model:title="innerPortlet.title"
@@ -32,7 +35,7 @@ import PortletEditor from './portleteditor.vue'
 import * as echarts from 'echarts'
 
 export default defineComponent({
-  name: 'WidgetLineChart',
+  name: 'WidgetECharts',
   props: [],
   mixins: [portletbase, editorbase],
   components: {
@@ -43,7 +46,6 @@ export default defineComponent({
   data: function () {
     return {
       model: false,
-      chartType: '',
       chart: null
     }
   },
@@ -51,7 +53,6 @@ export default defineComponent({
     delete: null
   },
   mounted() {
-    this.chartType = this.innerPortlet.params.options.series[0].type
     this.init()
   },
   methods: {
@@ -59,15 +60,18 @@ export default defineComponent({
       this.$emit('delete', this.portlet.name)
     },
     init() {
-      console.log(this.chartType)
-      let lineChart = document.getElementById(this.chartType)
-      console.log('lineChart:', lineChart)
+      let lineChart = this.$refs['echarts']
+      console.log('echarts:', lineChart)
       if (lineChart !== null) {
         echarts.dispose(lineChart)
-        // console.log('lineType', lineChart)
         let theme = this.model ? 'dark' : 'light'
         this.chart = echarts.init(lineChart, theme)
         this.chart.setOption(this.innerPortlet.params.options)
+      }
+    },
+    onResize() {
+      if (this.line_chart) {
+        this.line_chart.resize()
       }
     }
   }

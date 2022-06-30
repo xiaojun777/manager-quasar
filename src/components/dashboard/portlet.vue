@@ -22,13 +22,12 @@
     :editable="editable"
   >
   </widget-gallery>
-  <widget-line-chart
+  <widget-e-chart
     v-if="portlet.type == 'lineChart'"
     v-model:portlet="innerPortlet"
     @delete="onDelete"
     :editable="editable"
-  >
-  </widget-line-chart>
+  ></widget-e-chart>
 </template>
 
 <script>
@@ -36,7 +35,7 @@ import { defineComponent } from 'vue'
 import WidgetRows from './rows.vue'
 import WidgetHtml from './html.vue'
 import WidgetGallery from './gallery.vue'
-import WidgetLineChart from './lineChart.vue'
+import WidgetEChart from './echarts.vue'
 
 export default defineComponent({
   name: 'Portlet',
@@ -50,7 +49,7 @@ export default defineComponent({
     WidgetRows,
     WidgetHtml,
     WidgetGallery,
-    WidgetLineChart
+    WidgetEChart
   },
 
   data: function () {
