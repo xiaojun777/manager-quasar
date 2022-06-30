@@ -1,30 +1,31 @@
 export default {
   props: {
     portlet: Object,
-    editable: Boolean,
+    editable: Boolean
   },
   data() {
     return {
-      innerPortlet: this.portlet,
-    };
+      innerPortlet: this.portlet
+    }
   },
 
   emits: {
-    "update:portlet": null,
+    'update:portlet': null
   },
 
   watch: {
     innerPortlet: {
       handler(val) {
-        this.$emit("update:portlet", val);
+        console.log('innerPortlet: ', val)
+        this.$emit('update:portlet', val)
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
 
   computed: {},
 
   mounted: async function () {},
 
-  methods: {},
-};
+  methods: {}
+}

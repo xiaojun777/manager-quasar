@@ -6,12 +6,7 @@
     @delete="onDelete"
     :editable="editable"
   >
-    <q-card>
-      <q-card-section>
-        <div ref="echarts" id="echarts" style="height: 250px"></div>
-      </q-card-section>
-      <q-resize-observer @resize="onResize" />
-    </q-card>
+    <div ref="echarts" id="echarts" style="height: 250px"></div>
   </board-widget>
   <portlet-editor
     v-model:title="innerPortlet.title"
@@ -20,8 +15,26 @@
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
-    <ckeditor label="HTML" v-model:html="innerPortlet.params.options">
-    </ckeditor>
+    <!-- <div>{{ innerPortlet.params.options.series[0] }}</div> -->
+    <!-- <q-select
+      outlined
+      v-model="vModel"
+      :options="innerPortlet.params.options.series[0].data"
+      label="选择数据对象"
+      stack-label
+      emit-value
+      map-options
+      option-value="value"
+      option-label="name"
+    />
+    <q-input v-model="vModel"></q-input> -->
+    <q-input
+      v-for="item in datas"
+      type="number"
+      :key="item.name"
+      v-model.number="item.value"
+      :label="item.name"
+    ></q-input>
   </portlet-editor>
 </template>
 
@@ -40,19 +53,32 @@ export default defineComponent({
   mixins: [portletbase, editorbase],
   components: {
     BoardWidget,
-    Ckeditor,
+    // Ckeditor,
     PortletEditor
   },
   data: function () {
     return {
       model: false,
-      chart: null
+      chart: null,
+      datas: null
     }
   },
   emits: {
     delete: null
   },
+  watch: {
+    datas: {
+      handler(val) {
+        console.log('datas ', val)
+        this.init()
+
+        // this.init()
+      },
+      deep: true
+    }
+  },
   mounted() {
+    this.datas = this.innerPortlet.params.options.series[0].data
     this.init()
   },
   methods: {
@@ -63,10 +89,10 @@ export default defineComponent({
       let lineChart = this.$refs['echarts']
       console.log('echarts:', lineChart)
       if (lineChart !== null) {
-        echarts.dispose(lineChart)
+        // echarts.dispose(lineChart)
         let theme = this.model ? 'dark' : 'light'
-        this.chart = echarts.init(lineChart, theme)
-        this.chart.setOption(this.innerPortlet.params.options)
+        lineChart = echarts.init(lineChart, theme)
+        lineChart.setOption(this.innerPortlet.params.options)
       }
     },
     onResize() {

@@ -1,75 +1,17 @@
 <template>
   <q-btn @click="someThingIsChanging">change</q-btn>
-  <q-page>
-    <div class="row q-col-gutter-sm q-ml-xs q-mr-sm q-py-sm">
-      <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <line-chart :colorData="color"></line-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <bar-chart> </bar-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <pie-chart :options="pieOptions"></pie-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <scatter-chart></scatter-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <dotted-bar-chart></dotted-bar-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <guage-chart></guage-chart>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <boxplot></boxplot>
-      </div> -->
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <area-chart :dataOptions="dataOptions"></area-chart>
-      </div>
-    </div>
-  </q-page>
 </template>
 
 <script>
-import LineChart from 'src/components/echarts/LineChart'
-import Boxplot from 'src/components/echarts/BoxChart'
-import PieChart from 'src/components/echarts/PieChart'
-import ScatterChart from 'src/components/echarts/ScatterChart'
-import DottedBarChart from 'src/components/echarts/DottedBarChart'
-import GuageChart from 'src/components/echarts/GuageChart'
-import BarChart from 'src/components/echarts/BarChart'
-import AreaChart from 'src/components/echarts/AreaChart'
 import { defineComponent } from 'vue'
-import dataArray from 'src/mock/pages/echarts'
 
 export default defineComponent({
-  components: {
-    // LineChart,
-    // BarChart,
-    AreaChart
-    // GuageChart,
-    // Boxplot,
-    // PieChart,
-    // ScatterChart,
-    // DottedBarChart
-  },
+  components: {},
   name: 'Echarts',
-  data: function () {
-    return {
-      color: ['orange', 'cyan', 'pink', 'green', 'blue'],
-      dataOptions: dataArray.areaChartOptions
-    }
-  },
-  mounted() {
-    // console.log(datasOption.areaChartOptions);
-    console.log('mounted: ', typeof dataArray)
-  },
+  data: function () {},
+  mounted() {},
   methods: {
-    someThingIsChanging() {
-      this.color = this.color.reverse()
-      // console.log(this.color)
-      this.pieOptions.color = this.color
-    }
+    someThingIsChanging() {}
   }
 })
 </script>

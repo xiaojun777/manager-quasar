@@ -66,6 +66,7 @@ export default defineComponent({
   watch: {
     innerPortlet: {
       handler(val) {
+        console.log('portet:  ', val)
         this.$emit('update:portlet', val)
       },
       deep: true
