@@ -11,14 +11,14 @@
           flat rounded
           class="q-ml-sm"
           icon="add"
-          text-color="primary"
+          :text-color="!(loading || !flags.add) ? 'primary': 'gray'"
           :disable="loading || !flags.add"
           label="新增"
           @click="addRow"
         />
         <q-btn
           flat rounded
-          text-color="primary"
+          :text-color="!(loading || !flags.edit) ? 'primary': 'gray'"
           class="q-ml-sm"
           icon="edit"
           :disable="loading || !flags.edit"
@@ -27,7 +27,7 @@
         />
         <q-btn
           flat rounded
-          text-color="primary"
+          :text-color="!(loading || !flags.view) ? 'primary': 'gray'"
           class="q-ml-sm"
           icon="preview"
           :disable="loading || !flags.view"
@@ -36,7 +36,7 @@
         />
         <q-btn
           flat rounded
-          text-color="primary"
+          :text-color="!(loading || !flags.delete) ? 'primary': 'gray'"
           class="q-ml-sm"
           icon="remove"
           :disable="loading || !flags.delete"
@@ -69,7 +69,7 @@
         v-model:pagination="pagination"
         @request="onRequest"
         @row-click="onRowClick"
-        :row-key="row => {row[this.app.schema.key]}"
+        :row-key="row => row[this.app.schema.key]"
       >
         <template v-slot:top>
           <template v-for="item in searchingItems" :key="item.id">
@@ -399,5 +399,17 @@ export default defineComponent({
 ::v-deep .q-table th, ::v-deep .q-table td
   padding-top: 0px !important
   padding-bottom: 0px !important
+
+::v-deep .q-table thead tr, ::v-deep .q-table tbody td
+  height: 32px
+
+::v-deep .q-checkbox__bg
+  left: 30%
+  top: 30%
+  width: 40%
+  height: 40%
+
+::v-deep .q-checkbox__inner
+  font-size: 32px
 
 </style>

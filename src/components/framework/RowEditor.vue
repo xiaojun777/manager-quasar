@@ -1,6 +1,6 @@
 <template>
   <q-card :class="'column no-wrap ' + this.class">
-    <template v-if="getTabs().length > 1">
+    <template v-if="getTabs().length > 1 && method !== 'new'">
       <q-tabs
         v-model="panel"
         dense
@@ -24,26 +24,28 @@
         <div class="q-pa-md scroll col">
           <q-form class="q-gutter-sm">
             <template v-for="item in app.schema.items" :key="item.id">
-              <q-input v-if="item.type=='string'"
-                :readonly="this.method=='view'"
-                type="text"
-                stack-label
-                :label="item.label"
-                v-model="values[item.id]"/>
-              <q-input v-if="item.type=='number'"
-                :readonly="this.method=='view'"
-                type="number"
-                stack-label
-                :label="item.label"
-                v-model="values[item.id]"/>
-              <q-select v-if="item.type=='option'"
-                :readonly="this.method=='view'"
-                v-model="values[item.id]"
-                stack-label
-                emit-value
-                map-options
-                :options="this.getOptions(item.options)"
-                :label="item.label" />
+              <template v-if="!(this.method === 'new' && item.editable === false)">
+                <q-input v-if="item.type === 'string'"
+                  :readonly="this.method === 'view' || item.editable === false"
+                  type="text"
+                  stack-label
+                  :label="item.label"
+                  v-model="values[item.id]"/>
+                <q-input v-if="item.type === 'number'"
+                  :readonly="this.method === 'view' || item.editable === false"
+                  type="number"
+                  stack-label
+                  :label="item.label"
+                  v-model="values[item.id]"/>
+                <q-select v-if="item.type === 'option'"
+                  :readonly="this.method === 'view' || item.editable === false"
+                  v-model="values[item.id]"
+                  stack-label
+                  emit-value
+                  map-options
+                  :options="this.getOptions(item.options)"
+                  :label="item.label" />
+              </template>
             </template>
           </q-form>
         </div>

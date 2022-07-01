@@ -107,6 +107,7 @@ let app = {
         default: '',
         searchable: false,
         sortable: true,
+        editable: false,
         rules: [
           {
             type: 'required'

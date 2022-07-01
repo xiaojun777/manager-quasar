@@ -854,6 +854,16 @@ export default {
         }
       })
       .reply(function (config) {
+        return [200, board_one]
+      })
+
+    mock
+      .onGet('/board', {
+        params: {
+          board: 'echarts'
+        }
+      })
+      .reply(function (config) {
         return [200, board_three]
       })
   }
