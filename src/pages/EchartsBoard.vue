@@ -1,5 +1,5 @@
 <template>
-  <dash-board boardid="echarts"> </dash-board>
+  <dash-board boardid="echarts" editable> </dash-board>
 </template>
 
 <script>
