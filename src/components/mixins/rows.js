@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import _ from "lodash";
 export default {
     data () {
       return {
@@ -7,14 +7,13 @@ export default {
         rows: [],
         cols: [],
         app: {},
-        selection: 'none', //none, single, multiple
         defaultSearching: {},
         searching: {},
         pagination: {
           sortBy: '',
           descending: false,
           page: 1,
-          rowsPerPage: 5,
+          rowsPerPage: 10,
           rowsNumber: 0
         }
       }
@@ -41,8 +40,7 @@ export default {
       },
 
       async flushRows (pagination) {
-        let searching = Object.assign(this.defaultSearching, this.defaultSearching);
-        console.log(searching);
+        let searching = _.merge(this.defaultSearching, this.searching);
         this.rows = await this.getRows(pagination, searching);
       },
 

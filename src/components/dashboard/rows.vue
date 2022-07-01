@@ -29,7 +29,7 @@
       emit-value
       map-options
       option-value="id"
-      option-label="name"
+      option-label="label"
       :options="appinfos"
       label="选择应用"/>
 
@@ -94,7 +94,6 @@ export default defineComponent({
 
     methods: {
       onDelete () {
-        console.log('onDelete in rows...');
         this.$emit('delete', this.portlet.name);
       }
     }

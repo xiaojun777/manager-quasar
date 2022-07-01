@@ -60,6 +60,7 @@ export default defineComponent({
     appid: {
       async handler (val) {
         this.innerApp = await this.getApp();
+        this.resetSearching(this.searching);
       }
     }
   },

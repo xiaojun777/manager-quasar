@@ -9,7 +9,7 @@ export default {
     }
     return [200,{
       code: true,
-      items: retRows.slice(params.start, params.start + params.count),
+      items: params.count !== 0 ? retRows.slice(params.start, params.start + params.count) : retRows,
       length: retRows.length,
     }];
   },

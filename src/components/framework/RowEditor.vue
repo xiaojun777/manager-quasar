@@ -1,26 +1,28 @@
 <template>
   <q-card :class="'column no-wrap ' + this.class">
-    <q-tabs
-      v-model="panel"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="left"
-      narrow-indicator
-    >
-      <template v-for="tab in getTabs()" :key="tab.id">
-        <q-tab :name="tab.id" :label="tab.label" />
-      </template>
-    </q-tabs>
+    <template v-if="getTabs().length > 1">
+      <q-tabs
+        v-model="panel"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="left"
+        narrow-indicator
+      >
+        <template v-for="tab in getTabs()" :key="tab.id">
+          <q-tab :name="tab.id" :label="tab.label" />
+        </template>
+      </q-tabs>
 
-    <q-separator />
-    <q-tab-panels
+      <q-separator />
+    </template>
+    <q-tab-panels class="col"
       v-model="panel">
       <q-tab-panel :name="app.id"
         class="column">
-        <div class="q-pa-md scroll">
-          <q-form class="q-gutter-lg">
+        <div class="q-pa-md scroll col">
+          <q-form class="q-gutter-sm">
             <template v-for="item in app.schema.items" :key="item.id">
               <q-input v-if="item.type=='string'"
                 :readonly="this.method=='view'"
@@ -45,7 +47,7 @@
             </template>
           </q-form>
         </div>
-        <q-space />
+
         <div class="row justify-end q-pa-md q-gutter-sm">
           <q-btn
             flat rounded
@@ -70,7 +72,12 @@
 
       <template v-for="childapp in this.app.schema.apps" :key="childapp.id">
         <q-tab-panel :name="childapp.id" class="column">
-          <app-framework :appid="childapp.id" :rows-per-page="5" class="col" :defaultData="this.genForeignData(childapp.foreigns)">
+          <app-framework
+            :appid="childapp.id"
+            class="col"
+            :hideHeader="true"
+            :editable="method!=='view'"
+            :defaultData="this.genForeignData(childapp.foreigns)">
           </app-framework>
         </q-tab-panel>
       </template>

@@ -66,8 +66,6 @@ export default defineComponent({
     },
 
     onDeleteWidget (name) {
-      console.log('onDeleteWidget...');
-      console.log(name);
       this.deleteWidget(name);
     },
 
