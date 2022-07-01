@@ -1,6 +1,24 @@
 <template>
-  <q-page class="fit">
-    <div class="fit row justify-center">
+  <q-page class="fit column">
+    <q-bar v-if="editable"
+      class="bg-primary text-white">
+      <q-btn
+        flat rounded
+        class="q-ml-sm"
+        icon="add"
+        label="添加"
+        @click="onAddPortlet"
+      />
+
+      <q-btn
+        flat rounded
+        class="q-ml-sm"
+        icon="save_alt"
+        label="保存"
+        @click="onSaveBoard"
+      />
+    </q-bar>
+    <div class="col row justify-center">
       <template
         v-for="colnum in board.columns" :key="colnum">
         <draggable
@@ -15,7 +33,7 @@
                 :portlet="element"
                 :board="board.name"
                 :editable="editable"
-                @widget-delete="onDeleteWidget">
+                @widget-delete="onDeletePortlet">
               </portlet>
             </div>
           </template>
@@ -23,6 +41,11 @@
       </template>
     </div>
   </q-page>
+
+  <new-portlet-dialog ref="factory"
+    @new="onNewPortlet">
+
+  </new-portlet-dialog>
 </template>
 
 <script>
@@ -30,17 +53,23 @@ import { defineComponent } from "vue";
 import Portlet from './portlet.vue';
 import draggable from 'vuedraggable';
 import axios from "axios";
+import NewPortletDialog from "./newportlet.vue";
 
 export default defineComponent({
   name: "DashBoard",
 
   props: {
     boardid: String,
+    editable: {
+      type: Boolean,
+      default: false
+    }
   },
 
   components: {
     Portlet,
-    draggable
+    draggable,
+    NewPortletDialog
   },
 
   computed: {
@@ -52,8 +81,7 @@ export default defineComponent({
 
   data: function () {
     return {
-      board: {},
-      editable: true
+      board: {}
     };
   },
 
@@ -65,11 +93,11 @@ export default defineComponent({
       return response.data;
     },
 
-    onDeleteWidget (name) {
-      this.deleteWidget(name);
+    onDeletePortlet (name) {
+      this.deletePortlet(name);
     },
 
-    deleteWidget (name) {
+    deletePortlet (name) {
       for (let i=0; i<this.board.items.length; i++){
         let col = this.board.items[i];
         for (let j=0; j<col.length; j++){
@@ -80,6 +108,28 @@ export default defineComponent({
           }
         }
       }
+    },
+
+    addPortlet (val) {
+      if (this.board.items !== void 0){
+        if (this.board.items.length > 0){
+          this.board.items[0].push(val);
+        }else{
+          this.board.items = [val];
+        }
+      }
+    },
+
+    onAddPortlet () {
+      this.$refs.factory.show();
+    },
+
+    onNewPortlet (val) {
+      this.addPortlet(val);
+    },
+
+    onSaveBoard () {
+      console.log("save board upto server.");
     }
   },
 });

@@ -69,8 +69,8 @@ export default defineComponent({
     },
     data: function () {
       return {
-        appname: this.portlet.params.appid,
-        searching: this.portlet.params.searching
+        appname: this.portlet.params.appid !== void 0 ? this.portlet.params.appid : null,
+        searching: this.portlet.params.searching !== void 0 ? this.portlet.params.searching : null
       }
     },
     watch: {
@@ -81,9 +81,11 @@ export default defineComponent({
 
       searching: {
         handler (val) {
-          this.innerPortlet.params.seraching = val;
-          this.resetPagination();
-          this.flushRows();
+          if (this.innerPortlet.params.appid !== void 0 && this.innerPortlet.params.appid !== null){
+            this.innerPortlet.params.seraching = val;
+            this.resetPagination();
+            this.flushRows();
+          }
         },
         deep: true
       }

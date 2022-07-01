@@ -28,11 +28,13 @@ export default {
 
     methods: {
       async resetApp () {
-        this.app = await this.getApp();
-        this.initCols();
-        this.resetPagination();
-        //this.pagination.sortBy = this.app.schema.key;
-        this.flushRows();
+        if (this.appname !== void 0 && this.appname !== null){
+          this.app = await this.getApp();
+          this.initCols();
+          this.resetPagination();
+          //this.pagination.sortBy = this.app.schema.key;
+          this.flushRows();
+        }
       },
 
       getBaseUrl () {
