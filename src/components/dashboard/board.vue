@@ -9,7 +9,14 @@
         label="添加"
         @click="onAddPortlet"
       />
-
+      <q-btn
+        flat rounded
+        class="q-ml-sm"
+        icon="edit_note"
+        label="属性"
+        @click="onEditBoard"
+      />
+      <q-space/>
       <q-btn
         flat rounded
         class="q-ml-sm"
