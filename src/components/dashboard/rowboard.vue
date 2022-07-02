@@ -5,7 +5,7 @@
         flat
         rounded
         class="q-ml-sm"
-        icon="add"
+        icon="playlist_add"
         label="添加行"
         @click="onAddRow"
       />
@@ -13,9 +13,9 @@
         flat
         rounded
         class="q-ml-sm"
-        icon="edit_note"
-        label="属性"
-        @click="onEditBoard"
+        icon="add"
+        label="添加面板"
+        @click="onAddPortlet"
       />
       <q-space />
       <q-btn
@@ -27,7 +27,7 @@
         @click="onSaveBoard"
       />
     </q-bar>
-    <div v-if="board.items !== void 0" class="col column q-pr-sm">
+    <div v-if="board.items !== void 0" class="col column no-wrap">
       <template v-for="rownum in board.items.length" :key="rownum">
         <draggable
           v-if="editable"
@@ -49,6 +49,17 @@
               >
               </portlet>
             </div>
+          </template>
+          <template v-slot:header>
+            <q-btn
+              flat
+              rounded
+              v-if="this.board.items[rownum - 1].length === 0"
+              class="q-ma-sm text-red fit row-colored"
+              icon="cancel"
+              label="删除空行"
+              @click="onDeleteRow(rownum - 1)"
+            />
           </template>
         </draggable>
 
@@ -115,7 +126,7 @@ export default defineComponent({
     getClasses(length) {
       let colnum = 12 / length;
       colnum = Math.floor(colnum);
-      return `q-pl-sm q-pt-sm col-lg-${colnum} col-md-${colnum} col-xs-12 col-sm-12`;
+      return `q-pa-xs col-lg-${colnum} col-md-${colnum} col-xs-12 col-sm-12`;
     },
 
     async getBoard() {
@@ -130,16 +141,20 @@ export default defineComponent({
     },
 
     deletePortlet(name) {
+      console.log("delete portlet: " + name);
       for (let i = 0; i < this.board.items.length; i++) {
         let col = this.board.items[i];
         for (let j = 0; j < col.length; j++) {
           let item = col[j];
           if (item.name === name) {
+            console.log(JSON.stringify(this.board.items[i]));
             this.board.items[i].splice(j, 1);
+            console.log(JSON.stringify(this.board.items[i]));
             break;
           }
         }
       }
+      console.log(JSON.stringify(this.board.items[0]));
     },
 
     addPortlet(val) {
@@ -149,6 +164,20 @@ export default defineComponent({
         } else {
           this.board.items = [val];
         }
+      }
+    },
+
+    onAddRow() {
+      if (this.board.items !== void 0 && this.board.items !== null) {
+        this.board.items[this.board.items.length] = [];
+      } else {
+        this.board.items = [[]];
+      }
+    },
+
+    onDeleteRow(rowNum) {
+      if (this.board.items !== void 0 && this.board.items[rowNum] !== void 0) {
+        this.board.items.splice(rowNum, 1);
       }
     },
 
@@ -166,3 +195,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass" scoped>
+
+.row-colored
+  background-color: rgba(100,100,255,0.1)
+</style>
