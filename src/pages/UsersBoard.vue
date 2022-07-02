@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import DashBoard from "src/components/dashboard/board.vue";
+import DashBoard from "src/components/dashboard/colboard.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   components: { DashBoard },
-  name: "AppDashBoard",
+  //name: "AppDashBoard",
   data: function () {
     return {};
   },

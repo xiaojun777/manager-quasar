@@ -1,13 +1,13 @@
 <template>
-  <dash-board boardid="echarts" editable> </dash-board>
+  <row-dash-board boardid="users" editable> </row-dash-board>
 </template>
 
 <script>
-import DashBoard from "src/components/dashboard/colboard.vue";
+import RowDashBoard from "src/components/dashboard/rowboard.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: { DashBoard },
+  components: { RowDashBoard },
   //name: "AppDashBoard",
   data: function () {
     return {};
