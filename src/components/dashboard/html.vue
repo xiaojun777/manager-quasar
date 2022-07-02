@@ -4,8 +4,9 @@
     :titleshow="innerPortlet.titleshow"
     @edit="onEdit"
     @delete="onDelete"
-    :editable="editable">
-    <div v-html="innerPortlet.params.html"></div>
+    :editable="editable"
+  >
+    <div v-html="innerPortlet.params.html" class="q-pa-md"></div>
   </board-widget>
 
   <portlet-editor
@@ -14,50 +15,41 @@
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
-    >
-    <ckeditor
-      label="HTML"
-      v-model:html="innerPortlet.params.html">
-    </ckeditor>
-
+  >
+    <ckeditor label="HTML" v-model:html="innerPortlet.params.html"> </ckeditor>
   </portlet-editor>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import BoardWidget from "./widget.vue";
-import Ckeditor from "../base/ckeditor.vue"
-import portletbase from '../mixins/portletbase'
-import editorbase from '../mixins/editorbase'
-import PortletEditor from './portleteditor.vue'
+import Ckeditor from "../base/ckeditor.vue";
+import portletbase from "../mixins/portletbase";
+import editorbase from "../mixins/editorbase";
+import PortletEditor from "./portleteditor.vue";
 
 export default defineComponent({
   name: "WidgetHtml",
   props: [],
-  mixins: [
-    portletbase,
-    editorbase
-  ],
+  mixins: [portletbase, editorbase],
   components: {
     BoardWidget,
     Ckeditor,
-    PortletEditor
+    PortletEditor,
   },
   data: function () {
-    return {
-    };
+    return {};
   },
   emits: {
-    'delete': null
+    delete: null,
   },
 
   methods: {
-    onDelete () {
-      this.$emit('delete', this.portlet.name);
+    onDelete() {
+      this.$emit("delete", this.portlet.name);
     },
-  }
+  },
 });
 </script>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

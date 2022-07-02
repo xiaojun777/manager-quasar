@@ -33,7 +33,7 @@
           v-if="editable"
           tag="div"
           :componentData="{
-            class: 'row',
+            class: 'row fit',
           }"
           v-model="board.items[rownum - 1]"
           :group="board.name"
