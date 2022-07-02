@@ -52,10 +52,7 @@
           </template>
         </draggable>
 
-        <div
-          v-if="!editable"
-          class="row justify-between no-wrap content-stretch"
-        >
+        <div v-if="!editable" class="row fit">
           <template
             v-for="element in board.items[rownum - 1]"
             :key="element.name"
