@@ -2126,6 +2126,4 @@ const icons = [
   "curtains_closed",
 ];
 
-export default {
-  icons: icons,
-};
+export default icons;
