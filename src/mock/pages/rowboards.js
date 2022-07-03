@@ -4,6 +4,56 @@ let board_one = {
   items: [
     [
       {
+        title: "月收入",
+        titleshow: false,
+        type: "indicator",
+        name: "monthly",
+        params: {
+          indicatorname: "月收入",
+          indicatorvalue: "$ 20k",
+          icon: "attach_money",
+          bgcolor: "#546bfa",
+        },
+      },
+      {
+        title: "周销售",
+        titleshow: false,
+        type: "indicator",
+        name: "weeklysales",
+        params: {
+          indicatorname: "周销售",
+          icon: "bar_chart",
+          indicatorvalue: "20",
+          bgcolor: "#3a9688",
+        },
+      },
+      {
+        title: "新客户",
+        titleshow: false,
+        type: "indicator",
+        name: "newcustomer",
+        params: {
+          indicatorname: "新用户",
+          icon: "show_chart",
+          indicatorvalue: "321",
+          bgcolor: "#7cb342",
+        },
+      },
+      {
+        title: "活跃用户",
+        titleshow: false,
+        type: "indicator",
+        name: "activeusers",
+        params: {
+          indicatorname: "活跃用户",
+          icon: "person",
+          indicatorvalue: "82",
+          bgcolor: "#f88c2b",
+        },
+      },
+    ],
+    [
+      {
         title: "简介",
         titleshow: false,
         type: "html",

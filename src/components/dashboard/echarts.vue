@@ -2,7 +2,7 @@
   <board-widget
     :title="innerPortlet.title"
     :titleshow="innerPortlet.titleshow"
-    @edit="onEdit"
+    @edit="onPortletEdit"
     @delete="onDelete"
     :editable="editable"
   >
@@ -26,69 +26,69 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import BoardWidget from './widget.vue'
-import Ckeditor from '../base/ckeditor.vue'
-import portletbase from '../mixins/portletbase'
-import editorbase from '../mixins/editorbase'
-import PortletEditor from './portleteditor.vue'
-import * as echarts from 'echarts'
+import { defineComponent } from "vue";
+import BoardWidget from "./widget.vue";
+import Ckeditor from "../base/ckeditor.vue";
+import portletbase from "../mixins/portletbase";
+import editorbase from "../mixins/editorbase";
+import PortletEditor from "./portleteditor.vue";
+import * as echarts from "echarts";
 
 export default defineComponent({
-  name: 'WidgetECharts',
+  name: "WidgetECharts",
   props: [],
   mixins: [portletbase, editorbase],
   components: {
     BoardWidget,
     // Ckeditor,
-    PortletEditor
+    PortletEditor,
   },
   data: function () {
     return {
       model: false,
       chart: null,
-      datas: null
-    }
+      datas: null,
+    };
   },
   emits: {
-    delete: null
+    delete: null,
   },
   watch: {
     datas: {
       handler(val) {
-        console.log('datas ', val)
-        this.init()
+        console.log("datas ", val);
+        this.init();
 
         // this.init()
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
-    this.datas = this.innerPortlet.params.options.series[0].data
-    this.init()
+    this.datas = this.innerPortlet.params.options.series[0].data;
+    this.init();
   },
   methods: {
     onDelete() {
-      this.$emit('delete', this.portlet.name)
+      this.$emit("delete", this.portlet.name);
     },
     init() {
-      let lineChart = this.$refs['echarts']
-      console.log('echarts:', lineChart)
+      let lineChart = this.$refs["echarts"];
+      console.log("echarts:", lineChart);
       if (lineChart !== null) {
         // echarts.dispose(lineChart)
-        let theme = this.model ? 'dark' : 'light'
-        lineChart = echarts.init(lineChart, theme)
-        lineChart.setOption(this.innerPortlet.params.options)
+        let theme = this.model ? "dark" : "light";
+        lineChart = echarts.init(lineChart, theme);
+        lineChart.setOption(this.innerPortlet.params.options);
       }
     },
     onResize() {
       if (this.line_chart) {
-        this.line_chart.resize()
+        this.line_chart.resize();
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <style lang="sass" scoped></style>

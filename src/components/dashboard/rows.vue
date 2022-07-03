@@ -2,8 +2,8 @@
   <board-widget
     :title="innerPortlet.title"
     :titleshow="innerPortlet.titleshow"
-    @edit="onEdit"
-    @delete="onDelete"
+    @edit="onPortletEdit"
+    @delete="onPortletDelete"
     :editable="editable"
   >
     <q-table
@@ -95,11 +95,7 @@ export default defineComponent({
 
   mounted: function () {},
 
-  methods: {
-    onDelete() {
-      this.$emit("delete", this.portlet.name);
-    },
-  },
+  methods: {},
 });
 </script>
 

@@ -1,7 +1,8 @@
-import users from './users'
-import boards from './boards'
-import apps from './apps'
-import educations from './education'
+import users from "./users";
+import boards from "./boards";
+import apps from "./apps";
+import educations from "./education";
+import rowboards from "./rowboards";
 
 export default {
   installData: function (mock) {
@@ -9,5 +10,6 @@ export default {
     boards.installData(mock);
     users.installData(mock);
     educations.installData(mock);
-  }
+    rowboards.installData(mock);
+  },
 };

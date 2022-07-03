@@ -141,26 +141,22 @@ export default defineComponent({
     },
 
     deletePortlet(name) {
-      console.log("delete portlet: " + name);
       for (let i = 0; i < this.board.items.length; i++) {
         let col = this.board.items[i];
         for (let j = 0; j < col.length; j++) {
           let item = col[j];
           if (item.name === name) {
-            console.log(JSON.stringify(this.board.items[i]));
             this.board.items[i].splice(j, 1);
-            console.log(JSON.stringify(this.board.items[i]));
             break;
           }
         }
       }
-      console.log(JSON.stringify(this.board.items[0]));
     },
 
     addPortlet(val) {
       if (this.board.items !== void 0) {
         if (this.board.items.length > 0) {
-          this.board.items[0].push(val);
+          this.board.items[this.board.items.length - 1].push(val);
         } else {
           this.board.items = [val];
         }
