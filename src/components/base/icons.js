@@ -448,7 +448,6 @@ const icons = [
   "width_normal",
   "width_full",
   "width_wide",
-  "face_unlock",
   "unfold_more_double",
   "unfold_less_double",
   "repartition",
