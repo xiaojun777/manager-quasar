@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row no-wrap">
+  <q-page class="row no-wrap column">
     <icon-selector></icon-selector>
   </q-page>
 </template>

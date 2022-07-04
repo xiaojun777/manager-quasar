@@ -1,62 +1,59 @@
 <template>
-  <div class="fit q-pa-md">
-    <q-table
-      title="选择图标"
-      :rows="rows"
-      :columns="columns"
-      row-key="id"
-      selection="single"
-      v-model:selected="innerSelected"
-      :filter="filter"
-      :filter-method="filterData"
-      grid
-      hide-header
-      hide-bottom
-      :pagination="pagination"
-      :rows-per-page-options="[0]"
+  <div class="col q-pa-md column no-wrap" v-scroll ref="selector">
+    <q-bar class="bg-transparent">
+      <q-space/>
+      <q-input borderless dense debounce="300" v-model="filter" placeholder="搜索图标">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </q-bar>
+    <q-virtual-scroll
+      :items="rows"
+      v-slot="{ item }"
     >
-      <template v-slot:top-right>
-        <q-input
-          borderless
-          dense
-          debounce="300"
-          v-model="filter"
-          placeholder="搜索图标"
-        >
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-
-      <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-4 col-sm-2 col-md-2 col-lg-1">
-          <q-card
-            @click="props.selected = !props.selected"
+      <div class="row fit justify-around no-wrap">
+        <div v-for="(citem, cindex) in item" :key="cindex"
+          class="q-pa-xs" :style="{width: this.itemWidth + 'px'}"
+          :title="citem.id.replaceAll('_', ' ')">
+          <q-card v-if="citem.id !== ''"
+            @click="this.selected=citem.id"
             flat
             class="cursor-pointer custom-grey"
-            :class="props.selected ? 'bg-grey-2' : ''"
+            :class="citem.id===this.selected ? 'bg-grey-2' : ''"
           >
             <q-card-section class="row justify-center">
-              <q-icon size="xl" :name="props.row.id" />
+              <q-icon size="xl" :name="citem.id" />
             </q-card-section>
-            <q-card-section class="row justify-center custom-icon-label">
-              {{ props.row.id.replaceAll("_", " ") }}
+            <q-card-section class="text-center custom-icon-label">
+              {{ citem.id.replaceAll("_", " ") }}
             </q-card-section>
           </q-card>
+
+          <q-card v-if="citem.id === ''"
+            flat
+            class="custom-grey"
+          >
+          </q-card>
         </div>
-      </template>
-    </q-table>
+      </div>
+    </q-virtual-scroll>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import { useElementSize } from '@vueuse/core'
 import icons from "./icons";
+
 export default defineComponent({
   name: "IconSelector",
   props: {
     icon: String,
+    itemWidth: {
+      type: Number,
+      default: 120
+    }
   },
   components: {},
   emits: {
@@ -65,10 +62,12 @@ export default defineComponent({
   data: function () {
     return {
       rows: [],
+      defaultRows: [],
+      filterRows: [],
+      perRowItems: 5,
       filter: "",
-      innerSelected: [{id:this.icon}],
-      loading: false,
-      nextpage: 2,
+      selected: this.icon,
+      containerWidth: 0,
       pagination: { rowsPerPage: 0 },
       columns: [
         {
@@ -79,34 +78,64 @@ export default defineComponent({
     };
   },
   mounted: function () {
+    const { width } = useElementSize(this.$refs.selector);
+    this.containerWidth = width;
     icons.forEach((icon) => {
-      this.rows.push({
+      this.defaultRows.push({
         id: icon,
       });
     });
+    this.filterRows = this.defaultRows;
+    //this.reLayoutRows();
   },
   watch: {
+    containerWidth (val) {
+      this.perRowItems = Math.floor(val / this.itemWidth);
+      this.reLayoutRows();
+    },
+
     icon (val) {
       this.selected = [val];
     },
 
-    innerSelected (val) {
-      let icon = '';
-      if (val.length > 0){
-        icon = val[0].id;
-      }
-      this.$emit("update:icon", icon);
+    selected (val) {
+      this.$emit("update:icon", val);
     },
+
+    filter () {
+      this.filterData();
+    },
+
+    filterRows () {
+      this.reLayoutRows();
+    }
   },
   computed: {},
   methods: {
+    reLayoutRows () {
+      this.rows = [];
+
+      for(let i = 0; i < Math.ceil(this.filterRows.length / this.perRowItems); i++){
+        this.rows.push(this.filterRows.slice(i * this.perRowItems, (i + 1) * this.perRowItems));
+      }
+      let remains = this.filterRows.length % this.perRowItems;
+
+      if (remains !== 0){
+        for (let i=0; i<this.perRowItems - remains; i++){
+          this.rows[this.rows.length - 1].push({
+            id: ''
+          });
+        }
+      }
+    },
+
     filterData() {
-      if (this.rows.length > 2 && this.filter) {
-        return this.rows.filter((row) => {
+      if (this.defaultRows.length > 2 && this.filter) {
+        this.filterRows = this.defaultRows.filter((row) => {
           return row.id.indexOf(this.filter) !== -1;
         });
       } else {
-        return this.rows;
+        this.filterRows = this.defaultRows;
       }
     },
   },
