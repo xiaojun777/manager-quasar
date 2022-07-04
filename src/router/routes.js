@@ -16,6 +16,10 @@ const routes = [
         path: "rows_board",
         component: () => import("src/pages/RowsBoard.vue"),
       },
+      {
+        path: "rows_board_not_editable",
+        component: () => import("src/pages/RowsBoardNotEditable.vue"),
+      },
       { path: "test", component: () => import("src/pages/test.vue") },
     ],
   },

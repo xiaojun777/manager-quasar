@@ -8,6 +8,8 @@
   >
     <q-table
       flat
+      bordered
+      square
       class="fit full-width"
       :rows="rows"
       :columns="cols"

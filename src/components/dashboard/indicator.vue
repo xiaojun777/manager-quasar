@@ -64,12 +64,6 @@
       >
       </q-color-input>
 
-      <q-color-input
-        v-model:color="innerPortlet.params.bgcolor"
-        label="背景色"
-      >
-      </q-color-input>
-
       <q-icon-input
         v-model:icon="innerPortlet.params.icon"
         label="图标"
@@ -79,6 +73,12 @@
       <q-color-input
         v-model:color="innerPortlet.params.iconcolor"
         label="图标颜色"
+      >
+      </q-color-input>
+
+      <q-color-input
+        v-model:color="innerPortlet.params.bgcolor"
+        label="背景色"
       >
       </q-color-input>
   </portlet-editor>

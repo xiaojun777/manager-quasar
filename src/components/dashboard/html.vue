@@ -6,7 +6,7 @@
     @delete="onPortletDelete"
     :editable="editable"
   >
-    <div v-html="innerPortlet.params.html" class="q-pa-md"></div>
+    <q-card square bordered v-html="innerPortlet.params.html" class="fit q-pa-md no-box-shadow"></q-card>
   </board-widget>
 
   <portlet-editor

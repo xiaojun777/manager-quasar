@@ -1,5 +1,5 @@
 <template>
-  <q-card bordered class="column fit">
+  <q-card square class="column fit">
     <q-bar
       v-if="editable || titleshow"
       class="row bg-primary text-white q-pl-md full-width"
