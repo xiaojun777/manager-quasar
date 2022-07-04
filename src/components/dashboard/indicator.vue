@@ -6,26 +6,28 @@
     @delete="onPortletDelete"
     :editable="editable"
   >
-    <div class="col-md-3 col-sm-12 col-xs-12">
-      <q-item
-        :style="`background-color: ${portlet.params.bgcolor}`"
-        class="q-pa-none"
-      >
-        <q-item-section class="q-pa-md q-ml-none text-white">
-          <q-item-label class="text-white text-h6 text-weight-bolder">
-            {{ portlet.params.indicatorvalue }}
-          </q-item-label>
-          <q-item-label>{{ portlet.params.indicatorname }}</q-item-label>
-        </q-item-section>
-        <q-item-section side class="q-mr-md text-white">
-          <q-icon
-            :name="portlet.params.icon"
-            color="white"
-            size="44px"
-          ></q-icon>
-        </q-item-section>
-      </q-item>
-    </div>
+    <q-item
+      :style="`background-color: ${portlet.params.bgcolor}`"
+      class="q-pa-none"
+    >
+      <q-item-section class="q-pa-md q-ml-none text-white">
+        <q-item-label
+          :style="{color: portlet.params.valuecolor}"
+          class="text-h6 text-weight-bolder">
+          {{ portlet.params.indicatorvalue }}
+        </q-item-label>
+        <q-item-label :style="{color: portlet.params.namecolor}">
+          {{ portlet.params.indicatorname }}
+        </q-item-label>
+      </q-item-section>
+      <q-item-section side class="q-mr-md text-white">
+        <q-icon
+          :name="portlet.params.icon"
+          :style="{color: portlet.params.iconcolor}"
+          size="44px"
+        ></q-icon>
+      </q-item-section>
+    </q-item>
   </board-widget>
 
   <portlet-editor
@@ -43,6 +45,12 @@
       >
       </q-input>
 
+      <q-color-input
+        v-model:color="innerPortlet.params.namecolor"
+        label="指标名颜色"
+      >
+      </q-color-input>
+
       <q-input
         v-model="innerPortlet.params.indicatorvalue"
         stack-label
@@ -50,54 +58,30 @@
       >
       </q-input>
 
-      <q-input
-        v-model="innerPortlet.params.bgcolor"
-        stack-label
+      <q-color-input
+        v-model:color="innerPortlet.params.valuecolor"
+        label="指标颜色"
+      >
+      </q-color-input>
+
+      <q-color-input
+        v-model:color="innerPortlet.params.bgcolor"
         label="背景色"
-        class=""
       >
-        <template v-slot:append>
-          <q-icon
-            name="colorize"
-            class="cursor-pointer"
-            @click="colorPickerShow=true">
-          </q-icon>
-        </template>
-      </q-input>
+      </q-color-input>
 
-      <q-input
-        v-model="innerPortlet.params.icon"
-        stack-label
+      <q-icon-input
+        v-model:icon="innerPortlet.params.icon"
         label="图标"
-        class=""
       >
-        <template v-slot:append>
-          <q-icon
-            name="colorize"
-            class="cursor-pointer"
-            @click="iconSelectorShow=true">
-          </q-icon>
-        </template>
-      </q-input>
+      </q-icon-input>
+
+      <q-color-input
+        v-model:color="innerPortlet.params.iconcolor"
+        label="图标颜色"
+      >
+      </q-color-input>
   </portlet-editor>
-
-  <q-dialog v-model="colorPickerShow">
-    <q-card class="column no-wrap">
-      <q-color
-        class="col"
-        v-model="innerPortlet.params.bgcolor" />
-    </q-card>
-  </q-dialog>
-
-  <q-dialog full-width full-height v-model="iconSelectorShow">
-    <q-card class="column no-wrap">
-      <icon-selector
-        class="col"
-        @update:icon="iconSelectorShow=false"
-        v-model:icon="innerPortlet.params.icon"/>
-    </q-card>
-  </q-dialog>
-
 </template>
 
 <script>
@@ -106,7 +90,8 @@ import BoardWidget from "./widget.vue";
 import portletbase from "../mixins/portletbase";
 import editorbase from "../mixins/editorbase";
 import PortletEditor from "./portleteditor.vue";
-import IconSelector from "../base/iconselector.vue"
+import QIconInput from "../base/input/icon.vue"
+import QColorInput from "../base/input/color.vue"
 
 export default defineComponent({
   name: "WidgetIndicator",
@@ -115,7 +100,8 @@ export default defineComponent({
   components: {
     BoardWidget,
     PortletEditor,
-    IconSelector
+    QIconInput,
+    QColorInput
   },
   data: function () {
     return {

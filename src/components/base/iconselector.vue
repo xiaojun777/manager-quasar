@@ -23,7 +23,7 @@
             :class="citem.id===this.selected ? 'bg-grey-2' : ''"
           >
             <q-card-section class="row justify-center">
-              <q-icon size="xl" :name="citem.id" />
+              <q-icon size="xl" :name="citem.id" style="overflow:hidden"/>
             </q-card-section>
             <q-card-section class="text-center custom-icon-label">
               {{ citem.id.replaceAll("_", " ") }}

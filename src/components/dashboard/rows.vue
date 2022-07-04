@@ -8,7 +8,7 @@
   >
     <q-table
       flat
-      class="fit"
+      class="fit full-width"
       :rows="rows"
       :columns="cols"
       field="name"

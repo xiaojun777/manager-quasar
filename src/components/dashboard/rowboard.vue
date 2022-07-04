@@ -126,7 +126,7 @@ export default defineComponent({
     getClasses(length) {
       let colnum = 12 / length;
       colnum = Math.floor(colnum);
-      return `q-pa-xs col-lg-${colnum} col-md-${colnum} col-xs-12 col-sm-12`;
+      return `q-pa-xs col-lg-${colnum} col-md-${colnum} col-xs-12 col-sm-6`;
     },
 
     async getBoard() {
