@@ -56,17 +56,17 @@ import icons from "./icons";
 export default defineComponent({
   name: "IconSelector",
   props: {
-    selected: Array,
+    icon: String,
   },
   components: {},
   emits: {
-    "update:selected": null,
+    "update:icon": null,
   },
   data: function () {
     return {
       rows: [],
       filter: "",
-      innerSelected: this.selected,
+      innerSelected: [{id:this.icon}],
       loading: false,
       nextpage: 2,
       pagination: { rowsPerPage: 0 },
@@ -86,8 +86,16 @@ export default defineComponent({
     });
   },
   watch: {
-    innerSelected(val) {
-      this.$emit("update:selected", val);
+    icon (val) {
+      this.selected = [val];
+    },
+
+    innerSelected (val) {
+      let icon = '';
+      if (val.length > 0){
+        icon = val[0].id;
+      }
+      this.$emit("update:icon", icon);
     },
   },
   computed: {},
@@ -108,7 +116,6 @@ export default defineComponent({
 <style lang="sass" scoped>
 .custom-grey
   color: #5f6368
-
 
 .custom-icon-label
   text-overflow: ellipsis
