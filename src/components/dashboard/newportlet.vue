@@ -60,6 +60,9 @@ const options = [{
   value: 'html',
   label: '静态HTML内容'
 },{
+  value: 'indicator',
+  label: '单一指标'
+},{
   value: 'rows',
   label: '多行应用数据'
 },{
