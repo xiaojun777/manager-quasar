@@ -3,46 +3,60 @@
     <q-card class="column no-wrap">
       <q-card-section class="scroll">
         <q-form class="q-gutter-xs">
-          <q-input
-            stack-label
-            type="text"
-            label="标题"
-            :readonly="!innerTitleShow"
-            v-model="innerTitle">
-            <template v-slot:append>
-              <q-btn
-                flat dense round
-                icon="border_color"
-                class="q-ml-sm"
-                size="sm"
-                @click="colorDialogShow=true"
-              />
-
-              <q-btn
-                flat dense round
-                class="q-ml-sm"
-                size="sm"
-                :icon="innerTitleShow?'visibility':'visibility_off'"
-                @click="innerTitleShow=!innerTitleShow"
-              />
-            </template>
-          </q-input>
-
-          <q-color-input
-            v-model:color="innerBGColor"
-            label="背景色"
+          <q-expansion-item
+            expand-separator
+            icon="info"
+            label="portlet基础信息"
+            header-class="bg-primary text-white"
           >
-          </q-color-input>
+            <q-input
+              stack-label
+              type="text"
+              label="标题"
+              :readonly="!innerTitleShow"
+              v-model="innerTitle">
+              <template v-slot:append>
+                <q-btn
+                  flat dense round
+                  icon="border_color"
+                  class="q-ml-sm"
+                  size="sm"
+                  @click="colorDialogShow=true"
+                />
 
-          <q-field>
-            <q-toggle
-              v-model="innerBorderShow"
-              :icon="innerBorderShow ? 'border_all':'border_clear'"
-              :label="innerBorderShow ? '隐藏边框' : '显示边框'"
-            />
-          </q-field>
+                <q-btn
+                  flat dense round
+                  class="q-ml-sm"
+                  size="sm"
+                  :icon="innerTitleShow?'visibility':'visibility_off'"
+                  @click="innerTitleShow=!innerTitleShow"
+                />
+              </template>
+            </q-input>
 
-          <slot></slot>
+            <q-color-input
+              v-model:color="innerBGColor"
+              label="背景色"
+            >
+            </q-color-input>
+
+            <q-field>
+              <q-toggle
+                v-model="innerBorderShow"
+                :icon="innerBorderShow ? 'border_all':'border_clear'"
+                :label="innerBorderShow ? '隐藏边框' : '显示边框'"
+              />
+            </q-field>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            icon="extension"
+            label="portlet附加信息"
+            header-class="bg-primary text-white">
+
+            <slot></slot>
+          </q-expansion-item>
         </q-form>
       </q-card-section>
       <q-space />

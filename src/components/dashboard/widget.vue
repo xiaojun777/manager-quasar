@@ -1,5 +1,6 @@
 <template>
   <q-card square class="column fit"
+
     :style="{'background-color': bgcolor, 'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
     <q-bar
       v-if="editable || titleshow"
@@ -31,7 +32,9 @@
       </template>
     </q-bar>
 
-    <q-card-section class="q-portlet-body col full-width">
+    <q-card-section
+      v-ripple
+      class="q-portlet-body col full-width cursor-pointer">
       <slot></slot>
     </q-card-section>
   </q-card>
