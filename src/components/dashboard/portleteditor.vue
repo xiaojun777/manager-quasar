@@ -2,7 +2,7 @@
   <q-dialog full-width full-height v-model="innerShow">
     <q-card class="column no-wrap">
       <q-card-section class="scroll">
-        <q-form class="q-gutter-lg">
+        <q-form class="q-gutter-xs">
           <q-input
             stack-label
             type="text"
