@@ -16,6 +16,8 @@ export default defineComponent({
   data: function () {
     return {};
   },
+  mounted: function () {
+  },
   computed: {},
   methods: {},
 });
