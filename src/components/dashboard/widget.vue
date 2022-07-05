@@ -1,8 +1,9 @@
 <template>
-  <q-card square class="column fit">
+  <q-card square class="column fit"
+    :style="{'background-color': bgcolor, 'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
     <q-bar
       v-if="editable || titleshow"
-      class="row bg-primary text-white q-pl-md full-width"
+      class="q-pl-md full-width bg-transparent"
     >
       <template v-if="titleshow">
         <div>{{ title }}</div>
@@ -44,6 +45,19 @@ export default defineComponent({
   props: {
     title: String,
     titleshow: Boolean,
+    titlecolor: {
+      type: String,
+      default: '#fff'
+    },
+    bgcolor: {
+      type: String,
+      default: '#0080ff'
+    },
+    bordershow: {
+      type: Boolean,
+      default: false,
+    },
+
     editable: Boolean,
   },
   data: function () {

@@ -2,6 +2,9 @@
   <board-widget
     :title="innerPortlet.title"
     :titleshow="innerPortlet.titleshow"
+    :bordershow="innerPortlet.bordershow"
+    :bgcolor="innerPortlet.bgcolor"
+    :titlecolor="innerPortlet.titlecolor"
     @edit="onPortletEdit"
     @delete="onPortletDelete"
     :editable="editable"
@@ -38,6 +41,9 @@
   <portlet-editor
     v-model:title="innerPortlet.title"
     v-model:titleshow="innerPortlet.titleshow"
+    v-model:bordershow="innerPortlet.bordershow"
+    v-model:bgcolor="innerPortlet.bgcolor"
+    v-model:titlecolor="innerPortlet.titlecolor"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"

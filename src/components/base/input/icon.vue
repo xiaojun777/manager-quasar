@@ -2,14 +2,17 @@
   <q-input
     v-model="innerIcon"
     stack-label
-    label="图标"
+    :label="label"
   >
     <template v-slot:append>
-      <q-icon
-        :name="innerIcon!=='' ? innerIcon: 'search'"
-        class="cursor-pointer"
-        @click="dialogShow=true">
-      </q-icon>
+      <q-btn
+        flat dense round
+        :icon="innerIcon!=='' ? innerIcon: 'search'"
+        class="q-ml-sm"
+        size="sm"
+        @click="dialogShow=true"
+      />
+
     </template>
   </q-input>
 

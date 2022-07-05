@@ -10,13 +10,38 @@
             :readonly="!innerTitleShow"
             v-model="innerTitle">
             <template v-slot:append>
-              <q-checkbox
-                v-model="innerTitleShow"
-                label=""
-                checked-icon="visibility"
-                unchecked-icon="visibility_off"/>
+              <q-btn
+                flat dense round
+                icon="border_color"
+                class="q-ml-sm"
+                size="sm"
+                @click="colorDialogShow=true"
+              />
+
+              <q-btn
+                flat dense round
+                class="q-ml-sm"
+                size="sm"
+                :icon="innerTitleShow?'visibility':'visibility_off'"
+                @click="innerTitleShow=!innerTitleShow"
+              />
             </template>
           </q-input>
+
+          <q-color-input
+            v-model:color="innerBGColor"
+            label="背景色"
+          >
+          </q-color-input>
+
+          <q-field>
+            <q-toggle
+              v-model="innerBorderShow"
+              :icon="innerBorderShow ? 'border_all':'border_clear'"
+              :label="innerBorderShow ? '隐藏边框' : '显示边框'"
+            />
+          </q-field>
+
           <slot></slot>
         </q-form>
       </q-card-section>
@@ -39,23 +64,59 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="colorDialogShow">
+    <q-card class="column no-wrap">
+      <q-color
+        class="col"
+        v-model="innerTitleColor" />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import QColorInput from "../base/input/color.vue";
 
 export default defineComponent({
   name: "PortletEditor",
-  props: ['title','show', 'titleshow'],
+  props: {
+    title: String,
+    titlecolor: {
+      type: String,
+      default: '#FFF'
+    },
+    titleshow: {
+      type: Boolean,
+      default: false
+    },
+    show: {
+      type: Boolean,
+      default: false
+    },
+    bgcolor: {
+      type: String,
+      default: '#5f6368'
+    },
+    bordershow: {
+      type: Boolean,
+      default: false
+    }
+  },
   mixins: [
   ],
   components: {
+    QColorInput
   },
   data: function () {
     return {
       innerTitle: this.title,
+      innerTitleColor: this.titlecolor,
       innerShow: this.show,
-      innerTitleShow: this.titleshow
+      innerTitleShow: this.titleshow,
+      innerBGColor: this.bgcolor,
+      innerBorderShow: this.bordershow,
+      colorDialogShow: false
     };
   },
   emits: {
@@ -63,7 +124,10 @@ export default defineComponent({
     'save': null,
     'cancel': null,
     'update:show': null,
-    'update:titleshow': null
+    'update:titleshow': null,
+    'update:titlecolor': null,
+    'update:bordershow': null,
+    'update:bgcolor': null
   },
 
   watch: {
@@ -85,6 +149,21 @@ export default defineComponent({
     innerTitleShow: {
       handler (val) {
         this.$emit('update:titleshow', val);
+      }
+    },
+    innerBGColor: {
+      handler (val) {
+        this.$emit('update:bgcolor', val);
+      }
+    },
+    innerTitleColor: {
+      handler (val) {
+        this.$emit('update:titlecolor', val);
+      }
+    },
+    innerBorderShow: {
+      handler (val) {
+        this.$emit('update:bordershow', val);
       }
     }
   },

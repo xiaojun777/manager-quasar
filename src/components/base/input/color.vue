@@ -6,12 +6,14 @@
     :input-style="{ 'color': innerColor }"
   >
     <template v-slot:append>
-      <q-icon
-        name="colorize"
-        class="cursor-pointer"
-        :style="{ 'color': innerColor, 'border-color': 'lightgrey', 'border-style': 'solid', 'border-width': '1px' }"
-        @click="dialogShow=true">
-      </q-icon>
+      <q-btn
+        flat dense round
+        icon="colorize"
+        :style="{'color': innerColor, 'border': '1px solid lightgrey'}"
+        class="q-ml-sm"
+        size="sm"
+        @click="dialogShow=true"
+      />
     </template>
   </q-input>
 
