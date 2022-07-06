@@ -2,11 +2,14 @@
   <board-widget
     :title="innerPortlet.title"
     :titleshow="innerPortlet.titleshow"
+    :bordershow="innerPortlet.bordershow"
+    :bgcolor="innerPortlet.bgcolor"
+    :titlecolor="innerPortlet.titlecolor"
     @edit="onPortletEdit"
-    @delete="onDelete"
+    @delete="onPortletDelete"
     :editable="editable"
   >
-    <div ref="echarts" id="echarts" style="height: 250px"></div>
+    <div v-if="chartType" ref="echarts" id="echarts"></div>
   </board-widget>
   <portlet-editor
     v-model:title="innerPortlet.title"
@@ -15,80 +18,117 @@
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
-    <q-input
-      v-for="item in datas"
-      type="number"
-      :key="item.name"
-      v-model.number="item.value"
-      :label="item.name"
-    ></q-input>
+    <q-select
+      label="类型"
+      v-model="chartType"
+      stack-label
+      emit-value
+      map-options
+      :options="this.getOptions()"
+    />
+    <pie-chart-editor
+      v-if="chartType === 'pie'"
+      v-model:options="options"
+    ></pie-chart-editor>
+    <bar-chart-editor
+      v-else-if="chartType === 'bar'"
+      v-model:options="options"
+    ></bar-chart-editor>
+    <line-chart-editor
+      v-else-if="chartType === 'line'"
+      v-model:options="options"
+    ></line-chart-editor>
   </portlet-editor>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import BoardWidget from "./widget.vue";
-import Ckeditor from "../base/ckeditor.vue";
-import portletbase from "../mixins/portletbase";
-import editorbase from "../mixins/editorbase";
-import PortletEditor from "./portleteditor.vue";
-import * as echarts from "echarts";
+import { defineComponent } from 'vue'
+import BoardWidget from './widget.vue'
+import portletbase from '../mixins/portletbase'
+import editorbase from '../mixins/editorbase'
+import PortletEditor from './portleteditor.vue'
+import * as echarts from 'echarts'
+import PieChartEditor from './echarts/PieChart.vue'
+import LineChartEditor from './echarts/LineChart.vue'
+import BarChartEditor from './echarts/BarChart.vue'
+
+const options = [
+  {
+    value: 'line',
+    label: '折线图'
+  },
+  {
+    value: 'bar',
+    label: '柱状图'
+  },
+  {
+    value: 'pie',
+    label: '饼图'
+  }
+]
 
 export default defineComponent({
-  name: "WidgetECharts",
+  name: 'WidgetECharts',
   props: [],
   mixins: [portletbase, editorbase],
   components: {
+    PieChartEditor,
+    BarChartEditor,
+    LineChartEditor,
     BoardWidget,
-    // Ckeditor,
-    PortletEditor,
+    PortletEditor
   },
   data: function () {
     return {
       model: false,
       chart: null,
-      datas: null,
-    };
-  },
-  emits: {
-    delete: null,
+      chartType: '',
+      options:
+        this.portlet.params.options !== void 0
+          ? this.portlet.params.options
+          : null
+    }
   },
   watch: {
-    datas: {
+    options: {
       handler(val) {
-        console.log("datas ", val);
-        this.init();
-
-        // this.init()
+        // this.portlet.params.options = val
+        this.init()
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
-  mounted() {
-    this.datas = this.innerPortlet.params.options.series[0].data;
-    this.init();
+  emits: {
+    delete: null
   },
+
   methods: {
+    getOptions() {
+      return options
+    },
     onDelete() {
-      this.$emit("delete", this.portlet.name);
+      this.$emit('delete', this.portlet.name)
     },
     init() {
-      let lineChart = this.$refs["echarts"];
-      console.log("echarts:", lineChart);
+      let lineChart = this.$refs['echarts']
       if (lineChart !== null) {
-        // echarts.dispose(lineChart)
-        let theme = this.model ? "dark" : "light";
-        lineChart = echarts.init(lineChart, theme);
-        lineChart.setOption(this.innerPortlet.params.options);
+        echarts.dispose(lineChart)
+        let theme = this.model ? 'dark' : 'light'
+        lineChart = echarts.init(lineChart, theme)
+        lineChart.setOption(this.options)
       }
     },
     onResize() {
       if (this.line_chart) {
-        this.line_chart.resize();
+        this.line_chart.resize()
       }
-    },
-  },
-});
+    }
+  }
+})
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+#echarts
+  background: #fff
+  height: 300px
+</style>
