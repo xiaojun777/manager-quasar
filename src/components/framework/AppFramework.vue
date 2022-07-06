@@ -1,24 +1,21 @@
 <template>
-  <q-tab-panels :class="this.class"
-    v-model="panel"
-    animated
-    swipeable>
-    <q-tab-panel name="rows"
-      class="column">
-      <q-bar v-if="editable"
-        class="bg-transparent">
+  <q-tab-panels :class="this.class" v-model="panel" animated swipeable>
+    <q-tab-panel name="rows" class="column">
+      <q-bar v-if="editable" class="bg-primary text-white">
         <q-btn
-          flat rounded
+          flat
+          rounded
           class="q-ml-sm"
           icon="add"
-          :text-color="!(loading || !flags.add) ? 'primary': 'gray'"
+          :text-color="!(loading || !flags.add) ? 'white' : 'lightgrey'"
           :disable="loading || !flags.add"
           label="新增"
           @click="addRow"
         />
         <q-btn
-          flat rounded
-          :text-color="!(loading || !flags.edit) ? 'primary': 'gray'"
+          flat
+          rounded
+          :text-color="!(loading || !flags.edit) ? 'white' : 'lightgrey'"
           class="q-ml-sm"
           icon="edit"
           :disable="loading || !flags.edit"
@@ -26,8 +23,9 @@
           @click="editRow"
         />
         <q-btn
-          flat rounded
-          :text-color="!(loading || !flags.view) ? 'primary': 'gray'"
+          flat
+          rounded
+          :text-color="!(loading || !flags.view) ? 'white' : 'lightgrey'"
           class="q-ml-sm"
           icon="preview"
           :disable="loading || !flags.view"
@@ -35,8 +33,9 @@
           @click="viewRow"
         />
         <q-btn
-          flat rounded
-          :text-color="!(loading || !flags.delete) ? 'primary': 'gray'"
+          flat
+          rounded
+          :text-color="!(loading || !flags.delete) ? 'white' : 'lightgrey'"
           class="q-ml-sm"
           icon="remove"
           :disable="loading || !flags.delete"
@@ -46,9 +45,10 @@
 
         <q-space />
         <q-btn
-          flat dense round
+          flat
+          dense
+          round
           class="q-ml-sm"
-          text-color="primary"
           icon="search"
           :disable="loading"
           @click="searchRow"
@@ -58,6 +58,7 @@
       <q-table
         class="col"
         ref="table"
+        dense
         :title="app.label"
         :rows="rows"
         :columns="cols"
@@ -69,22 +70,26 @@
         v-model:pagination="pagination"
         @request="onRequest"
         @row-click="onRowClick"
-        :row-key="row => row[this.app.schema.key]"
+        :row-key="(row) => row[this.app.schema.key]"
       >
         <template v-slot:top>
           <template v-for="item in searchingItems" :key="item.id">
-            <q-chip removable @remove="onRemoveSearchingItem(item.id);" color="primary" text-color="white">
-              {{item.label}}
+            <q-chip
+              removable
+              @remove="onRemoveSearchingItem(item.id)"
+              :color="getColorWidthNumber(item.id.length, 8)"
+              text-color="white"
+            >
+              {{ item.label }}
             </q-chip>
           </template>
         </template>
-
       </q-table>
-      <search-view :app="app" ref="search" v-on:search="onSearch"> </search-view>
+      <search-view :app="app" ref="search" v-on:search="onSearch">
+      </search-view>
     </q-tab-panel>
 
-    <q-tab-panel name="editor"
-      class="row">
+    <q-tab-panel name="editor" class="row">
       <row-editor
         class="col"
         :app="app"
@@ -110,37 +115,38 @@ import axios from "axios";
 import SearchView from "./SearchView.vue";
 import AlertDialog from "./Alert.vue";
 import ConfirmDialog from "./Confirm.vue";
-import rows from "src/components/mixins/rows.js";
+import rows from "src/components/mixins/rows";
+import colors from "src/components/mixins/colors";
 
 export default defineComponent({
   name: "AppFramework",
-  mixins: [rows],
+  mixins: [rows, colors],
   components: {
     SearchView,
     AlertDialog,
-    ConfirmDialog
+    ConfirmDialog,
   },
   props: {
     appid: String,
     class: String,
     editable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     defaultData: {
       type: Object,
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     hideHeader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hideBottom: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: function () {
     return {
@@ -153,18 +159,18 @@ export default defineComponent({
         add: true,
         edit: false,
         view: false,
-        delete: false
+        delete: false,
       },
-      panel: 'rows',
+      panel: "rows",
       rowVal: {},
-      method: 'view'
+      method: "view",
     };
   },
 
   computed: {
-    selection () {
+    selection() {
       return this.editable ? "multiple" : "none";
-    }
+    },
   },
 
   mounted: async function () {
@@ -173,23 +179,23 @@ export default defineComponent({
 
   watch: {
     selected: {
-      handler (val) {
+      handler(val) {
         this.updateFlag(val);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
 
   methods: {
-    updateFlag (selected) {
-      switch (selected.length){
+    updateFlag(selected) {
+      switch (selected.length) {
         case 0: {
           this.flags = {
             add: true,
             edit: false,
             view: false,
-            delete: false
-          }
+            delete: false,
+          };
           break;
         }
         case 1: {
@@ -197,8 +203,8 @@ export default defineComponent({
             add: true,
             edit: true,
             view: true,
-            delete: true
-          }
+            delete: true,
+          };
           break;
         }
         default: {
@@ -206,32 +212,32 @@ export default defineComponent({
             add: true,
             edit: false,
             view: false,
-            delete: true
-          }
+            delete: true,
+          };
           break;
         }
       }
     },
 
     addRow() {
-      this.showRowEditor('new', this.defaultData);
+      this.showRowEditor("new", this.defaultData);
     },
 
     editRow() {
-      this.showRowEditor('edit', this.selected[0]);
+      this.showRowEditor("edit", this.selected[0]);
     },
 
     viewRow() {
-      this.showRowEditor('view', this.selected[0]);
+      this.showRowEditor("view", this.selected[0]);
     },
 
-    showRowEditor (method, val) {
+    showRowEditor(method, val) {
       this.panel = "editor";
       this.method = method;
       this.rowVal = val;
     },
 
-    hideRowEditor () {
+    hideRowEditor() {
       this.panel = "rows";
       this.rowVal = {};
     },
@@ -241,7 +247,7 @@ export default defineComponent({
     },
 
     async removeRow() {
-      let bRet = await this.$refs.confirm.show('确定要删除信息吗？');
+      let bRet = await this.$refs.confirm.show("确定要删除信息吗？");
       if (bRet) {
         let response = await axios.post(this.getBaseUrl() + "/delete", {
           params: this.selected,
@@ -253,31 +259,31 @@ export default defineComponent({
       }
     },
 
-    async onEditorAdd (val, callback) {
+    async onEditorAdd(val, callback) {
       let response = await axios.post(this.getBaseUrl() + "/add", {
         params: val,
       });
       callback(response.data);
     },
 
-    async onEditorEdit (val, callback) {
+    async onEditorEdit(val, callback) {
       let response = await axios.post(this.getBaseUrl() + "/update", {
         params: val,
       });
       callback(response.data);
     },
 
-    onEditorAfterNew () {
+    onEditorAfterNew() {
       this.hideRowEditor();
       this.flushRows();
     },
 
-    onEditorAfterEdit () {
+    onEditorAfterEdit() {
       this.hideRowEditor();
       this.flushRows();
     },
 
-    onEditorCancel () {
+    onEditorCancel() {
       this.hideRowEditor();
     },
 
@@ -285,7 +291,7 @@ export default defineComponent({
       this.flushRows(config.pagination);
     },
 
-    refreshTable () {
+    refreshTable() {
       this.resetPagination();
       this.flushRows();
       this.transSearchItems();
@@ -297,19 +303,19 @@ export default defineComponent({
     },
 
     onRowClick(event, row, index) {
-      this.showRowEditor('view', row);
+      this.showRowEditor("view", row);
     },
 
     onRemoveSearchingItem(itemId) {
-      switch(typeof this.searching[itemId]){
-        case 'string': {
-          this.searching[itemId] = '';
+      switch (typeof this.searching[itemId]) {
+        case "string": {
+          this.searching[itemId] = "";
           break;
         }
-        case 'object': {
-          if (Array.isArray(this.searching[itemId])){
+        case "object": {
+          if (Array.isArray(this.searching[itemId])) {
             this.searching[itemId] = [];
-          }else{
+          } else {
             this.searching[itemId] = {};
           }
           break;
@@ -318,7 +324,7 @@ export default defineComponent({
       this.refreshTable();
     },
 
-    transSearchItems () {
+    transSearchItems() {
       this.searchingItems = [];
       let searching = this.searching;
       for (let i = 0; i < this.app.schema.items.length; i++) {
@@ -326,55 +332,66 @@ export default defineComponent({
         if (item.searchable) {
           switch (item.type) {
             case "string": {
-              if (searching[item.id] !== void 0 && searching[item.id].length > 0) {
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id].length > 0
+              ) {
                 this.searchingItems.push({
                   id: item.id,
-                  label: item.label + ': ' + searching[item.id]
+                  label: item.label + ": " + searching[item.id],
                 });
               }
               break;
             }
             case "number": {
-              if (searching[item.id] !== void 0 && (searching[item.id].min !== void 0 || searching[item.id].max !== void 0)) {
+              if (
+                searching[item.id] !== void 0 &&
+                (searching[item.id].min !== void 0 ||
+                  searching[item.id].max !== void 0)
+              ) {
                 let numberSearching = searching[item.id];
-                let label = item.label + ': ';
+                let label = item.label + ": ";
                 let min = numberSearching.min;
                 let max = numberSearching.max;
                 let bMin = min !== void 0 && min.length !== 0;
                 let bMax = max !== void 0 && max.length !== 0;
 
-                if (bMin || bMax){
-                  if (bMin){
-                    label += '>=' + min;
+                if (bMin || bMax) {
+                  if (bMin) {
+                    label += ">=" + min;
                   }
 
-                  if (bMin && bMax){
-                    label += '且'
+                  if (bMin && bMax) {
+                    label += "且";
                   }
 
-                  if (bMax){
-                    label += '<=' + max;
+                  if (bMax) {
+                    label += "<=" + max;
                   }
                   this.searchingItems.push({
                     id: item.id,
-                    label: label
+                    label: label,
                   });
                 }
               }
               break;
             }
             case "option": {
-              if (searching[item.id] !== void 0 && searching[item.id] != null && searching[item.id].length > 0) {
-                let label = item.label + ': ';
+              if (
+                searching[item.id] !== void 0 &&
+                searching[item.id] != null &&
+                searching[item.id].length > 0
+              ) {
+                let label = item.label + ": ";
                 let labels = [];
-                for (let i=0; i<searching[item.id].length; i++) {
+                for (let i = 0; i < searching[item.id].length; i++) {
                   let con = searching[item.id][i];
                   labels.push(item.options[con]);
                 }
-                label += `[${labels.join(',')}]`;
+                label += `[${labels.join(",")}]`;
                 this.searchingItems.push({
                   id: item.id,
-                  label: label
+                  label: label,
                 });
               }
               break;
@@ -382,7 +399,7 @@ export default defineComponent({
           }
         }
       }
-    }
+    },
   },
 });
 </script>
@@ -392,24 +409,6 @@ export default defineComponent({
 .q-tab-panel
   padding: 0px !important
 
-::v-deep .q-table__top
-  padding-top: 0px !important
-  padding-bottom: 0px !important
-
-::v-deep .q-table th, ::v-deep .q-table td
-  padding-top: 0px !important
-  padding-bottom: 0px !important
-
-::v-deep .q-table thead tr, ::v-deep .q-table tbody td
-  height: 32px
-
-::v-deep .q-checkbox__bg
-  left: 30%
-  top: 30%
-  width: 40%
-  height: 40%
-
 ::v-deep .q-checkbox__inner
   font-size: 32px
-
 </style>
