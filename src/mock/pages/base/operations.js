@@ -107,7 +107,11 @@ var searchRows = function (app, rows, searching) {
           break;
         }
         case "option": {
-          if (searching[item.id] !== void 0 && searching[item.id] != null && searching[item.id].length > 0) {
+          if (
+            searching[item.id] !== void 0 &&
+            searching[item.id] !== null &&
+            searching[item.id].length > 0
+          ) {
             retRows = retRows.filter((row) => {
               let bRet = false;
               if (searching[item.id].includes(row[item.id])) {
@@ -129,5 +133,5 @@ export default {
   updateRow: updateRow,
   deleteRow: deleteRow,
   deleteRows: deleteRows,
-  searchRows: searchRows
+  searchRows: searchRows,
 };
