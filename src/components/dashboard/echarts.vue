@@ -24,19 +24,31 @@
       stack-label
       emit-value
       map-options
-      :options="this.getOptions()"
+      :options="getOptions()"
     />
+    <q-select
+      label="主题"
+      v-model="theme"
+      v-if="options"
+      :options="getThemeOptions()"
+      option-value="label"
+      map-options
+    ></q-select>
+
     <pie-chart-editor
       v-if="chartType === 'pie'"
       v-model:options="options"
+      :type="chartType"
     ></pie-chart-editor>
     <bar-chart-editor
       v-else-if="chartType === 'bar'"
       v-model:options="options"
+      :type="chartType"
     ></bar-chart-editor>
     <line-chart-editor
       v-else-if="chartType === 'line'"
       v-model:options="options"
+      :type="chartType"
     ></line-chart-editor>
   </portlet-editor>
 </template>
@@ -51,6 +63,9 @@ import * as echarts from 'echarts'
 import PieChartEditor from './echarts/PieChart.vue'
 import LineChartEditor from './echarts/LineChart.vue'
 import BarChartEditor from './echarts/BarChart.vue'
+import wonderlandTheme from '../../mock/pages/theme/wonderlandTheme.json'
+import primaryTheme from '../../mock/pages/theme/primaryTheme.json'
+import waldenTheme from '../../mock/pages/theme/waldenTheme.json'
 
 const options = [
   {
@@ -66,7 +81,13 @@ const options = [
     label: '饼图'
   }
 ]
-
+const themeOptions = [
+  { label: 'dark' },
+  { label: 'light' },
+  { label: 'vintage', value: wonderlandTheme },
+  { label: 'waldenTheme', value: waldenTheme },
+  { label: 'primaryTheme', value: primaryTheme }
+]
 export default defineComponent({
   name: 'WidgetECharts',
   props: [],
@@ -80,9 +101,9 @@ export default defineComponent({
   },
   data: function () {
     return {
-      model: false,
       chart: null,
       chartType: '',
+      theme: { label: 'light' },
       options:
         this.portlet.params.options !== void 0
           ? this.portlet.params.options
@@ -91,20 +112,46 @@ export default defineComponent({
   },
   watch: {
     options: {
-      handler(val) {
-        // this.portlet.params.options = val
+      handler() {
         this.init()
       },
       deep: true
+    },
+    theme: {
+      handler(val) {
+        if (val.label !== 'dark' && val.label !== 'light') {
+          echarts.registerTheme(val.label, val.value)
+        }
+        this.init()
+      }
+    }
+    // dataChange: {
+    //   handle(val) {
+    //     console.log(val)
+    //     if (val.theme.label !== 'dark' && val.theme.label !== 'light') {
+    //       echarts.registerTheme(val.theme.label, val.theme.value)
+    //     }
+    //     this.init()
+    //   },
+    //   deep: true
+    // }
+  },
+  computed: {
+    dataChange() {
+      const { options, theme } = this
+      return { options, theme }
     }
   },
   emits: {
     delete: null
   },
-
+  mounted() {},
   methods: {
     getOptions() {
       return options
+    },
+    getThemeOptions() {
+      return themeOptions
     },
     onDelete() {
       this.$emit('delete', this.portlet.name)
@@ -113,14 +160,13 @@ export default defineComponent({
       let lineChart = this.$refs['echarts']
       if (lineChart !== null) {
         echarts.dispose(lineChart)
-        let theme = this.model ? 'dark' : 'light'
-        lineChart = echarts.init(lineChart, theme)
+        lineChart = echarts.init(lineChart, this.theme.label)
         lineChart.setOption(this.options)
       }
     },
     onResize() {
-      if (this.line_chart) {
-        this.line_chart.resize()
+      if (this.chart) {
+        this.chart.resize()
       }
     }
   }
