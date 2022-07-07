@@ -1,13 +1,14 @@
 <template>
   <q-card square class="column fit"
-    :style="{'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
+    :style="{'color': titleColor, 'border': portlet.bordershow ? '1px solid ' + bgColor : 'none'}">
     <q-bar
-      v-if="editable || titleshow"
+      v-if="editable || portlet.titleshow"
       class="q-pl-md full-width"
-      :style="{'background-color': bgcolor}"
+      :style="{'background-color': bgColor}"
     >
-      <template v-if="titleshow">
-        <div class="text-no-wrap no-scroll">{{ title }}</div>
+      <template v-if="portlet.titleshow">
+        <q-icon v-if="portlet.titleicon" :name="portlet.titleicon"/>
+        <div class="text-no-wrap no-scroll">{{ portlet.title }}</div>
       </template>
       <q-space />
       <template v-if="editable">
@@ -46,25 +47,27 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "DoardWidget",
   props: {
-    title: String,
-    titleshow: Boolean,
-    titlecolor: {
-      type: String,
-      default: '#fff'
-    },
-    bgcolor: {
-      type: String,
-      default: '#0080ff'
-    },
-    bordershow: {
-      type: Boolean,
-      default: false,
-    },
-
+    portlet: Object,
     editable: Boolean,
   },
   data: function () {
-    return {};
+    return {
+      titleColor: 'white',
+      bgColor: '#2a2abd',
+    };
+  },
+  watch: {
+    'portlet.titlecolor': {
+      handler (val) {
+        this.titleColor = val;
+      }
+    },
+
+    'portlet.bgcolor': {
+      handler (val) {
+        this.bgColor = val;
+      }
+    },
   },
 
   emits: {

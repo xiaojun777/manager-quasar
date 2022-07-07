@@ -44,10 +44,18 @@
                   <template v-slot:append>
                     <q-btn
                       flat dense round
-                      icon="border_color"
+                      icon="colorize"
                       class="q-ml-sm"
                       size="sm"
-                      @click="colorDialogShow=true"
+                      @click="onColorClick"
+                    />
+
+                    <q-btn
+                      flat dense round
+                      :icon="innerPortlet.titleicon ? innerPortlet.titleicon: 'search'"
+                      class="q-ml-sm"
+                      size="sm"
+                      @click="onIconClick"
                     />
 
                     <q-btn
@@ -89,20 +97,17 @@
       </div>
     </div>
   </q-dialog>
+  <QColorPicker v-model:color="innerPortlet.titlecolor" ref="colorpicker"/>
+  <QIconPicker v-model:icon="innerPortlet.titleicon" ref="iconpicker"/>
 
-  <q-dialog v-model="colorDialogShow">
-    <q-card class="column no-wrap">
-      <q-color
-        class="col"
-        v-model="innerPortlet.titlecolor" />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import QColorInput from "../base/input/color.vue";
 import _ from "lodash";
+import QColorPicker from "src/components/base/picker/color.vue"
+import QIconPicker from 'src/components/base/picker/icon.vue'
 
 export default defineComponent({
   name: "PortletEditor",
@@ -116,7 +121,9 @@ export default defineComponent({
   mixins: [
   ],
   components: {
-    QColorInput
+    QColorInput,
+    QIconPicker,
+    QColorPicker
   },
   data: function () {
     return {
@@ -154,6 +161,14 @@ export default defineComponent({
 
     onEditorCancel () {
       this.$emit('cancel');
+    },
+
+    onColorClick () {
+      this.$refs.colorpicker.show();
+    },
+
+    onIconClick () {
+      this.$refs.iconpicker.show();
     }
   }
 });

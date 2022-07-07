@@ -1,10 +1,6 @@
 <template>
   <board-widget
-    :title="innerPortlet.title"
-    :titleshow="innerPortlet.titleshow"
-    :bordershow="innerPortlet.bordershow"
-    :bgcolor="innerPortlet.bgcolor"
-    :titlecolor="innerPortlet.titlecolor"
+    :portlet="innerPortlet"
     @edit="onPortletEdit"
     @delete="onPortletDelete"
     :editable="editable"
