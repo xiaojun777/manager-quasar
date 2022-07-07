@@ -12,25 +12,23 @@
         :style="{'color': innerColor, 'border': '1px solid lightgrey'}"
         class="q-ml-sm"
         size="sm"
-        @click="dialogShow=true"
+        @click="onColorPicker"
       />
     </template>
   </q-input>
+  <QColorPicker v-model:color="innerColor" ref="picker"/>
 
-  <q-dialog v-model="dialogShow">
-    <q-card class="column no-wrap">
-      <q-color
-        class="col"
-        v-model="innerColor" />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import QColorPicker from "src/components/base/picker/color.vue"
 
 export default defineComponent({
   name: 'QColorInput',
+  components: {
+    QColorPicker
+  },
   props: {
     color: {
       type:String,
@@ -50,6 +48,11 @@ export default defineComponent({
   watch: {
     innerColor (val) {
       this.$emit('update:color', val);
+    }
+  },
+  methods: {
+    onColorPicker () {
+      this.$refs.picker.show();
     }
   }
 })

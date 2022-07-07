@@ -1,9 +1,10 @@
 <template>
   <q-card square class="column fit"
-    :style="{'background-color': bgcolor, 'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
+    :style="{'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
     <q-bar
       v-if="editable || titleshow"
-      class="q-pl-md full-width bg-transparent"
+      class="q-pl-md full-width"
+      :style="{'background-color': bgcolor}"
     >
       <template v-if="titleshow">
         <div class="text-no-wrap no-scroll">{{ title }}</div>
@@ -33,7 +34,7 @@
 
     <q-card-section
       v-ripple
-      class="q-portlet-body col full-width cursor-pointer">
+      class="q-portlet-body col full-width cursor-pointer ">
       <slot></slot>
     </q-card-section>
   </q-card>

@@ -47,7 +47,7 @@
                       icon="border_color"
                       class="q-ml-sm"
                       size="sm"
-                      @click="innerPortlet.titleshow=true"
+                      @click="colorDialogShow=true"
                     />
 
                     <q-btn

@@ -10,29 +10,22 @@
         :icon="innerIcon!=='' ? innerIcon: 'search'"
         class="q-ml-sm"
         size="sm"
-        @click="dialogShow=true"
+        @click="onSearchClick"
       />
 
     </template>
   </q-input>
 
-  <q-dialog full-width full-height v-model="dialogShow">
-    <q-card class="column no-wrap">
-      <icon-selector
-        class="col"
-        @update:icon="dialogShow=false"
-        v-model:icon="innerIcon"/>
-    </q-card>
-  </q-dialog>
+  <QIconPicker v-model:icon="innerIcon" ref="picker"/>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import IconSelector from "../iconselector.vue"
+import QIconPicker from 'src/components/base/picker/icon.vue'
 export default defineComponent({
   name: 'QIconInput',
   components: {
-    IconSelector
+    QIconPicker
   },
   props: {
     icon: {
@@ -44,7 +37,6 @@ export default defineComponent({
   data: function () {
     return {
       innerIcon: this.icon,
-      dialogShow: false
     }
   },
   emits: {
@@ -53,6 +45,11 @@ export default defineComponent({
   watch: {
     innerIcon (val) {
       this.$emit('update:icon', val);
+    }
+  },
+  methods: {
+    onSearchClick () {
+      this.$refs.picker.show();
     }
   }
 })

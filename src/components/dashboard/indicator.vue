@@ -31,6 +31,7 @@
         ></q-icon>
       </q-item-section>
     </q-item>
+
   </board-widget>
 
   <portlet-editor
@@ -108,8 +109,6 @@ export default defineComponent({
   },
   data: function () {
     return {
-      iconSelectorShow: false,
-      colorPickerShow: false
     };
   },
   emits: {

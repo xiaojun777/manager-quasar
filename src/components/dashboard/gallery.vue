@@ -9,6 +9,7 @@
     @delete="onPortletDelete"
     :editable="editable"
   >
+
     <q-carousel
       swipeable
       animated
