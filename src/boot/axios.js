@@ -10,6 +10,8 @@ import axios from 'axios'
 const api = axios.create({ baseURL: 'https://api.example.com' })
 import AppFramework from 'src/components/framework/AppFramework.vue';
 import RowEditor from 'src/components/framework/RowEditor.vue';
+import Portlet from 'src/components/dashboard/portlet.vue';
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -24,6 +26,7 @@ export default boot(({ app }) => {
 
   app.component('app-framework', AppFramework);
   app.component('row-editor', RowEditor);
+  app.component('portlet', Portlet);
 })
 
 export { api }

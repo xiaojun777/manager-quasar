@@ -1,13 +1,12 @@
 <template>
   <q-card square class="column fit"
-
     :style="{'background-color': bgcolor, 'color': titlecolor, 'border': bordershow ? '1px solid ' + bgcolor : 'none'}">
     <q-bar
       v-if="editable || titleshow"
       class="q-pl-md full-width bg-transparent"
     >
       <template v-if="titleshow">
-        <div>{{ title }}</div>
+        <div class="text-no-wrap no-scroll">{{ title }}</div>
       </template>
       <q-space />
       <template v-if="editable">

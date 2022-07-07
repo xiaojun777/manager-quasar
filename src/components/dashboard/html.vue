@@ -13,16 +13,14 @@
   </board-widget>
 
   <portlet-editor
-    v-model:title="innerPortlet.title"
-    v-model:titleshow="innerPortlet.titleshow"
-    v-model:bordershow="innerPortlet.bordershow"
-    v-model:bgcolor="innerPortlet.bgcolor"
-    v-model:titlecolor="innerPortlet.titlecolor"
+    v-model:portlet="innerPortlet"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
-    <ckeditor label="HTML" v-model:html="innerPortlet.params.html"> </ckeditor>
+    <template v-slot="{portlet}">
+      <ckeditor label="HTML" v-model:html="portlet.params.html"> </ckeditor>
+    </template>
   </portlet-editor>
 </template>
 

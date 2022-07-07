@@ -55,7 +55,8 @@ let board_one = {
     [
       {
         title: "简介",
-        titleshow: false,
+        titleshow: true,
+        bordershow: true,
         type: "html",
         name: "desc",
         draggable: true,
@@ -66,6 +67,7 @@ let board_one = {
       {
         title: "女性员工",
         titleshow: true,
+        bordershow: true,
         type: "rows",
         name: "female",
         draggable: true,
@@ -79,6 +81,7 @@ let board_one = {
       {
         title: "李姓员工",
         titleshow: true,
+        bordershow: true,
         type: "rows",
         name: "huang",
         draggable: true,
@@ -94,6 +97,7 @@ let board_one = {
       {
         title: "男性员工",
         titleshow: true,
+        bordershow: true,
         type: "rows",
         name: "male",
         draggable: true,
@@ -107,6 +111,7 @@ let board_one = {
       {
         title: "张三教育经历",
         titleshow: true,
+        bordershow: true,
         type: "rows",
         name: "zhangsan",
         draggable: true,
@@ -122,6 +127,7 @@ let board_one = {
       {
         title: "30-40岁员工",
         titleshow: false,
+        bordershow: true,
         type: "rows",
         name: "30-40",
         draggable: true,

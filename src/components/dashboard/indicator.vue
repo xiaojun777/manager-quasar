@@ -34,59 +34,56 @@
   </board-widget>
 
   <portlet-editor
-    v-model:title="innerPortlet.title"
-    v-model:titleshow="innerPortlet.titleshow"
-    v-model:bordershow="innerPortlet.bordershow"
-    v-model:bgcolor="innerPortlet.bgcolor"
-    v-model:titlecolor="innerPortlet.titlecolor"
+    v-model:portlet="innerPortlet"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
-
+    <template v-slot="{portlet}">
       <q-input
-        v-model="innerPortlet.params.indicatorname"
+        v-model="portlet.params.indicatorname"
         stack-label
         label="指标名"
       >
       </q-input>
 
       <q-color-input
-        v-model:color="innerPortlet.params.namecolor"
+        v-model:color="portlet.params.namecolor"
         label="指标名颜色"
       >
       </q-color-input>
 
       <q-input
-        v-model="innerPortlet.params.indicatorvalue"
+        v-model="portlet.params.indicatorvalue"
         stack-label
         label="指标值"
       >
       </q-input>
 
       <q-color-input
-        v-model:color="innerPortlet.params.valuecolor"
+        v-model:color="portlet.params.valuecolor"
         label="指标颜色"
       >
       </q-color-input>
 
       <q-icon-input
-        v-model:icon="innerPortlet.params.icon"
+        v-model:icon="portlet.params.icon"
         label="图标"
       >
       </q-icon-input>
 
       <q-color-input
-        v-model:color="innerPortlet.params.iconcolor"
+        v-model:color="portlet.params.iconcolor"
         label="图标颜色"
       >
       </q-color-input>
 
       <q-color-input
-        v-model:color="innerPortlet.params.bgcolor"
+        v-model:color="portlet.params.bgcolor"
         label="背景色"
       >
       </q-color-input>
+    </template>
   </portlet-editor>
 </template>
 

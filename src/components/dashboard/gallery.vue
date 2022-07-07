@@ -39,15 +39,14 @@
   </board-widget>
 
   <portlet-editor
-    v-model:title="innerPortlet.title"
-    v-model:titleshow="innerPortlet.titleshow"
-    v-model:bordershow="innerPortlet.bordershow"
-    v-model:bgcolor="innerPortlet.bgcolor"
-    v-model:titlecolor="innerPortlet.titlecolor"
+    v-model:portlet="innerPortlet"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
+    <template v-slot="{portlet}">
+      {{portlet}}
+    </template>
   </portlet-editor>
 </template>
 

@@ -23,28 +23,27 @@
   </board-widget>
 
   <portlet-editor
-    v-model:title="innerPortlet.title"
-    v-model:titleshow="innerPortlet.titleshow"
-    v-model:bordershow="innerPortlet.bordershow"
-    v-model:bgcolor="innerPortlet.bgcolor"
-    v-model:titlecolor="innerPortlet.titlecolor"
+    v-model:portlet="innerPortlet"
     @save="onEditorSave"
     @cancel="onEditorCancel"
     v-model:show="editorShow"
   >
-    <q-select
-      v-model="appname"
-      stack-label
-      emit-value
-      map-options
-      option-value="id"
-      option-label="label"
-      :options="appinfos"
-      label="选择应用"
-    />
 
-    <q-searchings :appid="appname" v-model:searching="searching">
-    </q-searchings>
+    <template v-slot="{portlet}">
+      <q-select
+        v-model="portlet.params.appid"
+        stack-label
+        emit-value
+        map-options
+        option-value="id"
+        option-label="label"
+        :options="appinfos"
+        label="选择应用"
+      />
+
+      <q-searchings :appid="portlet.params.appid" v-model:searching="portlet.params.searching">
+      </q-searchings>
+    </template>
   </portlet-editor>
 </template>
 
@@ -57,6 +56,7 @@ import editorbase from "src/components/mixins/editorbase";
 import apps from "src/components/mixins/apps";
 import QSearchings from "src/components/base/searching.vue";
 import PortletEditor from "./portleteditor.vue";
+import _ from "lodash";
 
 export default defineComponent({
   name: "WidgetRows",
@@ -80,21 +80,18 @@ export default defineComponent({
     };
   },
   watch: {
-    appname(val) {
-      this.innerPortlet.params.appid = val;
-      this.resetApp();
+    'portlet.params.appid': {
+      handler (val) {
+        this.appname = val;
+        this.resetApp();
+      }
     },
 
-    searching: {
+    'portlet.params.searching': {
       handler(val) {
-        if (
-          this.innerPortlet.params.appid !== void 0 &&
-          this.innerPortlet.params.appid !== null
-        ) {
-          this.innerPortlet.params.seraching = val;
-          this.resetPagination();
-          this.flushRows();
-        }
+        this.searching = val;
+        this.resetPagination();
+        this.flushRows();
       },
       deep: true,
     },
