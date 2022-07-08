@@ -23,7 +23,7 @@
         <q-icon
           :name="portlet.params.icon"
           :style="{color: portlet.params.iconcolor}"
-          size="44px"
+          size="48px"
         ></q-icon>
       </q-item-section>
     </q-item>

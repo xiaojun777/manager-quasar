@@ -8,7 +8,7 @@
     >
       <template v-if="portlet.titleshow">
         <q-icon v-if="portlet.titleicon" :name="portlet.titleicon"/>
-        <div class="text-no-wrap no-scroll">{{ portlet.title }}</div>
+        <div class="text-h6 text-no-wrap no-scroll">{{ portlet.title }}</div>
       </template>
       <q-space />
       <template v-if="editable">
