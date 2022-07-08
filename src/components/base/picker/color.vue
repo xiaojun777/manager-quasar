@@ -3,6 +3,10 @@
     <q-card class="column no-wrap">
       <q-color
         class="col"
+        flat square
+        no-header-tabs
+        no-footer
+        default-view="palette"
         v-model="innerColor" />
     </q-card>
   </q-dialog>

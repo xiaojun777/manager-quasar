@@ -44,14 +44,6 @@
                   <template v-slot:append>
                     <q-btn
                       flat dense round
-                      icon="colorize"
-                      class="q-ml-sm"
-                      size="sm"
-                      @click="onColorClick"
-                    />
-
-                    <q-btn
-                      flat dense round
                       :icon="innerPortlet.titleicon ? innerPortlet.titleicon: 'search'"
                       class="q-ml-sm"
                       size="sm"
@@ -69,6 +61,7 @@
                 </q-input>
 
                 <q-color-input
+                  dense
                   v-model:color="innerPortlet.bgcolor"
                   label="背景色"
                 >

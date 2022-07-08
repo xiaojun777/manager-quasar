@@ -1,6 +1,6 @@
 <template>
   <q-card square class="column fit"
-    :style="{'color': titleColor, 'border': portlet.bordershow ? '1px solid ' + bgColor : 'none'}">
+    :style="{'color': getTitleColor(), 'border': portlet.bordershow ? '1px solid ' + bgColor : 'none'}">
     <q-bar
       v-if="editable || portlet.titleshow"
       class="q-pl-md full-width"
@@ -43,9 +43,11 @@
 
 <script>
 import { defineComponent } from "vue";
+import colors from "src/components/mixins/colors"
 
 export default defineComponent({
   name: "DoardWidget",
+  mixins: [colors],
   props: {
     portlet: Object,
     editable: Boolean,
@@ -82,6 +84,10 @@ export default defineComponent({
     onDelete() {
       this.$emit("delete");
     },
+
+    getTitleColor () {
+      return this.getBlackOrWhite(this.bgColor);
+    }
   },
 });
 </script>

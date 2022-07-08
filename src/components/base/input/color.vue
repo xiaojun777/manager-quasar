@@ -1,38 +1,50 @@
 <template>
-  <q-input
-    stack-label
-    :label="label"
-    v-model="innerColor"
-    :input-style="{ 'color': innerColor }"
-  >
-    <template v-slot:append>
-      <q-btn
-        flat dense round
-        icon="colorize"
-        :style="{'color': innerColor, 'border': '1px solid lightgrey'}"
-        class="q-ml-sm"
-        size="sm"
-        @click="onColorPicker"
-      />
+  <q-field :label="label" stack-label>
+    <template v-slot:control>
+      <q-btn v-if="dense"
+        rounded
+        class="no-border color-btn"
+        dense
+        :text-color="getBlackOrWhite(innerColor)"
+        :style="{'background-color': innerColor}"
+        :label="innerColor" icon="colorize">
+        <q-popup-proxy transition-show="scale" transition-hide="scale">
+          <q-color v-model="innerColor"
+            flat square border
+            no-header
+            no-header-tabs
+            default-view="palette">
+          </q-color>
+        </q-popup-proxy>
+      </q-btn>
+      <q-color v-if="!dense"
+        v-model="innerColor"
+        flat square border
+        no-header-tabs
+        no-footer
+        default-view="palette">
+      </q-color>
     </template>
-  </q-input>
-  <QColorPicker v-model:color="innerColor" ref="picker"/>
-
+  </q-field>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import QColorPicker from "src/components/base/picker/color.vue"
+import colors from "src/components/mixins/colors"
 
 export default defineComponent({
   name: 'QColorInput',
+  mixins: [colors],
   components: {
-    QColorPicker
   },
   props: {
+    dense: {
+      type: Boolean,
+      default: false
+    },
     color: {
       type:String,
-      default: '#FFF'
+      default: '#FFFFFF'
     },
     label: String
   },
@@ -53,7 +65,7 @@ export default defineComponent({
   methods: {
     onColorPicker () {
       this.$refs.picker.show();
-    }
+    },
   }
 })
 </script>
