@@ -1,13 +1,19 @@
 <template>
-  <q-card square class="column fit"
-    :style="{'color': titleColor, 'border': portlet.bordershow ? '1px solid ' + bgColor : 'none'}">
+  <q-card
+    square
+    class="column fit"
+    :style="{
+      color: titleColor,
+      border: portlet.bordershow ? '1px solid ' + bgColor : 'none',
+    }"
+  >
     <q-bar
       v-if="editable || portlet.titleshow"
       class="q-pl-md full-width"
-      :style="{'background-color': bgColor}"
+      :style="{ 'background-color': bgColor }"
     >
       <template v-if="portlet.titleshow">
-        <q-icon v-if="portlet.titleicon" :name="portlet.titleicon"/>
+        <q-icon v-if="portlet.titleicon" :name="portlet.titleicon" />
         <div class="text-no-wrap no-scroll">{{ portlet.title }}</div>
       </template>
       <q-space />
@@ -35,7 +41,8 @@
 
     <q-card-section
       v-ripple
-      class="q-portlet-body col full-width cursor-pointer ">
+      class="q-portlet-body col full-width cursor-pointer"
+    >
       <slot></slot>
     </q-card-section>
   </q-card>
@@ -52,21 +59,21 @@ export default defineComponent({
   },
   data: function () {
     return {
-      titleColor: 'white',
-      bgColor: '#2a2abd',
+      titleColor: "white",
+      bgColor: "#2a2abd",
     };
   },
   watch: {
-    'portlet.titlecolor': {
-      handler (val) {
+    "portlet.titlecolor": {
+      handler(val) {
         this.titleColor = val;
-      }
+      },
     },
 
-    'portlet.bgcolor': {
-      handler (val) {
+    "portlet.bgcolor": {
+      handler(val) {
         this.bgColor = val;
-      }
+      },
     },
   },
 
