@@ -44,14 +44,6 @@
                   <template v-slot:append>
                     <q-btn
                       flat dense round
-                      icon="colorize"
-                      class="q-ml-sm"
-                      size="sm"
-                      @click="onColorClick"
-                    />
-
-                    <q-btn
-                      flat dense round
                       :icon="innerPortlet.titleicon ? innerPortlet.titleicon: 'search'"
                       class="q-ml-sm"
                       size="sm"
@@ -68,19 +60,32 @@
                   </template>
                 </q-input>
 
+
                 <q-color-input
+                  class="col"
+                  dense
                   v-model:color="innerPortlet.bgcolor"
                   label="背景色"
                 >
                 </q-color-input>
 
-                <q-field>
-                  <q-toggle
-                    v-model="innerPortlet.bordershow"
-                    :icon="innerPortlet.bordershow ? 'border_all':'border_clear'"
-                    :label="innerPortlet.bordershow ? '隐藏边框' : '显示边框'"
-                  />
-                </q-field>
+                <div class="row">
+                  <q-field>
+                    <q-toggle
+                      v-model="innerPortlet.bgcolorgradient"
+                      icon="gradient"
+                      label="标题栏渐进背景色"
+                    />
+                  </q-field>
+
+                  <q-field>
+                    <q-toggle
+                      v-model="innerPortlet.bordershow"
+                      :icon="innerPortlet.bordershow ? 'border_all':'border_clear'"
+                      :label="innerPortlet.bordershow ? '隐藏边框' : '显示边框'"
+                    />
+                  </q-field>
+                </div>
               </q-expansion-item>
 
               <q-expansion-item
@@ -97,7 +102,6 @@
       </div>
     </div>
   </q-dialog>
-  <QColorPicker v-model:color="innerPortlet.titlecolor" ref="colorpicker"/>
   <QIconPicker v-model:icon="innerPortlet.titleicon" ref="iconpicker"/>
 
 </template>
@@ -122,8 +126,7 @@ export default defineComponent({
   ],
   components: {
     QColorInput,
-    QIconPicker,
-    QColorPicker
+    QIconPicker
   },
   data: function () {
     return {

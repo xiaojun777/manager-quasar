@@ -23,7 +23,7 @@
         <q-icon
           :name="portlet.params.icon"
           :style="{color: portlet.params.iconcolor}"
-          size="44px"
+          size="48px"
         ></q-icon>
       </q-item-section>
     </q-item>
@@ -45,6 +45,7 @@
       </q-input>
 
       <q-color-input
+        dense
         v-model:color="portlet.params.namecolor"
         label="指标名颜色"
       >
@@ -58,6 +59,7 @@
       </q-input>
 
       <q-color-input
+        dense
         v-model:color="portlet.params.valuecolor"
         label="指标颜色"
       >
@@ -70,12 +72,14 @@
       </q-icon-input>
 
       <q-color-input
+        dense
         v-model:color="portlet.params.iconcolor"
         label="图标颜色"
       >
       </q-color-input>
 
       <q-color-input
+        dense
         v-model:color="portlet.params.bgcolor"
         label="背景色"
       >

@@ -3,18 +3,22 @@
     square
     class="column fit"
     :style="{
-      color: titleColor,
+      color: getTitleColor(),
       border: portlet.bordershow ? '1px solid ' + bgColor : 'none',
     }"
   >
     <q-bar
       v-if="editable || portlet.titleshow"
       class="q-pl-md full-width"
-      :style="{ 'background-color': bgColor }"
+      :style="
+        portlet.bgcolorgradient !== void 0 && portlet.bgcolorgradient === true
+          ? { 'background-image': getGradient() }
+          : { 'background-color': bgColor }
+      "
     >
       <template v-if="portlet.titleshow">
         <q-icon v-if="portlet.titleicon" :name="portlet.titleicon" />
-        <div class="text-no-wrap no-scroll">{{ portlet.title }}</div>
+        <div class="text-h6 text-no-wrap no-scroll">{{ portlet.title }}</div>
       </template>
       <q-space />
       <template v-if="editable">
@@ -50,9 +54,11 @@
 
 <script>
 import { defineComponent } from "vue";
+import colors from "src/components/mixins/colors";
 
 export default defineComponent({
   name: "DoardWidget",
+  mixins: [colors],
   props: {
     portlet: Object,
     editable: Boolean,
@@ -75,6 +81,19 @@ export default defineComponent({
         this.bgColor = val;
       },
     },
+
+    portlet: {
+      handler() {
+        if (this.portlet.titlecolor !== void 0) {
+          this.titleColor = this.portlet.titlecolor;
+        }
+        if (this.portlet.bgcolor !== void 0) {
+          this.bgColor = this.portlet.bgcolor;
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
   },
 
   emits: {
@@ -88,6 +107,17 @@ export default defineComponent({
 
     onDelete() {
       this.$emit("delete");
+    },
+
+    getTitleColor() {
+      return this.getBlackOrWhite(this.bgColor);
+    },
+
+    getGradient() {
+      let str = `linear-gradient(to right, ${
+        this.bgColor
+      }, ${this.getGradientColor(this.bgColor, 0.5)})`;
+      return str;
     },
   },
 });

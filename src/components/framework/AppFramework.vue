@@ -1,5 +1,5 @@
 <template>
-  <q-tab-panels :class="this.class" v-model="panel" animated swipeable>
+   <q-tab-panels :class="this.class" v-model="panel" animated swipeable>
     <q-tab-panel name="rows" class="column">
       <q-bar v-if="editable" class="bg-primary text-white">
         <q-btn
